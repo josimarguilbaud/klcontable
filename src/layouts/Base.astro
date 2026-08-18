@@ -226,24 +226,40 @@ const NAV = [
         </button>
       </div>
 
-      <div id="menu-movil" class="hidden border-t border-tinta-200 bg-white md:hidden">
+      <div
+        id="menu-movil"
+        class="hidden max-h-[calc(100vh-4.75rem)] overflow-y-auto overscroll-contain border-t border-tinta-200 bg-white md:hidden"
+      >
         <div class="space-y-1 px-4 py-3">
           {
             NAV.map((n) => (
-              <div>
+              n.hijos.length === 0 ? (
                 <a href={n.ruta} class="block rounded-md px-3 py-3 font-semibold hover:bg-tinta-50">
                   {n.nombre}
                 </a>
-                {n.hijos.length > 0 && (
+              ) : (
+                /* Plegado por defecto: con los 13 hijos abiertos el menu medía
+                   el doble que la pantalla y empujaba la pagina. <details> lo
+                   resuelve de forma nativa, sin JavaScript y accesible. */
+                <details class="group/sub">
+                  <summary class="flex cursor-pointer list-none items-center justify-between rounded-md px-3 py-3 font-semibold hover:bg-tinta-50">
+                    {n.nombre}
+                    <svg class="h-4 w-4 text-tinta-500 transition group-open/sub:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+                    </svg>
+                  </summary>
                   <div class="mb-1 ml-3 border-l border-tinta-200 pl-3">
                     {n.hijos.map((h) => (
                       <a href={h.ruta} class="block rounded-md px-3 py-2 text-sm text-tinta-700 hover:bg-tinta-50">
                         {h.nombre}
                       </a>
                     ))}
+                    <a href={n.ruta} class="block rounded-md px-3 py-2 text-sm font-bold text-marca-700">
+                      Ver todos →
+                    </a>
                   </div>
-                )}
-              </div>
+                </details>
+              )
             ))
           }
           <a
