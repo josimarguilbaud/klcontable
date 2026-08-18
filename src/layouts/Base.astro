@@ -357,8 +357,23 @@ const NAV = [
           </div>
         </div>
 
-        <div class="mt-12 border-t border-tinta-700 pt-6 text-xs text-tinta-500">
+        <div
+          class="mt-12 flex flex-col gap-2 border-t border-tinta-700 pt-6 text-xs text-tinta-500 sm:flex-row sm:items-center sm:justify-between"
+        >
           <p>© {new Date().getFullYear()} {SITE.nombre}. {SITE.ciudad}, Panamá.</p>
+          {/* `rel="noopener"` no es decorativo: sin el, la pagina destino puede
+              manipular esta a traves de `window.opener`. */}
+          <p>
+            Desarrollado por{' '}
+            <a
+              href="https://elementoweb.com"
+              target="_blank"
+              rel="noopener"
+              class="font-semibold text-tinta-400 underline underline-offset-2 hover:text-acento-400"
+            >
+              elementoweb.com
+            </a>
+          </p>
         </div>
       </div>
     </footer>
