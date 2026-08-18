@@ -1,0 +1,54 @@
+---
+/**
+ * Los iconos de los servicios, dibujados a mano en SVG.
+ *
+ * El campo `icono` llevaba en `servicios.ts` desde el principio y NO se pintaba
+ * en ningún sitio: era dato muerto. Aquí cobra sentido.
+ *
+ * Por qué SVG en línea y no una librería de iconos ni imágenes:
+ * - No añade ni una petición de red. En un sitio que pelea posiciones en
+ *   Google, diez iconos son diez peticiones que no vamos a pagar.
+ * - Hereda el color del texto con `currentColor`, así que cambia solo al pasar
+ *   el ratón por la tarjeta sin duplicar ficheros.
+ * - Se ve nítido en cualquier pantalla y pesa menos que un PNG diminuto.
+ *
+ * Todos comparten la misma rejilla de 24 y el mismo grosor de trazo, que es lo
+ * que hace que un juego de iconos parezca un juego y no seis dibujos sueltos.
+ */
+interface Props {
+  nombre: string;
+  clase?: string;
+}
+const { nombre, clase = 'h-7 w-7' } = Astro.props;
+
+/** Trazos por nombre. Si llega uno desconocido, cae en `brujula`. */
+const TRAZOS: Record<string, string> = {
+  // Orientación: para la asesoría, que es «alguien que le dice por dónde».
+  brujula: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+  // Engranaje: el trabajo mensual que corre solo por debajo.
+  engranaje:
+    '<circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M4.2 4.2l2.1 2.1m11.4 11.4 2.1 2.1M2 12h3m14 0h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+  // Lupa sobre documento: auditoría y precios de transferencia, que es mirar.
+  lupa: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/><circle cx="16.5" cy="14.5" r="3.5"/><path d="m19 17 2.5 2.5"/>',
+  // Edificio: sociedades, trámites y regímenes especiales.
+  edificio:
+    '<path d="M3 21h18M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M15 21V9h2a2 2 0 0 1 2 2v10"/><path d="M8 7h2M8 11h2M8 15h2"/>',
+  // Personas: planilla y municipio, donde lo que hay detrás son personas.
+  personas:
+    '<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 6.5a3 3 0 0 1 0 5.9M17 14.2a5.5 5.5 0 0 1 4 5.3"/>',
+  // Sobre: facturación electrónica, que es un documento que viaja.
+  sobre: '<rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 8.2 5.5a1.5 1.5 0 0 0 1.6 0L21 7"/>',
+};
+---
+
+<svg
+  class={clase}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  set:html={TRAZOS[nombre] ?? TRAZOS.brujula}
+/>
