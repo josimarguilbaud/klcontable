@@ -1,0 +1,136 @@
+---
+/**
+ * Nosotros. Ruta `/nosotros/`, la que estaba indexada.
+ *
+ * En una firma contable esta página vende más que la portada: el cliente está
+ * a punto de entregarle sus números a un desconocido y viene aquí a decidir si
+ * se fía. Por eso lleva los 35 años arriba y no escondidos.
+ *
+ * Lo que NO lleva: nombres de socios, idoneidades ni fotos inventadas. Cuando
+ * Josimar dé esos datos, se pintan solos desde `site.ts`.
+ */
+import Base from '../layouts/Base.astro';
+import { SITE, HAY_CREDENCIALES } from '../data/site';
+import { SERVICIOS } from '../data/servicios';
+---
+
+<Base
+  title="Nosotros | 35 Años de Experiencia Contable en Panamá — KL Contable"
+  description="KL Contable lleva 35 años de experiencia en contabilidad, impuestos y planilla en Panamá. Conozca cómo trabajamos y por qué nuestros clientes se quedan."
+  ruta="/nosotros/"
+  migas={[{ nombre: 'Inicio', ruta: '/' }]}
+>
+  <section class="hero-degradado bg-tinta-900">
+    <div class="mx-auto max-w-6xl px-5 py-16 lg:py-20">
+      <p class="mb-4 text-xs font-bold tracking-widest text-acento-400 uppercase">La firma</p>
+      <h1 class="max-w-3xl font-titulo text-3xl leading-[1.08] font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+        35 años llevando la contabilidad de empresas panameñas
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-tinta-200">
+        Tiempo suficiente para haber visto de todo: reformas fiscales,
+        digitalizaciones, crisis y bonanzas. Y para saber que lo que un
+        empresario necesita casi nunca es un informe más bonito.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto max-w-3xl px-5">
+      <div class="space-y-5 text-lg leading-relaxed text-tinta-700">
+        <p>
+          <strong>KL Contable</strong> nació para hacer algo que suena obvio y
+          se cumple poco: que un empresario entienda sus propios números.
+        </p>
+        <p>
+          En estos 35 años hemos visto pasar muchas empresas por aquí, y casi
+          todas llegaron por el mismo motivo. No porque su contador anterior se
+          equivocara en una cifra, sino porque no contestaba el teléfono, porque
+          avisaba de los vencimientos cuando ya habían pasado, o porque entregaba
+          unos informes que nadie en la empresa sabía leer.
+        </p>
+        <p>
+          Trabajamos con las obligaciones reales de una empresa panameña: la
+          <strong>DGI</strong>, el <strong>ITBMS</strong>, la planilla ante la
+          <strong>Caja de Seguro Social</strong>, los trámites que aparecen sin
+          avisar. Y lo hacemos con una regla simple: si usted no entiende lo que
+          le explicamos, el trabajo no está terminado.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Misión y Visión: estaban en la web anterior y son de la casa -->
+  <section class="border-y border-tinta-200 bg-tinta-50 py-16 lg:py-20">
+    <div class="mx-auto grid max-w-6xl gap-8 px-5 md:grid-cols-2">
+      <div class="rounded-xl border border-tinta-200 bg-white p-8">
+        <h2 class="font-titulo text-2xl font-black tracking-tight">Misión</h2>
+        <p class="mt-4 leading-relaxed text-tinta-700">
+          Llevar la contabilidad de nuestros clientes con precisión y al día,
+          cumpliendo cada obligación en su plazo, y traducirles sus números a un
+          lenguaje que puedan usar para decidir.
+        </p>
+      </div>
+      <div class="rounded-xl border border-tinta-200 bg-white p-8">
+        <h2 class="font-titulo text-2xl font-black tracking-tight">Visión</h2>
+        <p class="mt-4 leading-relaxed text-tinta-700">
+          Ser el despacho al que una empresa panameña llama <em>antes</em> de
+          tomar una decisión, no después de tener el problema.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto max-w-6xl px-5">
+      <h2 class="font-titulo text-2xl font-black tracking-tight lg:text-3xl">
+        En qué le podemos ayudar
+      </h2>
+      <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {
+          SERVICIOS.map((s) => (
+            <a href={`/services/${s.slug}/`} class="tarjeta rounded-xl border border-tinta-200 bg-white p-6">
+              <h3 class="font-titulo text-lg font-bold">{s.nombre}</h3>
+              <p class="mt-2 text-sm text-tinta-700">{s.resumen}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    /* Cuando existan RUC, idoneidad o el nombre del contador responsable, esta
+       sección aparece sola. Mientras no existan, no se enseña nada: en una
+       firma contable una credencial inventada no es marketing, es un problema. */
+    HAY_CREDENCIALES && (
+      <section class="border-t border-tinta-200 bg-tinta-50 py-16">
+        <div class="mx-auto max-w-3xl px-5">
+          <h2 class="font-titulo text-2xl font-black tracking-tight">Datos de la firma</h2>
+          <ul class="mt-6 space-y-2 text-tinta-700">
+            {SITE.contadorResponsable && <li>Contador responsable: {SITE.contadorResponsable}</li>}
+            {SITE.idoneidadJTC && <li>Idoneidad JTC: {SITE.idoneidadJTC}</li>}
+            {SITE.ruc && <li>RUC: {SITE.ruc}</li>}
+            {SITE.direccion && <li>{SITE.direccion}</li>}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="bg-tinta-900 py-16">
+    <div class="mx-auto max-w-3xl px-5 text-center">
+      <h2 class="font-titulo text-2xl font-black tracking-tight text-white lg:text-3xl">
+        ¿Conversamos?
+      </h2>
+      <p class="mt-3 text-tinta-200">La primera consulta es gratuita. {SITE.horario}.</p>
+      <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href={`tel:${SITE.telefonoE164}`} class="rounded-md bg-acento-500 px-6 py-3.5 font-titulo font-bold text-white hover:bg-acento-400">
+          Llamar al {SITE.telefono}
+        </a>
+        <a href="/contacto/" class="rounded-md border border-white/25 px-6 py-3.5 font-titulo font-bold text-white hover:bg-white/10">
+          Escribir un mensaje
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

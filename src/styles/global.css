@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/*
+ * Sistema de diseño — «Confianza Contable».
+ *
+ * Teal corporativo + esmeralda de acento sobre pizarra. El teal transmite la
+ * seriedad que un despacho contable necesita; el esmeralda es el color del
+ * crecimiento y se reserva SOLO para lo que el cliente debe pulsar. Si el
+ * acento se usa en todas partes deja de señalar nada.
+ *
+ * Tipografías: Outfit para titulares y Source Sans 3 para el texto.
+ *
+ * NO se usan Inter ni Roboto, que era la pareja de la maqueta: son las dos
+ * caras que usa medio internet y todo sitio generado con IA, así que la web
+ * habría quedado indistinguible de la competencia. Outfit es geométrica y
+ * moderna sin resultar fría —importa, porque el cliente aquí es un dueño de
+ * pyme, no un banco—, y Source Sans 3 está diseñada para leer párrafos y
+ * cifras seguidas, que es justo lo que hay en una web contable.
+ */
+@theme {
+  --color-tinta-950: #020617;
+  --color-tinta-900: #0f172a;
+  --color-tinta-700: #334155;
+  --color-tinta-500: #64748b;
+  --color-tinta-200: #e2e8f0;
+  --color-tinta-50:  #f8fafc;
+
+  --color-marca-800: #115e59;
+  --color-marca-700: #0f766e;
+  --color-marca-600: #0d9488;
+  --color-marca-50:  #f0fdfa;
+
+  --color-acento-500: #10b981;
+  --color-acento-400: #34d399;
+
+  --color-whatsapp: #25d366;
+
+  --font-sans: 'Source Sans 3', system-ui, sans-serif;
+  --font-titulo: Outfit, system-ui, sans-serif;
+
+  /*
+   * Escala tipográfica con saltos de 1.3, no de 1.1. Con pasos pequeños todo
+   * parece del mismo tamaño y el ojo no encuentra por dónde empezar a leer;
+   * el contraste es lo que crea la jerarquía.
+   */
+  --text-display: 3.5rem;
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.02em;
+  --text-titulo: 2.25rem;
+  --text-titulo--line-height: 1.15;
+  --text-titulo--letter-spacing: -0.015em;
+  --text-sub: 1.375rem;
+  --text-sub--line-height: 1.35;
+
+  --shadow-suave: 0 10px 40px -10px rgb(15 118 110 / 0.10);
+  --shadow-acento: 0 10px 25px -5px rgb(16 185 129 / 0.30);
+}
+
+/*
+ * El degradado del hero va sobre la foto para que el texto blanco tenga
+ * contraste real. Sin él, un titular blanco sobre una foto clara es ilegible
+ * justo donde más importa: la primera pantalla.
+ */
+.hero-degradado {
+  background-image:
+    linear-gradient(to right, rgb(15 23 42 / 0.95) 0%, rgb(15 118 110 / 0.82) 100%);
+}
+
+/* La tarjeta se levanta al pasar el ratón y marca el borde superior en
+   esmeralda: señala «esto es pulsable» sin necesidad de decirlo. */
+.tarjeta {
+  border-top: 3px solid transparent;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.tarjeta:hover {
+  transform: translateY(-4px);
+  border-top-color: var(--color-acento-500);
+  box-shadow: 0 20px 40px -15px rgb(15 118 110 / 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta { transition: none; }
+  .tarjeta:hover { transform: none; }
+}

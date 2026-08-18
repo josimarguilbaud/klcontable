@@ -1,0 +1,225 @@
+---
+/**
+ * Portada.
+ *
+ * El <title> y el H1 conservan las palabras con las que la web ya posicionaba
+ * («Contador en Panamá», «Servicios de Contabilidad en Panamá»). Eso no se
+ * toca: es lo que Google tiene asociado al dominio.
+ *
+ * Todo lo demás está escrito para el dueño de una pyme. La regla al redactar
+ * fue: si una frase solo la entiende un contador, se reescribe.
+ */
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+import { SERVICIOS } from '../data/servicios';
+
+const FAQS = [
+  {
+    p: '¿Cuánto cuesta llevar la contabilidad de mi empresa en Panamá?',
+    r: 'Depende del volumen de operaciones, de si tiene empleados y de si está al día o hay atrasos. Por eso la primera consulta es gratuita: se revisa su caso y se le da un precio cerrado, sin sorpresas después.',
+  },
+  {
+    p: '¿Atienden a empresas pequeñas y a personas naturales?',
+    r: 'Sí. De hecho es donde más falta hace: una empresa grande tiene departamento contable, y una pequeña toma las mismas decisiones sin nadie a quien preguntar.',
+  },
+  {
+    p: 'Tengo la contabilidad atrasada. ¿Es un problema?',
+    r: 'Es lo más común que llega y no hay nada de qué avergonzarse. Lo primero es ver cuánto hay pendiente y ordenarlo; a partir de ahí se sigue al día.',
+  },
+  {
+    p: '¿Puedo cambiarme de contador a mitad de año?',
+    r: 'Sí, en cualquier momento. Se recibe la información que tenga, se revisa en qué estado está y se continúa desde ahí.',
+  },
+];
+
+const PASOS = [
+  { n: '1', t: 'Conversamos', d: 'Nos cuenta qué necesita y en qué estado están sus números. Sin costo y sin compromiso.' },
+  { n: '2', t: 'Le decimos qué hace falta', d: 'Un diagnóstico claro y un precio cerrado. Si algo no le hace falta, se lo decimos.' },
+  { n: '3', t: 'Nos encargamos', d: 'Usted vuelve a su negocio. Nosotros le avisamos antes de cada vencimiento.' },
+];
+---
+
+<Base
+  title="Contador en Panamá | Servicios de Contabilidad en Panamá — KL Contable"
+  description="Servicios de contabilidad en Panamá para empresas y emprendedores: contabilidad mensual, impuestos ante la DGI, planilla y trámites. Primera consulta gratuita."
+  ruta="/"
+  faqs={FAQS}
+>
+  <!-- HERO -->
+  <section class="hero-degradado relative bg-tinta-900">
+    <div class="mx-auto max-w-6xl px-5 py-20 lg:py-28">
+      <p class="mb-5 inline-block rounded-full border border-acento-500/40 bg-acento-500/10 px-4 py-1.5 text-xs font-bold tracking-widest text-acento-400 uppercase">
+        {SITE.ciudad} · {SITE.horario}
+      </p>
+
+      <h1 class="max-w-4xl font-titulo text-4xl leading-[1.05] font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
+        Contador en Panamá para empresas que quieren dormir tranquilas<span class="text-acento-500">.</span>
+      </h1>
+
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-tinta-200 lg:text-xl">
+        Llevamos su contabilidad, sus impuestos y su planilla al día. Usted se
+        dedica a su negocio, y nosotros le avisamos <strong class="text-white">antes</strong>
+        de cada vencimiento, no después.
+      </p>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a href="/contacto/" class="rounded-md bg-acento-500 px-7 py-4 text-center font-titulo font-bold text-white shadow-[var(--shadow-acento)] transition hover:bg-acento-400">
+          Consulta gratuita
+        </a>
+        <a href="/services/" class="rounded-md border border-white/25 px-7 py-4 text-center font-titulo font-bold text-white transition hover:bg-white/10">
+          Ver los servicios
+        </a>
+      </div>
+
+      <!-- Confianza SIN cifras inventadas: los 35 años estan confirmados, el
+           resto son promesas que se pueden cumplir. Nada de «500+ clientes». -->
+      <div class="mt-14 grid gap-6 border-t border-white/15 pt-8 sm:grid-cols-4">
+        {SITE.anosExperiencia && (
+          <div>
+            <p class="font-titulo text-4xl font-black text-acento-500">{SITE.anosExperiencia} años</p>
+            <p class="mt-1 text-sm text-tinta-200">Llevando contabilidad en Panamá.</p>
+          </div>
+        )}
+        <div>
+          <p class="font-titulo text-lg font-bold text-white">Aviso antes del vencimiento</p>
+          <p class="mt-1 text-sm text-tinta-200">Nunca se entera tarde de una fecha.</p>
+        </div>
+        <div>
+          <p class="font-titulo text-lg font-bold text-white">Le hablamos claro</p>
+          <p class="mt-1 text-sm text-tinta-200">Sin jerga. Si no lo entiende, no sirve.</p>
+        </div>
+        <div>
+          <p class="font-titulo text-lg font-bold text-white">Precio cerrado</p>
+          <p class="mt-1 text-sm text-tinta-200">Sabe cuánto paga antes de empezar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="bg-tinta-50 py-20 lg:py-24">
+    <div class="mx-auto max-w-6xl px-5">
+      <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+        Lo que hacemos
+      </span>
+      <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+        Servicios de contabilidad en Panamá
+      </h2>
+      <p class="mt-4 max-w-2xl text-lg text-tinta-700">
+        Seis servicios que cubren todo lo que su empresa necesita: desde el
+        registro del día a día hasta la auditoría que le pide el banco.
+      </p>
+
+      <div class="mt-11 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {
+          SERVICIOS.map((s) => (
+            <a
+              href={`/services/${s.slug}/`}
+              class="tarjeta group rounded-xl border border-tinta-200 bg-white p-7"
+            >
+              <h3 class="font-titulo text-xl font-bold group-hover:text-marca-700">{s.nombre}</h3>
+              <p class="mt-2.5 text-tinta-700">{s.resumen}</p>
+              <span class="mt-5 inline-block text-sm font-bold text-marca-700">Ver más →</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO TRABAJAMOS -->
+  <section class="py-20 lg:py-24">
+    <div class="mx-auto max-w-6xl px-5">
+      <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+        Cómo trabajamos
+      </span>
+      <h2 class="mt-4 font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+        Empezar es más simple de lo que parece
+      </h2>
+
+      <div class="mt-11 grid gap-8 md:grid-cols-3">
+        {
+          PASOS.map((p) => (
+            <div class="border-t-2 border-acento-500 pt-5">
+              <span class="font-titulo text-4xl font-black text-tinta-200">{p.n}</span>
+              <h3 class="mt-2 font-titulo text-xl font-bold">{p.t}</h3>
+              <p class="mt-2 text-tinta-700">{p.d}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- TEXTO SEO, escrito para leerse, no para rellenar -->
+  <section class="border-y border-tinta-200 bg-tinta-50 py-20">
+    <div class="mx-auto max-w-3xl px-5">
+      <h2 class="font-titulo text-3xl font-black tracking-tight">
+        ¿Busca un contador en Panamá?
+      </h2>
+      <div class="mt-6 space-y-5 text-lg leading-relaxed text-tinta-700">
+        <p>
+          La mayoría de las empresas no cambia de contador porque el anterior
+          hiciera mal los números. Cambia porque no contestaba, porque se
+          enteraba de los vencimientos tarde, o porque entregaba unos informes
+          que nadie sabía leer.
+        </p>
+        <p>
+          En <strong>KL Contable</strong> llevamos <strong>35 años</strong>
+          haciendo esto en Panamá, y partimos de algo simple: usted no tiene
+          por qué entender de contabilidad. Para eso nos contrata. Lo que sí
+          tiene derecho a saber es <strong>cuánto entra, cuánto sale y qué le
+          toca pagar este mes</strong>, dicho en palabras normales.
+        </p>
+        <p>
+          Trabajamos con las obligaciones reales de una empresa panameña: las
+          declaraciones ante la <strong>DGI</strong>, el <strong>ITBMS</strong>
+          mensual, la planilla ante la <strong>Caja de Seguro Social</strong> por
+          el sistema SIPE, y los trámites que aparecen por el camino. Todo con
+          aviso anticipado, porque casi todas las multas que hemos visto no
+          fueron por no querer pagar: fueron por enterarse tarde.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ visible + declarada en schema -->
+  <section class="py-20 lg:py-24">
+    <div class="mx-auto max-w-3xl px-5">
+      <h2 class="font-titulo text-3xl font-black tracking-tight">Preguntas frecuentes</h2>
+      <div class="mt-9 divide-y divide-tinta-200 border-y border-tinta-200">
+        {
+          FAQS.map((f) => (
+            <details class="group py-5">
+              <summary class="flex cursor-pointer list-none items-start justify-between gap-4 font-titulo text-lg font-bold">
+                {f.p}
+                <span class="mt-1 shrink-0 text-marca-700 transition group-open:rotate-45">+</span>
+              </summary>
+              <p class="mt-3 leading-relaxed text-tinta-700">{f.r}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CIERRE -->
+  <section class="bg-tinta-900 py-20">
+    <div class="mx-auto max-w-3xl px-5 text-center">
+      <h2 class="font-titulo text-3xl font-black tracking-tight text-white lg:text-4xl">
+        Cuénteme su caso y le digo qué hace falta
+      </h2>
+      <p class="mt-4 text-lg text-tinta-200">
+        La primera conversación no cuesta nada. Si no necesita nada, se lo digo.
+      </p>
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href={`tel:${SITE.telefonoE164}`} class="rounded-md bg-acento-500 px-7 py-4 font-titulo font-bold text-white hover:bg-acento-400">
+          Llamar al {SITE.telefono}
+        </a>
+        <a href="/contacto/" class="rounded-md border border-white/25 px-7 py-4 font-titulo font-bold text-white hover:bg-white/10">
+          Escribir un mensaje
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

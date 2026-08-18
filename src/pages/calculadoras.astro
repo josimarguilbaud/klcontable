@@ -1,0 +1,248 @@
+---
+/**
+ * Calculadora de aportes al Seguro Social.
+ *
+ * Calcula SOLO lo que está verificado en el Artículo 96 de la Ley 51 (reformada
+ * por la Ley 462 de 2025): la cuota del trabajador y la cuota patronal. NO
+ * calcula el «costo total del empleado», porque eso necesita el Seguro
+ * Educativo y la prima de riesgo profesional, que no se han podido comprobar en
+ * fuente oficial. Ver `src/data/fiscal.ts`.
+ *
+ * Esa omisión es deliberada y se dice en la página. La alternativa —poner una
+ * cifra plausible— es lo que hace que un empresario presupueste mal, y ocurre
+ * en varias webs contables panameñas que siguen publicando la cuota patronal
+ * anterior a la reforma.
+ *
+ * La tasa patronal se inyecta desde el servidor en el build, así que si el
+ * sitio se reconstruye después de marzo de 2027 sale sola la nueva.
+ */
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+import {
+  CUOTA_TRABAJADOR_SS,
+  TRAMOS_PATRONAL_SS,
+  cuotaPatronalSS,
+  FUENTE_CSS,
+} from '../data/fiscal';
+
+const patronalHoy = cuotaPatronalSS();
+const anoActual = new Date().getFullYear();
+
+const PERIODOS = [
+  'Hasta el 28 de febrero de 2027',
+  'Del 1 de marzo de 2027 al 28 de febrero de 2029',
+  'Desde el 1 de marzo de 2029',
+];
+
+const waCosto = encodeURIComponent(
+  'Hola, quisiera el cálculo completo del costo de un empleado.'
+);
+
+const faqs = [
+  {
+    p: '¿Por qué la cuota patronal aparece con fechas?',
+    r: 'Porque la reforma de 2025 no la subió de una vez: la sube por tramos. La cifra de hoy no es la que regirá en 2027 ni la de 2029, y una calculadora que ignore eso se equivoca en cuanto se planifica a más de un año.',
+  },
+  {
+    p: '¿Esto es el costo total de tener un empleado?',
+    r: 'No, y preferimos decirlo. Al Seguro Social hay que sumarle el seguro educativo, la prima de riesgo profesional —que depende de la actividad— y las provisiones de décimo, vacaciones y prima de antigüedad. Le damos el cálculo completo por WhatsApp, con su actividad concreta.',
+  },
+  {
+    p: '¿De dónde salen estos porcentajes?',
+    r: 'Del Artículo 96 del Texto Único de la Ley 51 de 2005, reformada por la Ley 462 de 18 de marzo de 2025. El enlace a la fuente está al pie de la tabla.',
+  },
+];
+---
+
+<Base
+  title="Calculadora de Seguro Social en Panamá | KL Contable"
+  description="Calcule la cuota del trabajador y la cuota patronal al Seguro Social en Panamá, con los porcentajes vigentes de la Ley 462 y su calendario de aumentos."
+  ruta="/calculadoras/"
+  faqs={faqs}
+  migas={[{ nombre: 'Inicio', ruta: '/' }]}
+>
+  <section class="hero-degradado bg-tinta-900">
+    <div class="mx-auto max-w-6xl px-5 py-16 lg:py-20">
+      <p class="mb-4 text-xs font-bold tracking-widest text-acento-400 uppercase">
+        Herramienta gratuita
+      </p>
+      <h1 class="max-w-3xl font-titulo text-3xl leading-[1.08] font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+        Calculadora de Seguro Social
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-tinta-200">
+        Cuánto se le descuenta a un salario y cuánto aporta la empresa, con los
+        porcentajes que están hoy en la ley.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto grid max-w-6xl gap-10 px-5 lg:grid-cols-[1fr_.9fr]">
+      <div class="rounded-2xl border border-tinta-200 bg-white p-8 shadow-[var(--shadow-suave)] lg:p-10">
+        <label for="salario" class="block font-titulo text-lg font-bold">
+          Salario mensual bruto
+        </label>
+        <div class="mt-3 flex items-center rounded-lg border border-tinta-200 bg-tinta-50 focus-within:border-marca-700 focus-within:ring-2 focus-within:ring-marca-700/20">
+          <span class="pl-4 text-lg font-bold text-tinta-500">B/.</span>
+          <input
+            id="salario"
+            type="number"
+            min="0"
+            step="10"
+            value="1000"
+            inputmode="decimal"
+            class="w-full bg-transparent px-3 py-4 text-lg font-bold outline-none"
+          />
+        </div>
+
+        <div class="mt-8 space-y-4">
+          <div class="flex items-baseline justify-between border-b border-tinta-200 pb-4">
+            <div>
+              <p class="font-titulo font-bold">Le descuentan al trabajador</p>
+              <p class="text-sm text-tinta-500">{CUOTA_TRABAJADOR_SS}% del salario</p>
+            </div>
+            <p id="r-trabajador" class="font-titulo text-2xl font-black text-marca-700">—</p>
+          </div>
+
+          <div class="flex items-baseline justify-between border-b border-tinta-200 pb-4">
+            <div>
+              <p class="font-titulo font-bold">Le queda al trabajador</p>
+              <p class="text-sm text-tinta-500">
+                Antes del impuesto sobre la renta y otros descuentos
+              </p>
+            </div>
+            <p id="r-neto" class="font-titulo text-2xl font-black">—</p>
+          </div>
+
+          <div class="flex items-baseline justify-between">
+            <div>
+              <p class="font-titulo font-bold">Aporta la empresa</p>
+              <p class="text-sm text-tinta-500">{patronalHoy}% en {anoActual}</p>
+            </div>
+            <p id="r-patronal" class="font-titulo text-2xl font-black text-acento-500">—</p>
+          </div>
+        </div>
+
+        <!-- Decir lo que NO calcula es tan importante como el resultado -->
+        <div class="mt-8 rounded-xl border border-amber-200 bg-amber-50 p-5">
+          <p class="font-titulo font-bold text-amber-900">
+            Esto no es el costo total del empleado
+          </p>
+          <p class="mt-2 text-sm leading-relaxed text-amber-900">
+            Falta el seguro educativo, la prima de riesgo profesional —que
+            depende de su actividad— y las provisiones de décimo, vacaciones y
+            prima de antigüedad. No las estimamos aquí: una cifra aproximada en
+            un presupuesto de nómina no le sirve de nada.
+          </p>
+          <a
+            href={`https://wa.me/${SITE.whatsapp}?text=${waCosto}`}
+            rel="noopener"
+            target="_blank"
+            class="mt-4 inline-block font-titulo text-sm font-bold text-amber-900 underline"
+          >
+            Pedir el cálculo completo por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="font-titulo text-2xl font-black tracking-tight">
+          La cuota patronal está subiendo
+        </h2>
+        <p class="mt-4 leading-relaxed text-tinta-700">
+          La reforma de 2025 no subió la cuota de una sola vez: la sube por
+          tramos. Si planifica su nómina a más de un año, esta tabla le importa.
+        </p>
+
+        <div class="mt-6 overflow-hidden rounded-xl border border-tinta-200">
+          <table class="w-full text-left">
+            <thead class="bg-tinta-50">
+              <tr>
+                <th class="px-5 py-3 font-titulo text-sm font-bold">Período</th>
+                <th class="px-5 py-3 text-right font-titulo text-sm font-bold">Cuota patronal</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-tinta-200">
+              {
+                TRAMOS_PATRONAL_SS.map((t, i) => (
+                  <tr class={t.tasa === patronalHoy ? 'bg-marca-50' : ''}>
+                    <td class="px-5 py-3.5 text-sm">{PERIODOS[i]}</td>
+                    <td class="px-5 py-3.5 text-right font-titulo font-black whitespace-nowrap">
+                      {t.tasa}%
+                      {t.tasa === patronalHoy && (
+                        <span class="ml-2 text-xs font-bold text-marca-700">HOY</span>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <p class="mt-5 text-sm leading-relaxed text-tinta-500">
+          Fuente: <a
+            href={FUENTE_CSS.url}
+            rel="noopener nofollow"
+            target="_blank"
+            class="underline">{FUENTE_CSS.nombre}</a
+          >, {FUENTE_CSS.articulo}. Comprobado el 17 de agosto de 2026.
+        </p>
+
+        <div class="mt-8 rounded-xl border border-tinta-200 bg-tinta-50 p-6">
+          <p class="font-titulo font-bold">Ojo con las cifras que circulan</p>
+          <p class="mt-2 text-sm leading-relaxed text-tinta-700">
+            Todavía se publica por ahí una cuota patronal más baja: es la de
+            antes de la reforma. Si hizo sus cuentas con ella, le salen menos de
+            lo que realmente paga.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-tinta-200 bg-tinta-50 py-16 lg:py-20">
+    <div class="mx-auto max-w-3xl px-5">
+      <h2 class="font-titulo text-2xl font-black tracking-tight lg:text-3xl">
+        Preguntas frecuentes
+      </h2>
+      <div class="mt-8 divide-y divide-tinta-200 border-y border-tinta-200">
+        {
+          faqs.map((f) => (
+            <details class="group py-5">
+              <summary class="flex cursor-pointer list-none items-start justify-between gap-4 font-titulo text-lg font-bold">
+                {f.p}
+                <span class="mt-1 shrink-0 text-marca-700 transition group-open:rotate-45">+</span>
+              </summary>
+              <p class="mt-3 leading-relaxed text-tinta-700">{f.r}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script define:vars={{ TRABAJADOR: CUOTA_TRABAJADOR_SS, PATRONAL: patronalHoy }}>
+  const campo = document.getElementById('salario');
+  const salidas = {
+    trabajador: document.getElementById('r-trabajador'),
+    neto: document.getElementById('r-neto'),
+    patronal: document.getElementById('r-patronal'),
+  };
+
+  const money = (n) =>
+    'B/. ' + n.toLocaleString('es-PA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  function calcular() {
+    // Un salario vacío o negativo se trata como 0: mejor un cero que un NaN.
+    const bruto = Math.max(0, Number(campo.value) || 0);
+    const cuota = (bruto * TRABAJADOR) / 100;
+    salidas.trabajador.textContent = money(cuota);
+    salidas.neto.textContent = money(bruto - cuota);
+    salidas.patronal.textContent = money((bruto * PATRONAL) / 100);
+  }
+
+  campo.addEventListener('input', calcular);
+  calcular();
+</script>

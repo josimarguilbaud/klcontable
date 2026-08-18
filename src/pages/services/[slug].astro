@@ -1,0 +1,152 @@
+---
+/**
+ * Ficha de servicio. Genera las SEIS páginas que Google tenía indexadas, con
+ * su slug exacto.
+ *
+ * Cada ficha es una página de aterrizaje completa, no un párrafo: título y
+ * descripción propios, un H1 con la palabra que se busca, el problema del
+ * cliente antes que la lista de tareas, FAQ visible y declarada, y enlaces a
+ * los servicios hermanos. Una web contable pierde posiciones cuando sus fichas
+ * son seis variaciones del mismo texto.
+ */
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../data/site';
+import { SERVICIOS } from '../../data/servicios';
+
+export function getStaticPaths() {
+  return SERVICIOS.map((s) => ({ params: { slug: s.slug }, props: { servicio: s } }));
+}
+
+const { servicio } = Astro.props;
+const otros = SERVICIOS.filter((s) => s.slug !== servicio.slug).slice(0, 3);
+const ruta = `/services/${servicio.slug}/`;
+
+const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio.nombre}.`);
+---
+
+<Base
+  title={servicio.titulo}
+  description={servicio.descripcion}
+  ruta={ruta}
+  faqs={servicio.faqs}
+  migas={[
+    { nombre: 'Inicio', ruta: '/' },
+    { nombre: 'Servicios', ruta: '/services/' },
+  ]}
+>
+  <section class="hero-degradado bg-tinta-900">
+    <div class="mx-auto max-w-6xl px-5 py-16 lg:py-20">
+      <p class="mb-4 text-xs font-bold tracking-widest text-acento-400 uppercase">
+        {servicio.nombre}
+      </p>
+      <h1 class="max-w-3xl font-titulo text-3xl leading-[1.08] font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+        {servicio.h1}
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-tinta-200">{servicio.gancho}</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href="/contacto/" class="rounded-md bg-acento-500 px-6 py-3.5 text-center font-titulo font-bold text-white hover:bg-acento-400">
+          Consulta gratuita
+        </a>
+        <a href={`https://wa.me/${SITE.whatsapp}?text=${waTexto}`} rel="noopener" target="_blank"
+           class="rounded-md border border-white/25 px-6 py-3.5 text-center font-titulo font-bold text-white hover:bg-white/10">
+          Preguntar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- El problema antes que la solución: el cliente tiene que reconocerse -->
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[1.1fr_.9fr]">
+      <div>
+        <h2 class="font-titulo text-2xl font-black tracking-tight lg:text-3xl">
+          Esto es para usted si…
+        </h2>
+        <ul class="mt-6 space-y-4">
+          {
+            servicio.senales.map((s) => (
+              <li class="flex gap-3">
+                <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-acento-500" />
+                <span class="text-lg text-tinta-700">{s}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-8 text-lg leading-relaxed text-tinta-700">{servicio.paraQuien}</p>
+      </div>
+
+      <div class="rounded-xl border border-tinta-200 bg-tinta-50 p-7">
+        <h2 class="font-titulo text-xl font-bold">Qué incluye</h2>
+        <ul class="mt-5 space-y-3.5">
+          {
+            servicio.incluye.map((i) => (
+              <li class="flex gap-3 text-tinta-700">
+                <svg class="mt-1 h-5 w-5 shrink-0 text-marca-700" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd" />
+                </svg>
+                <span>{i}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-tinta-200 bg-tinta-50 py-16 lg:py-20">
+    <div class="mx-auto max-w-3xl px-5">
+      <h2 class="font-titulo text-2xl font-black tracking-tight lg:text-3xl">
+        Preguntas frecuentes
+      </h2>
+      <div class="mt-8 divide-y divide-tinta-200 border-y border-tinta-200">
+        {
+          servicio.faqs.map((f) => (
+            <details class="group py-5">
+              <summary class="flex cursor-pointer list-none items-start justify-between gap-4 font-titulo text-lg font-bold">
+                {f.p}
+                <span class="mt-1 shrink-0 text-marca-700 transition group-open:rotate-45">+</span>
+              </summary>
+              <p class="mt-3 leading-relaxed text-tinta-700">{f.r}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Enlaces internos: reparten autoridad y evitan que la ficha sea un callejón -->
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto max-w-6xl px-5">
+      <h2 class="font-titulo text-2xl font-black tracking-tight">Otros servicios</h2>
+      <div class="mt-8 grid gap-5 md:grid-cols-3">
+        {
+          otros.map((s) => (
+            <a href={`/services/${s.slug}/`} class="tarjeta rounded-xl border border-tinta-200 bg-white p-6">
+              <h3 class="font-titulo text-lg font-bold">{s.nombre}</h3>
+              <p class="mt-2 text-sm text-tinta-700">{s.resumen}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-tinta-900 py-16">
+    <div class="mx-auto max-w-3xl px-5 text-center">
+      <h2 class="font-titulo text-2xl font-black tracking-tight text-white lg:text-3xl">
+        ¿Hablamos de su caso?
+      </h2>
+      <p class="mt-3 text-tinta-200">
+        La primera consulta es gratuita. {SITE.horario}.
+      </p>
+      <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href={`tel:${SITE.telefonoE164}`} class="rounded-md bg-acento-500 px-6 py-3.5 font-titulo font-bold text-white hover:bg-acento-400">
+          Llamar al {SITE.telefono}
+        </a>
+        <a href="/contacto/" class="rounded-md border border-white/25 px-6 py-3.5 font-titulo font-bold text-white hover:bg-white/10">
+          Escribir un mensaje
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
