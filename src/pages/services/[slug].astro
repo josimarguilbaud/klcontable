@@ -11,14 +11,14 @@
  */
 import Base from '../../layouts/Base.astro';
 import { SITE } from '../../data/site';
-import { SERVICIOS } from '../../data/servicios';
+import { TODOS } from '../../data/servicios';
 
 export function getStaticPaths() {
-  return SERVICIOS.map((s) => ({ params: { slug: s.slug }, props: { servicio: s } }));
+  return TODOS.map((s) => ({ params: { slug: s.slug }, props: { servicio: s } }));
 }
 
 const { servicio } = Astro.props;
-const otros = SERVICIOS.filter((s) => s.slug !== servicio.slug).slice(0, 3);
+const otros = TODOS.filter((s) => s.slug !== servicio.slug).slice(0, 3);
 const ruta = `/services/${servicio.slug}/`;
 
 const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio.nombre}.`);

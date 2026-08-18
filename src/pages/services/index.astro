@@ -10,7 +10,7 @@
  */
 import Base from '../../layouts/Base.astro';
 import { SITE } from '../../data/site';
-import { SERVICIOS } from '../../data/servicios';
+import { TODOS } from '../../data/servicios';
 ---
 
 <Base
@@ -35,7 +35,7 @@ import { SERVICIOS } from '../../data/servicios';
     <div class="mx-auto max-w-6xl px-5">
       <div class="grid gap-6 md:grid-cols-2">
         {
-          SERVICIOS.map((s) => (
+          TODOS.map((s) => (
             <a
               href={`/services/${s.slug}/`}
               class="tarjeta group rounded-xl border border-tinta-200 bg-white p-8"

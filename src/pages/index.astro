@@ -20,7 +20,7 @@
  */
 import Base from '../layouts/Base.astro';
 import { SITE } from '../data/site';
-import { SERVICIOS } from '../data/servicios';
+import { TODOS } from '../data/servicios';
 import { GUIAS } from '../data/guias';
 import { ARTICULOS } from '../data/articulos';
 
@@ -328,7 +328,7 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
     </div>
   </section>
 
-  <!-- SERVICIOS -->
+  <!-- TODOS -->
   <section class="border-y border-tinta-200 bg-tinta-50 py-20 lg:py-24">
     <div class="mx-auto max-w-6xl px-5">
       <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
@@ -346,7 +346,7 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
 
       <div class="mt-11 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {
-          SERVICIOS.map((s) => (
+          TODOS.map((s) => (
             <a
               href={`/services/${s.slug}/`}
               class="tarjeta group rounded-xl border border-tinta-200 bg-white p-7"

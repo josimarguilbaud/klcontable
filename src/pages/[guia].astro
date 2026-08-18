@@ -10,7 +10,7 @@
 import Base from '../layouts/Base.astro';
 import { SITE } from '../data/site';
 import { GUIAS } from '../data/guias';
-import { SERVICIOS } from '../data/servicios';
+import { TODOS } from '../data/servicios';
 
 export function getStaticPaths() {
   return GUIAS.map((g) => ({ params: { guia: g.slug }, props: { guia: g } }));
@@ -18,8 +18,8 @@ export function getStaticPaths() {
 
 const { guia } = Astro.props;
 const relacionados = guia.servicios
-  .map((s) => SERVICIOS.find((x) => x.slug === s))
-  .filter((s): s is (typeof SERVICIOS)[number] => Boolean(s));
+  .map((s) => TODOS.find((x) => x.slug === s))
+  .filter((s): s is (typeof TODOS)[number] => Boolean(s));
 ---
 
 <Base

@@ -12,7 +12,7 @@
  */
 import Base from '../layouts/Base.astro';
 import { SITE } from '../data/site';
-import { SERVICIOS } from '../data/servicios';
+import { TODOS } from '../data/servicios';
 
 const waTexto = encodeURIComponent('Hola, quisiera una consulta sobre servicios contables.');
 ---
@@ -119,7 +119,7 @@ const waTexto = encodeURIComponent('Hola, quisiera una consulta sobre servicios 
             <select id="servicio" name="servicio"
               class="w-full rounded-lg border border-tinta-200 bg-tinta-50 px-4 py-3 outline-none focus:border-marca-700 focus:ring-2 focus:ring-marca-700/20">
               <option value="">No estoy seguro, quiero que me orienten</option>
-              {SERVICIOS.map((s) => <option value={s.nombre}>{s.nombre}</option>)}
+              {TODOS.map((s) => <option value={s.nombre}>{s.nombre}</option>)}
             </select>
           </div>
 

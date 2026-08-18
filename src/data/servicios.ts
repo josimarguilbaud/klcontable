@@ -261,4 +261,12 @@ export const SERVICIOS: Servicio[] = [
   },
 ];
 
-export const porSlug = (slug: string) => SERVICIOS.find((s) => s.slug === slug);
+// Los cuatro que faltaban frente al prototipo de AI Studio. Viven en su propio
+// fichero porque sus slugs son nuevos y en espanol: los seis de arriba llevan
+// el slug heredado y no se tocan.
+import { SERVICIOS_NUEVOS } from './servicios-nuevos';
+
+/** Los diez servicios, que es lo que ve la web. */
+export const TODOS: Servicio[] = [...SERVICIOS, ...SERVICIOS_NUEVOS];
+
+export const porSlug = (slug: string) => TODOS.find((s) => s.slug === slug);
