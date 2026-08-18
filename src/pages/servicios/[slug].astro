@@ -14,6 +14,7 @@ import { SITE } from '../../data/site';
 import { TODOS } from '../../data/servicios';
 import { DESARROLLO } from '../../data/servicios-desarrollo';
 import { DESARROLLO_2 } from '../../data/servicios-desarrollo-2';
+import { IMG_SERVICIO } from '../../data/imagenes';
 
 export function getStaticPaths() {
   return TODOS.map((s) => ({ params: { slug: s.slug }, props: { servicio: s } }));
@@ -24,6 +25,7 @@ const otros = TODOS.filter((s) => s.slug !== servicio.slug).slice(0, 3);
 // Los cinco bloques, en orden: los tres que explican el servicio y luego el
 // coste de no hacer nada y el «como empezamos», que es lo que cierra.
 const bloques = [...(DESARROLLO[servicio.slug] ?? []), ...(DESARROLLO_2[servicio.slug] ?? [])];
+const foto = IMG_SERVICIO[servicio.slug];
 const ruta = `/servicios/${servicio.slug}/`;
 
 const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio.nombre}.`);
@@ -40,7 +42,8 @@ const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio
   ]}
 >
   <section class="hero-degradado bg-tinta-900">
-    <div class="mx-auto max-w-6xl px-5 py-16 lg:py-20">
+    <div class="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 lg:grid-cols-[1.15fr_.85fr] lg:py-20">
+      <div>
       <p class="mb-4 text-xs font-bold tracking-widest text-acento-400 uppercase">
         {servicio.nombre}
       </p>
@@ -57,7 +60,22 @@ const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio
           Preguntar por WhatsApp
         </a>
       </div>
-    </div>
+          </div>
+
+      {
+        foto && (
+          <img
+            src={foto}
+            alt=""
+            width="800"
+            height="533"
+            loading="eager"
+            fetchpriority="high"
+            class="hidden aspect-[3/2] w-full rounded-2xl object-cover shadow-2xl ring-1 ring-white/10 lg:block"
+          />
+        )
+      }
+</div>
   </section>
 
   <!-- El problema antes que la solución: el cliente tiene que reconocerse -->
