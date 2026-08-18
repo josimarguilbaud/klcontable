@@ -8,35 +8,224 @@
  *
  * Todo lo demás está escrito para el dueño de una pyme. La regla al redactar
  * fue: si una frase solo la entiende un contador, se reescribe.
+ *
+ * ⚠️ REGLA DURA DE ESTA PÁGINA: ni un número que no esté verificado. Nada de
+ * «+500 clientes» ni «98% de satisfacción», y ningún precio. Lo único
+ * cuantificado son los 35 años, confirmados por el dueño. Todo lo demás son
+ * promesas que se pueden cumplir, no cifras de adorno: un despacho contable
+ * que exagera en su propia web es justo lo que su cliente teme.
+ *
+ * Los textos largos viven arriba como datos y no incrustados en el marcado:
+ * así se leen, se corrigen y se amplían sin pelearse con las clases.
  */
 import Base from '../layouts/Base.astro';
 import { SITE } from '../data/site';
 import { SERVICIOS } from '../data/servicios';
+import { GUIAS } from '../data/guias';
+import { ARTICULOS } from '../data/articulos';
 
+/** Los tres artículos más recientes, para que la portada alimente al blog. */
+const ULTIMOS = [...ARTICULOS].sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, 3);
+
+/**
+ * Las señales de que algo va mal. Van ANTES que los servicios a propósito:
+ * quien busca contador no busca «contabilidad», busca dejar de tener un
+ * problema concreto. Si se reconoce en uno solo, sigue leyendo.
+ */
+const SENALES = [
+  {
+    t: 'Se entera de los vencimientos por la multa',
+    d: 'El aviso debería llegarle antes de la fecha, no después en forma de recargo. Si su fuente de información es la notificación de la DGI, ya llegó tarde por definición.',
+  },
+  {
+    t: 'No sabe si su negocio ganó dinero el mes pasado',
+    d: 'Si tiene que estimarlo, su contabilidad no le está sirviendo para lo único que debería servirle: decidir con información en la mano.',
+  },
+  {
+    t: 'Su contador tarda días en contestar',
+    d: 'En contabilidad muchas preguntas tienen fecha de caducidad. Una respuesta que llega en cinco días a veces ya no sirve para nada.',
+  },
+  {
+    t: 'Recibe informes que no entiende',
+    d: 'Un informe que nadie lee no es un informe, es un archivo. Y si nadie lo lee, nadie detecta cuando algo va mal dentro de él.',
+  },
+  {
+    t: 'Mezcla la cuenta personal con la del negocio',
+    d: 'Es cómodo durante seis meses y carísimo al cierre del año, cuando hay que reconstruir de memoria qué gasto era de quién.',
+  },
+  {
+    t: 'Le da pereza preguntarle a su contador',
+    d: 'Esta es la más reveladora. Si evita llamar porque la conversación va a ser incómoda, el problema ya dejó de ser técnico.',
+  },
+];
+
+/**
+ * Qué incluye el servicio mensual. Sin precio —no lo tenemos confirmado— pero
+ * con el alcance bien concreto, que es lo que de verdad pregunta el cliente
+ * cuando dice «¿y qué me das por eso?».
+ */
+const INCLUYE = [
+  {
+    t: 'El registro de todo el mes',
+    d: 'Ingresos, gastos, bancos y comprobantes, registrados como corresponde y no amontonados en una carpeta hasta que llegue el cierre del año.',
+  },
+  {
+    t: 'Sus declaraciones, presentadas en plazo',
+    d: 'Las obligaciones que le toquen ante la Dirección General de Ingresos, preparadas y presentadas dentro de la fecha, sin que usted tenga que acordarse.',
+  },
+  {
+    t: 'Aviso antes de cada vencimiento',
+    d: 'Le escribimos por WhatsApp antes, diciéndole qué toca y para cuándo. No es magia: es que alguien lleva el calendario por usted.',
+  },
+  {
+    t: 'Estados financieros que se entienden',
+    d: 'Cuánto entró, cuánto salió y qué le toca pagar, en palabras normales. Y en el formato que le pide el banco cuando lo necesita.',
+  },
+  {
+    t: 'Su planilla y la Caja de Seguro Social',
+    d: 'Nómina, cuotas por el sistema SIPE, décimo tercer mes y liquidaciones. Es donde un error pequeño se convierte en un problema laboral grande.',
+  },
+  {
+    t: 'Un interlocutor fijo',
+    d: 'La misma persona, que ya conoce su negocio. No una centralita distinta cada vez ni un expediente que alguien tiene que releer antes de contestarle.',
+  },
+];
+
+/**
+ * Las razones. Cada una es una promesa que el cliente puede comprobar en su
+ * primer mes, no un adjetivo. «Profesionales y comprometidos» no dice nada:
+ * lo dicen las cuatrocientas webs de contadores que hay en Panamá.
+ */
+const RAZONES = [
+  {
+    t: 'Le avisamos antes, no después',
+    d: 'Es lo primero que notará y lo que más dinero le ahorra. Casi todas las multas que hemos visto no vinieron de no querer pagar, sino de enterarse tarde.',
+  },
+  {
+    t: 'Le hablamos en español, no en contable',
+    d: 'Si en la primera conversación no entiende lo que le decimos, no va a mejorar con el tiempo. Traducir es parte del trabajo, no un favor que le hacemos.',
+  },
+  {
+    t: 'Precio cerrado desde el principio',
+    d: 'Sabe cuánto paga antes de empezar, sin esa sensación de que cada trimestre aparece un concepto nuevo que no estaba en la conversación inicial.',
+  },
+  {
+    t: 'Sus documentos son suyos',
+    d: 'Si algún día decide cambiar de despacho, se lleva su información completa y ordenada. Que esto suene obvio no significa que siempre ocurra.',
+  },
+  {
+    t: 'No le vendemos lo que no necesita',
+    d: 'Si en la primera consulta resulta que no le hace falta un servicio mensual, se lo decimos. Preferimos un cliente que vuelve a uno que se siente vendido.',
+  },
+  {
+    t: 'Conocemos el terreno panameño',
+    d: 'La DGI, la Caja de Seguro Social, el Registro Público y las ventanillas donde todavía hay que presentarse en persona. Eso no se aprende en un manual.',
+  },
+];
+
+/**
+ * Los pasos. Cuatro y no tres: faltaba el traspaso, que es justo el momento
+ * que más frena a quien ya tiene contador y no se atreve a cambiar.
+ */
+const PASOS = [
+  {
+    n: '1',
+    t: 'Conversamos',
+    d: 'Nos cuenta a qué se dedica, si tiene empleados y en qué estado están sus números hoy. Es una conversación, no un interrogatorio, y no cuesta nada.',
+  },
+  {
+    n: '2',
+    t: 'Le decimos qué hace falta',
+    d: 'Un diagnóstico claro y un precio cerrado. Si hay atrasos, le decimos cuántos y qué implica ponerse al día. Si algo no le hace falta, también se lo decimos.',
+  },
+  {
+    n: '3',
+    t: 'Nos hacemos cargo del traspaso',
+    d: 'Si ya tenía contador, recibimos lo que haya, revisamos en qué estado está y seguimos desde ahí. No hay que empezar de cero ni pelearse con nadie.',
+  },
+  {
+    n: '4',
+    t: 'Usted vuelve a su negocio',
+    d: 'Cada mes recibe sus números en palabras claras y un aviso antes de cada vencimiento. Cuando tenga una duda, la respuesta le llega el mismo día.',
+  },
+];
+
+/**
+ * FAQ. Dieciséis en vez de cuatro: cada una es una búsqueda real con intención
+ * de contratar, y todas van al schema, que es lo que se gana el desplegable en
+ * los resultados de Google.
+ *
+ * Ninguna respuesta inventa una cifra. Las que dependerían de un precio o de un
+ * porcentaje sin verificar mandan a la consulta gratuita, que además convierte.
+ */
 const FAQS = [
   {
     p: '¿Cuánto cuesta llevar la contabilidad de mi empresa en Panamá?',
-    r: 'Depende del volumen de operaciones, de si tiene empleados y de si está al día o hay atrasos. Por eso la primera consulta es gratuita: se revisa su caso y se le da un precio cerrado, sin sorpresas después.',
+    r: 'Depende del volumen de operaciones, de si tiene empleados en planilla y de si está al día o hay atrasos que ordenar. Por eso la primera consulta es gratuita: se revisa su caso concreto y se le da un precio cerrado, sin sorpresas después.',
   },
   {
     p: '¿Atienden a empresas pequeñas y a personas naturales?',
-    r: 'Sí. De hecho es donde más falta hace: una empresa grande tiene departamento contable, y una pequeña toma las mismas decisiones sin nadie a quien preguntar.',
+    r: 'Sí, y es donde más falta hace. Una empresa grande tiene departamento contable; una pequeña toma exactamente las mismas decisiones y carga con las mismas obligaciones, pero sin nadie a quien preguntarle a media mañana.',
   },
   {
     p: 'Tengo la contabilidad atrasada. ¿Es un problema?',
-    r: 'Es lo más común que llega y no hay nada de qué avergonzarse. Lo primero es ver cuánto hay pendiente y ordenarlo; a partir de ahí se sigue al día.',
+    r: 'Es lo más común que nos llega y no hay nada de qué avergonzarse: las contabilidades se atrasan por motivos normales, como que el contador anterior renunció o que el negocio creció más rápido de lo previsto. Lo primero es medir cuánto hay pendiente, y casi siempre resulta menos grave de lo que el dueño temía.',
   },
   {
     p: '¿Puedo cambiarme de contador a mitad de año?',
-    r: 'Sí, en cualquier momento. Se recibe la información que tenga, se revisa en qué estado está y se continúa desde ahí.',
+    r: 'Sí, en cualquier momento del año. Se recibe la información que tenga, se revisa en qué estado está y se continúa desde ahí. No hace falta esperar al cierre ni empezar los registros de cero.',
+  },
+  {
+    p: '¿Qué documentos necesito para empezar?',
+    r: 'Para la primera conversación, ninguno: basta con que nos cuente a qué se dedica y qué tiene hoy. Para empezar a trabajar necesitaremos sus comprobantes del período, los estados de cuenta bancarios y lo que se haya presentado antes, si es que se presentó algo.',
+  },
+  {
+    p: '¿Tengo que declarar ITBMS?',
+    r: 'Depende de su actividad y de su nivel de facturación: no todas las actividades están gravadas y no todos los que facturan quedan obligados desde el primer día. Con dos datos —a qué se dedica y cuánto factura al mes— se lo respondemos con precisión y sin costo.',
+  },
+  {
+    p: '¿Me conviene ser persona natural o abrir una sociedad?',
+    r: 'Depende de cuánto espera facturar, de si va a tener socios y de qué riesgo asume su actividad. Si va a haber más de un dueño, la sociedad deja de ser una opción y pasa a ser lo que evita que en dos años nadie sepa a quién le pertenece qué.',
+  },
+  {
+    p: '¿Cuánto cuesta realmente un empleado además de su salario?',
+    r: 'Bastante más que el salario: hay que sumarle la cuota patronal al Seguro Social, el seguro educativo, la prima de riesgo profesional según su actividad y las provisiones de décimo tercer mes, vacaciones y prima de antigüedad. Le damos la cifra exacta de su caso antes de que contrate a nadie.',
+  },
+  {
+    p: 'Tengo una sociedad que no opera. ¿Debo hacer algo igual?',
+    r: 'Sí. Una sociedad no deja de existir porque no facture, y las obligaciones que genera no llaman a la puerta: se acumulan en silencio y aparecen el día que necesita usarla para vender algo, abrir una cuenta o hacer un trámite.',
+  },
+  {
+    p: 'Vivo fuera de Panamá. ¿Pueden llevar mi empresa igual?',
+    r: 'Sí. El trabajo contable y la mayoría de los trámites se hacen sin que usted esté aquí, y las ventanillas que todavía exigen presencia física las cubrimos nosotros. Si algo necesita un poder suyo, se lo decimos por adelantado y no a mitad de camino.',
+  },
+  {
+    p: '¿Presentan ustedes las declaraciones o solo las preparan?',
+    r: 'Las presentamos. Preparar una declaración y dejarla esperando a que el cliente la presente es la forma más común de que un vencimiento se pase con todo el trabajo ya hecho.',
+  },
+  {
+    p: '¿Qué pasa si ya tengo una multa o un atraso con la DGI?',
+    r: 'Lo primero es saber exactamente qué se debe y por qué concepto, porque no todo lo que aparece en una notificación es lo que finalmente se paga. Lo segundo es no dejar que se acumule otro período encima: el recargo por mora crece mientras la obligación siga pendiente.',
+  },
+  {
+    p: '¿Cada cuánto recibiré información de mi empresa?',
+    r: 'Cada mes, y en palabras que se entienden: cuánto entró, cuánto salió y qué le toca pagar. Más un aviso antes de cada vencimiento, que es la parte que evita los sustos.',
+  },
+  {
+    p: '¿Trabajan con empresas de cualquier sector?',
+    r: 'Sí. Lo que cambia entre un comercio, una constructora y una consultoría es el volumen de documentos y la prima de riesgo profesional de su planilla, no las obligaciones de fondo.',
+  },
+  {
+    p: '¿La primera consulta es realmente gratuita?',
+    r: 'Sí, y sin compromiso. Le decimos qué necesita y cuánto costaría. Si resulta que no necesita contratar nada todavía, también se lo decimos: preferimos que vuelva cuando le haga falta.',
+  },
+  {
+    p: '¿Dónde están y cómo los contacto?',
+    r: `Estamos en ${SITE.ciudad} y atendemos ${SITE.horario.toLowerCase()}. La vía más rápida es WhatsApp o una llamada al ${SITE.telefono}; también puede escribirnos por el formulario y le respondemos en menos de 24 horas hábiles.`,
   },
 ];
 
-const PASOS = [
-  { n: '1', t: 'Conversamos', d: 'Nos cuenta qué necesita y en qué estado están sus números. Sin costo y sin compromiso.' },
-  { n: '2', t: 'Le decimos qué hace falta', d: 'Un diagnóstico claro y un precio cerrado. Si algo no le hace falta, se lo decimos.' },
-  { n: '3', t: 'Nos encargamos', d: 'Usted vuelve a su negocio. Nosotros le avisamos antes de cada vencimiento.' },
-];
+const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios contables.');
 ---
 
 <Base
@@ -62,9 +251,24 @@ const PASOS = [
         de cada vencimiento, no después.
       </p>
 
+      <p class="mt-4 max-w-2xl leading-relaxed text-tinta-300">
+        Contabilidad mensual, declaraciones ante la DGI, ITBMS, planilla ante la
+        Caja de Seguro Social y los trámites que aparecen por el camino. Con un
+        precio cerrado y un interlocutor fijo que conoce su negocio.
+      </p>
+
       <div class="mt-9 flex flex-col gap-3 sm:flex-row">
         <a href="/contacto/" class="rounded-md bg-acento-500 px-7 py-4 text-center font-titulo font-bold text-white shadow-[var(--shadow-acento)] transition hover:bg-acento-400">
           Consulta gratuita
+        </a>
+        <a
+          href={`https://wa.me/${SITE.whatsapp}?text=${waHome}`}
+          rel="noopener"
+          target="_blank"
+          class="rounded-md px-7 py-4 text-center font-titulo font-bold text-white transition hover:opacity-90"
+          style="background-color: var(--color-whatsapp)"
+        >
+          Escribir por WhatsApp
         </a>
         <a href="/services/" class="rounded-md border border-white/25 px-7 py-4 text-center font-titulo font-bold text-white transition hover:bg-white/10">
           Ver los servicios
@@ -96,8 +300,36 @@ const PASOS = [
     </div>
   </section>
 
+  <!-- EL PROBLEMA: va antes que los servicios a proposito -->
+  <section class="py-20 lg:py-24">
+    <div class="mx-auto max-w-6xl px-5">
+      <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+        ¿Le suena alguna?
+      </span>
+      <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+        Señales de que su contabilidad tiene un problema
+      </h2>
+      <p class="mt-4 max-w-2xl text-lg text-tinta-700">
+        La mayoría de las empresas no cambia de contador porque el anterior
+        hiciera mal los números, sino por alguna de estas seis cosas. Si se
+        reconoce en una sola, ya vale la pena una conversación.
+      </p>
+
+      <div class="mt-11 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {
+          SENALES.map((s) => (
+            <div class="rounded-xl border border-tinta-200 bg-white p-7">
+              <h3 class="font-titulo text-lg leading-snug font-bold">{s.t}</h3>
+              <p class="mt-3 leading-relaxed text-tinta-700">{s.d}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
   <!-- SERVICIOS -->
-  <section class="bg-tinta-50 py-20 lg:py-24">
+  <section class="border-y border-tinta-200 bg-tinta-50 py-20 lg:py-24">
     <div class="mx-auto max-w-6xl px-5">
       <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
         Lo que hacemos
@@ -107,7 +339,9 @@ const PASOS = [
       </h2>
       <p class="mt-4 max-w-2xl text-lg text-tinta-700">
         Seis servicios que cubren todo lo que su empresa necesita: desde el
-        registro del día a día hasta la auditoría que le pide el banco.
+        registro del día a día hasta la auditoría que le pide el banco. Se
+        contratan juntos o por separado, aunque juntos salen mejor porque no hay
+        que pasarse información entre despachos.
       </p>
 
       <div class="mt-11 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -127,26 +361,177 @@ const PASOS = [
     </div>
   </section>
 
-  <!-- CÓMO TRABAJAMOS -->
+  <!-- QUÉ INCLUYE -->
   <section class="py-20 lg:py-24">
+    <div class="mx-auto max-w-6xl px-5">
+      <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+        El servicio mensual
+      </span>
+      <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+        Qué recibe cada mes, en concreto
+      </h2>
+      <p class="mt-4 max-w-2xl text-lg text-tinta-700">
+        «Llevamos su contabilidad» no dice nada. Esto es lo que hay dentro de esa
+        frase, para que sepa exactamente qué está contratando.
+      </p>
+
+      <div class="mt-11 grid gap-x-10 gap-y-8 md:grid-cols-2">
+        {
+          INCLUYE.map((i) => (
+            <div class="flex gap-4">
+              <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-acento-500" />
+              <div>
+                <h3 class="font-titulo text-lg font-bold">{i.t}</h3>
+                <p class="mt-1.5 leading-relaxed text-tinta-700">{i.d}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QUÉ NOSOTROS -->
+  <section class="border-y border-tinta-200 bg-tinta-50 py-20 lg:py-24">
+    <div class="mx-auto max-w-6xl px-5">
+      <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+        Por qué KL Contable
+      </span>
+      <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+        Seis promesas que puede comprobar el primer mes
+      </h2>
+      <p class="mt-4 max-w-2xl text-lg text-tinta-700">
+        No le vamos a decir que somos profesionales y comprometidos: eso lo dicen
+        todas las webs de contadores de Panamá. Estas seis, en cambio, se
+        verifican solas.
+      </p>
+
+      <div class="mt-11 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {
+          RAZONES.map((r) => (
+            <div class="rounded-xl border border-tinta-200 bg-white p-7">
+              <h3 class="font-titulo text-lg leading-snug font-bold">{r.t}</h3>
+              <p class="mt-3 leading-relaxed text-tinta-700">{r.d}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- A QUIÉN ATENDEMOS -->
+  <section class="py-20 lg:py-24">
+    <div class="mx-auto max-w-6xl px-5">
+      <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+        A quién atendemos
+      </span>
+      <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+        Cada tipo de cliente necesita cosas distintas
+      </h2>
+      <p class="mt-4 max-w-2xl text-lg text-tinta-700">
+        Un extranjero que abre sociedad en Panamá busca algo muy distinto de lo
+        que busca una pyme local con doce empleados. Entre en la guía que le
+        corresponde y encontrará su caso, no un texto que sirve para todos.
+      </p>
+
+      <div class="mt-11 grid gap-6 md:grid-cols-3">
+        {
+          GUIAS.map((g) => (
+            <a
+              href={`/${g.slug}/`}
+              class="tarjeta group flex flex-col rounded-xl border border-tinta-200 bg-white p-7"
+            >
+              <h3 class="font-titulo text-xl font-bold group-hover:text-marca-700">{g.nombre}</h3>
+              <p class="mt-3 grow leading-relaxed text-tinta-700">{g.gancho}</p>
+              <span class="mt-5 inline-block text-sm font-bold text-marca-700">Ver la guía →</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO TRABAJAMOS -->
+  <section class="border-y border-tinta-200 bg-tinta-50 py-20 lg:py-24">
     <div class="mx-auto max-w-6xl px-5">
       <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
         Cómo trabajamos
       </span>
-      <h2 class="mt-4 font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+      <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
         Empezar es más simple de lo que parece
       </h2>
+      <p class="mt-4 max-w-2xl text-lg text-tinta-700">
+        Sobre todo el paso tres, que es el que frena a casi todo el mundo: si ya
+        tiene contador, no hace falta que usted gestione el traspaso ni que se
+        pelee con nadie.
+      </p>
 
-      <div class="mt-11 grid gap-8 md:grid-cols-3">
+      <div class="mt-11 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
         {
           PASOS.map((p) => (
             <div class="border-t-2 border-acento-500 pt-5">
-              <span class="font-titulo text-4xl font-black text-tinta-200">{p.n}</span>
+              <span class="font-titulo text-4xl font-black text-tinta-300">{p.n}</span>
               <h3 class="mt-2 font-titulo text-xl font-bold">{p.t}</h3>
-              <p class="mt-2 text-tinta-700">{p.d}</p>
+              <p class="mt-2 leading-relaxed text-tinta-700">{p.d}</p>
             </div>
           ))
         }
+      </div>
+    </div>
+  </section>
+
+  <!-- HERRAMIENTAS: enlaza hacia dentro, que es lo que reparte autoridad
+       entre las paginas del propio sitio -->
+  <section class="py-20 lg:py-24">
+    <div class="mx-auto max-w-6xl px-5">
+      <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+        Gratis y sin registrarse
+      </span>
+      <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+        Herramientas para resolver dudas hoy mismo
+      </h2>
+      <p class="mt-4 max-w-2xl text-lg text-tinta-700">
+        No hace falta que nos contrate para usarlas. Están aquí porque un
+        empresario informado toma mejores decisiones, y porque así ve cómo
+        trabajamos antes de pagarnos un solo balboa.
+      </p>
+
+      <div class="mt-11 grid gap-6 lg:grid-cols-2">
+        <a href="/calculadoras/" class="tarjeta group rounded-2xl border border-tinta-200 bg-white p-8">
+          <h3 class="font-titulo text-2xl font-black tracking-tight group-hover:text-marca-700">
+            Calculadora de Seguro Social
+          </h3>
+          <p class="mt-3 leading-relaxed text-tinta-700">
+            Cuánto se le descuenta a un salario y cuánto aporta la empresa, con
+            los porcentajes que están hoy en la ley. Incluye el calendario de
+            aumentos de la cuota patronal, que sube por tramos y que muchas webs
+            todavía publican con la cifra anterior a la reforma.
+          </p>
+          <span class="mt-5 inline-block text-sm font-bold text-marca-700">
+            Abrir la calculadora →
+          </span>
+        </a>
+
+        <div class="rounded-2xl border border-tinta-200 bg-white p-8">
+          <h3 class="font-titulo text-2xl font-black tracking-tight">Del blog</h3>
+          <ul class="mt-4 space-y-3.5">
+            {
+              ULTIMOS.map((a) => (
+                <li>
+                  <a href={`/blog/${a.slug}/`} class="group block">
+                    <span class="font-titulo font-bold group-hover:text-marca-700">{a.h1}</span>
+                    <span class="mt-0.5 block text-sm text-tinta-500">
+                      {a.minutos} min de lectura
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+          <a href="/blog/" class="mt-6 inline-block text-sm font-bold text-marca-700">
+            Ver todos los artículos →
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -162,22 +547,43 @@ const PASOS = [
           La mayoría de las empresas no cambia de contador porque el anterior
           hiciera mal los números. Cambia porque no contestaba, porque se
           enteraba de los vencimientos tarde, o porque entregaba unos informes
-          que nadie sabía leer.
+          que nadie sabía leer. El trabajo técnico se da por hecho; lo que se
+          echa de menos es que alguien esté pendiente y lo explique.
         </p>
         <p>
           En <strong>KL Contable</strong> llevamos <strong>35 años</strong>
           haciendo esto en Panamá, y partimos de algo simple: usted no tiene
           por qué entender de contabilidad. Para eso nos contrata. Lo que sí
           tiene derecho a saber es <strong>cuánto entra, cuánto sale y qué le
-          toca pagar este mes</strong>, dicho en palabras normales.
+          toca pagar este mes</strong>, dicho en palabras normales y sin tener
+          que preguntar dos veces.
         </p>
         <p>
           Trabajamos con las obligaciones reales de una empresa panameña: las
-          declaraciones ante la <strong>DGI</strong>, el <strong>ITBMS</strong>
-          mensual, la planilla ante la <strong>Caja de Seguro Social</strong> por
-          el sistema SIPE, y los trámites que aparecen por el camino. Todo con
-          aviso anticipado, porque casi todas las multas que hemos visto no
-          fueron por no querer pagar: fueron por enterarse tarde.
+          declaraciones ante la <strong>Dirección General de Ingresos</strong>,
+          el <strong>ITBMS</strong> mensual cuando corresponde, la planilla ante
+          la <strong>Caja de Seguro Social</strong> por el sistema SIPE, el
+          <strong>décimo tercer mes</strong> y los trámites que van apareciendo.
+          Todo con aviso anticipado, porque casi todas las multas que hemos
+          visto no fueron por no querer pagar: fueron por enterarse tarde, y ese
+          recargo crece cada mes que la obligación sigue pendiente.
+        </p>
+        <p>
+          Atendemos tanto a quien está <strong>abriendo su negocio</strong> y
+          todavía no sabe si le conviene ser persona natural o sociedad, como a
+          la <strong>pyme establecida</strong> que necesita sus estados
+          financieros en orden para pedir un crédito, como al
+          <strong>extranjero</strong> que tiene una sociedad panameña y vive a
+          nueve husos horarios de aquí. Son tres necesidades muy distintas, y
+          por eso cada una tiene su propia guía en esta web.
+        </p>
+        <p>
+          Si tiene la <strong>contabilidad atrasada</strong>, es el caso más
+          común que nos llega y tiene solución: se mide cuánto hay pendiente, se
+          ordena lo viejo y se sostiene lo nuevo a la vez, porque ponerse al día
+          mientras el mes corriente se sigue atrasando es correr en una cinta.
+          Escríbanos con cuánto tiempo lleva sin presentar y le decimos qué tan
+          grande es el trabajo. Saberlo ya quita la mitad del peso.
         </p>
       </div>
     </div>
@@ -187,6 +593,10 @@ const PASOS = [
   <section class="py-20 lg:py-24">
     <div class="mx-auto max-w-3xl px-5">
       <h2 class="font-titulo text-3xl font-black tracking-tight">Preguntas frecuentes</h2>
+      <p class="mt-4 text-lg text-tinta-700">
+        Las dudas que más nos llegan por WhatsApp, respondidas sin rodeos. Si la
+        suya no está, pregúntela: contestar no cuesta nada.
+      </p>
       <div class="mt-9 divide-y divide-tinta-200 border-y border-tinta-200">
         {
           FAQS.map((f) => (
@@ -210,14 +620,24 @@ const PASOS = [
         Cuénteme su caso y le digo qué hace falta
       </h2>
       <p class="mt-4 text-lg text-tinta-200">
-        La primera conversación no cuesta nada. Si no necesita nada, se lo digo.
+        La primera conversación no cuesta nada. Le decimos qué necesita y cuánto
+        cuesta, y si resulta que no necesita nada, también se lo decimos.
       </p>
       <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
         <a href={`tel:${SITE.telefonoE164}`} class="rounded-md bg-acento-500 px-7 py-4 font-titulo font-bold text-white hover:bg-acento-400">
           Llamar al {SITE.telefono}
         </a>
+        <a
+          href={`https://wa.me/${SITE.whatsapp}?text=${waHome}`}
+          rel="noopener"
+          target="_blank"
+          class="rounded-md px-7 py-4 font-titulo font-bold text-white transition hover:opacity-90"
+          style="background-color: var(--color-whatsapp)"
+        >
+          Escribir por WhatsApp
+        </a>
         <a href="/contacto/" class="rounded-md border border-white/25 px-7 py-4 font-titulo font-bold text-white hover:bg-white/10">
-          Escribir un mensaje
+          Formulario
         </a>
       </div>
     </div>
