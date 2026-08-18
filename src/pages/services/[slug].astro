@@ -13,6 +13,7 @@ import Base from '../../layouts/Base.astro';
 import { SITE } from '../../data/site';
 import { TODOS } from '../../data/servicios';
 import { DESARROLLO } from '../../data/servicios-desarrollo';
+import { DESARROLLO_2 } from '../../data/servicios-desarrollo-2';
 
 export function getStaticPaths() {
   return TODOS.map((s) => ({ params: { slug: s.slug }, props: { servicio: s } }));
@@ -20,7 +21,9 @@ export function getStaticPaths() {
 
 const { servicio } = Astro.props;
 const otros = TODOS.filter((s) => s.slug !== servicio.slug).slice(0, 3);
-const bloques = DESARROLLO[servicio.slug] ?? [];
+// Los cinco bloques, en orden: los tres que explican el servicio y luego el
+// coste de no hacer nada y el «como empezamos», que es lo que cierra.
+const bloques = [...(DESARROLLO[servicio.slug] ?? []), ...(DESARROLLO_2[servicio.slug] ?? [])];
 const ruta = `/services/${servicio.slug}/`;
 
 const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio.nombre}.`);
