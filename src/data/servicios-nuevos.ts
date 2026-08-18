@@ -5,7 +5,7 @@
  * nueve servicios y la web solo seis. Estos cuatro son justo los que menos
  * competencia tienen en Panamá y los que más factura un despacho.
  *
- * ⚠️ Slugs NUEVOS, en español, bajo `/services/` — el prefijo en inglés se
+ * ⚠️ Slugs NUEVOS, en español, bajo `/servicios/` — el prefijo en inglés se
  * conserva por herencia (es la ruta indexada), pero lo que se añade de cero ya
  * no repite el anglicismo. Ninguno de estos existía en la web caída, así que no
  * hay nada indexado que preservar aquí.

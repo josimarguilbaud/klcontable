@@ -24,7 +24,7 @@ const otros = TODOS.filter((s) => s.slug !== servicio.slug).slice(0, 3);
 // Los cinco bloques, en orden: los tres que explican el servicio y luego el
 // coste de no hacer nada y el «como empezamos», que es lo que cierra.
 const bloques = [...(DESARROLLO[servicio.slug] ?? []), ...(DESARROLLO_2[servicio.slug] ?? [])];
-const ruta = `/services/${servicio.slug}/`;
+const ruta = `/servicios/${servicio.slug}/`;
 
 const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio.nombre}.`);
 ---
@@ -36,7 +36,7 @@ const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio
   faqs={servicio.faqs}
   migas={[
     { nombre: 'Inicio', ruta: '/' },
-    { nombre: 'Servicios', ruta: '/services/' },
+    { nombre: 'Servicios', ruta: '/servicios/' },
   ]}
 >
   <section class="hero-degradado bg-tinta-900">
@@ -147,7 +147,7 @@ const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio
       <div class="mt-8 grid gap-5 md:grid-cols-3">
         {
           otros.map((s) => (
-            <a href={`/services/${s.slug}/`} class="tarjeta rounded-xl border border-tinta-200 bg-white p-6">
+            <a href={`/servicios/${s.slug}/`} class="tarjeta rounded-xl border border-tinta-200 bg-white p-6">
               <h3 class="font-titulo text-lg font-bold">{s.nombre}</h3>
               <p class="mt-2 text-sm text-tinta-700">{s.resumen}</p>
             </a>

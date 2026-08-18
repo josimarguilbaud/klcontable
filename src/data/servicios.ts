@@ -1,7 +1,7 @@
 /**
  * Los seis servicios, con el slug EXACTO que tenía la web indexada.
  *
- * Los slugs NO se tocan, ni siquiera el `/services/` en inglés dentro de una
+ * Los slugs NO se tocan, ni siquiera el `/servicios/` en inglés dentro de una
  * web en español. Chirría, sí; pero es la ruta que Google tiene y lo único que
  * sobrevivió a la caída del hosting. Cambiarla es tirar justo lo que venimos a
  * recuperar.

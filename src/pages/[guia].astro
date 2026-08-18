@@ -4,7 +4,7 @@
  * /para-extranjeros/.
  *
  * Rutas nuevas y en español. No había nada indexado aquí que conservar, así
- * que se escriben como deben escribirse; el `/services/` en inglés se mantiene
+ * que se escriben como deben escribirse; el `/servicios/` en inglés se mantiene
  * solo porque tiene historia detrás.
  */
 import Base from '../layouts/Base.astro';
@@ -73,7 +73,7 @@ const relacionados = guia.servicios
       <div class="mt-8 grid gap-5 md:grid-cols-3">
         {
           relacionados.map((s) => (
-            <a href={`/services/${s.slug}/`} class="tarjeta rounded-xl border border-tinta-200 bg-white p-6">
+            <a href={`/servicios/${s.slug}/`} class="tarjeta rounded-xl border border-tinta-200 bg-white p-6">
               <h3 class="font-titulo text-lg font-bold">{s.nombre}</h3>
               <p class="mt-2 text-sm text-tinta-700">{s.resumen}</p>
             </a>

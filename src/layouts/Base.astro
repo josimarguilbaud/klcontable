@@ -88,7 +88,7 @@ const waUrl = `https://wa.me/${SITE.whatsapp}?text=${waTexto}`;
  * una pantalla de 375px es una trampa para el pulgar.
  */
 const NAV = [
-  { nombre: 'Servicios', ruta: '/services/', hijos: TODOS.map((s) => ({ nombre: s.nombre, ruta: `/services/${s.slug}/` })) },
+  { nombre: 'Servicios', ruta: '/servicios/', hijos: TODOS.map((s) => ({ nombre: s.nombre, ruta: `/servicios/${s.slug}/` })) },
   { nombre: 'Guías', ruta: '/para-pymes/', hijos: GUIAS.map((g) => ({ nombre: g.nombre, ruta: `/${g.slug}/` })) },
   { nombre: 'Calculadora', ruta: '/calculadoras/', hijos: [] },
   { nombre: 'Nosotros', ruta: '/nosotros/', hijos: [] },
@@ -311,10 +311,10 @@ const NAV = [
           <div>
             <h2 class="mb-4 font-titulo font-bold text-white">Servicios</h2>
             <ul class="space-y-2 text-sm">
-              <li><a href="/services/asesoria-contable-panama/" class="hover:text-acento-400">Asesoría contable</a></li>
-              <li><a href="/services/servicios-de-contabilidad-outsourcing-en-panama/" class="hover:text-acento-400">Contabilidad outsourcing</a></li>
-              <li><a href="/services/servicios-de-gestion-tributaria-en-panama/" class="hover:text-acento-400">Gestión tributaria</a></li>
-              <li><a href="/services/servicios-de-planilla-en-panama/" class="hover:text-acento-400">Planilla y CSS</a></li>
+              <li><a href="/servicios/asesoria-contable-panama/" class="hover:text-acento-400">Asesoría contable</a></li>
+              <li><a href="/servicios/servicios-de-contabilidad-outsourcing-en-panama/" class="hover:text-acento-400">Contabilidad outsourcing</a></li>
+              <li><a href="/servicios/servicios-de-gestion-tributaria-en-panama/" class="hover:text-acento-400">Gestión tributaria</a></li>
+              <li><a href="/servicios/servicios-de-planilla-en-panama/" class="hover:text-acento-400">Planilla y CSS</a></li>
             </ul>
           </div>
 

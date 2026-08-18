@@ -7,7 +7,7 @@
  * habla en sus términos.
  *
  * Estas rutas SÍ van en español: son nuevas, no había nada indexado que
- * conservar. El `/services/` en inglés se mantiene solo por herencia.
+ * conservar. El `/servicios/` en inglés se mantiene solo por herencia.
  */
 import type { Faq } from './servicios';
 
