@@ -1,0 +1,73 @@
+---
+/**
+ * 404.
+ *
+ * El sitio anterior se cayó entero, así que va a haber gente llegando por
+ * enlaces viejos durante meses. Un 404 que solo dice «no encontrado» los pierde;
+ * este los reparte hacia lo que sí existe y les deja la vía de WhatsApp abierta.
+ *
+ * `noindex` para que Google no lo trate como una página más del sitio.
+ */
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+import { SERVICIOS } from '../data/servicios';
+
+const waTexto = encodeURIComponent('Hola, buscaba algo en su web y no lo encontré.');
+---
+
+<Base
+  title="Página no encontrada | KL Contable"
+  description="La página que busca no existe o cambió de dirección. Le ayudamos a encontrar lo que necesita."
+  ruta="/404/"
+  noindex
+>
+  <section class="hero-degradado bg-tinta-900">
+    <div class="mx-auto max-w-6xl px-5 py-16 lg:py-24">
+      <p class="mb-4 font-titulo text-6xl font-black text-acento-500">404</p>
+      <h1 class="max-w-3xl font-titulo text-3xl leading-[1.08] font-black tracking-tight text-white sm:text-4xl">
+        Esta página ya no está aquí
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-tinta-200">
+        Puede que el enlace sea de la versión anterior de nuestra web. Lo que
+        buscaba probablemente esté abajo.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto max-w-6xl px-5">
+      <h2 class="font-titulo text-2xl font-black tracking-tight">Nuestros servicios</h2>
+      <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {
+          SERVICIOS.map((s) => (
+            <a
+              href={`/services/${s.slug}/`}
+              class="tarjeta rounded-xl border border-tinta-200 bg-white p-6"
+            >
+              <h3 class="font-titulo text-lg font-bold">{s.nombre}</h3>
+              <p class="mt-2 text-sm text-tinta-700">{s.resumen}</p>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+        <a
+          href="/"
+          class="rounded-md bg-marca-700 px-6 py-3.5 text-center font-titulo font-bold text-white hover:bg-marca-600"
+        >
+          Volver al inicio
+        </a>
+        <a
+          href={`https://wa.me/${SITE.whatsapp}?text=${waTexto}`}
+          rel="noopener"
+          target="_blank"
+          class="rounded-md px-6 py-3.5 text-center font-titulo font-bold text-white transition hover:opacity-90"
+          style="background-color: var(--color-whatsapp)"
+        >
+          Preguntar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

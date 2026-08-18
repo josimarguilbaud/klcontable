@@ -1,0 +1,5 @@
+# KL Contable — https://klcontable.com
+User-agent: *
+Allow: /
+
+Sitemap: https://klcontable.com/sitemap-index.xml

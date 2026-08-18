@@ -9,6 +9,8 @@ import { SITE, OFICIALES } from '../data/site';
 import type { Faq } from '../data/servicios';
 
 interface Props {
+  /** Paginas que no deben indexarse (404, gracias, etc.). */
+  noindex?: boolean;
   title: string;
   description: string;
   ruta: string;
@@ -18,7 +20,7 @@ interface Props {
   faqs?: Faq[];
 }
 
-const { title, description, ruta, migas = [], faqs = [] } = Astro.props;
+const { title, description, ruta, migas = [], faqs = [], noindex = false } = Astro.props;
 const canonical = new URL(ruta, SITE.dominio).href;
 
 // El negocio, descrito una sola vez. Las claves que no se saben NO se inventan:
@@ -89,7 +91,10 @@ const NAV = [
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta
+      name="robots"
+      content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large"}
+    />
     <meta name="geo.region" content="PA-8" />
     <meta name="geo.placename" content={SITE.ciudad} />
 
