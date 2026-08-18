@@ -36,8 +36,19 @@ const TRAZOS: Record<string, string> = {
   // Personas: planilla y municipio, donde lo que hay detrás son personas.
   personas:
     '<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 6.5a3 3 0 0 1 0 5.9M17 14.2a5.5 5.5 0 0 1 4 5.3"/>',
-  // Sobre: facturación electrónica, que es un documento que viaja.
+  // Sobre: la mensajería y los trámites, que es papel que se lleva y se trae.
   sobre: '<rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 8.2 5.5a1.5 1.5 0 0 0 1.6 0L21 7"/>',
+  // Factura dentada: la electrónica. El borde de abajo evoca el recibo.
+  factura:
+    '<path d="M5 3h10l4 4v14l-2.3-1.5L14.4 21l-2.3-1.5L9.8 21l-2.4-1.5L5 21z"/><path d="M15 3v4h4"/><path d="M8.5 11h7M8.5 15h4"/>',
+  // Dos nodos unidos: operaciones entre empresas relacionadas.
+  vinculo:
+    '<circle cx="5.5" cy="6.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M8 6.5h6a2 2 0 0 1 2 2v6.5"/><path d="M16 6.5h2.5M3 17.5h13"/>',
+  // Sello con cinta: un régimen especial es un estatus concedido.
+  sello:
+    '<circle cx="12" cy="9" r="5.5"/><path d="m9 14.2-1 6.3 4-2 4 2-1-6.3"/><path d="m10.3 9 1.2 1.2 2.2-2.4"/>',
+  // Mapa plegado con marca: el municipio, que es territorio.
+  mapa: '<path d="m3 6.5 6-2.5 6 2.5 6-2.5v13l-6 2.5-6-2.5-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/>',
 };
 ---
 

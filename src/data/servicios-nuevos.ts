@@ -28,7 +28,7 @@ export const SERVICIOS_NUEVOS: Servicio[] = [
     gancho:
       'De la factura en papel a la electrónica sin parar de vender ni un día.',
     resumen: 'Su empresa emitiendo facturas electrónicas, bien montado desde el principio.',
-    icono: 'sobre',
+    icono: 'factura',
     paraQuien:
       'Para la empresa que todavía factura como siempre y sabe que tiene que dar el paso, y para la que ya lo intentó por su cuenta y se quedó a medias entre el proveedor y la DGI.',
     incluye: [
@@ -74,7 +74,7 @@ export const SERVICIOS_NUEVOS: Servicio[] = [
     gancho:
       'Si su empresa le compra o le vende a una empresa relacionada, esto le toca — y es de lo que más caro sale ignorar.',
     resumen: 'El estudio y la declaración cuando opera con empresas relacionadas.',
-    icono: 'lupa',
+    icono: 'vinculo',
     paraQuien:
       'Para la empresa panameña que hace operaciones con su matriz, con una filial, o con otra sociedad del mismo dueño. Da igual que sea una sola factura al año: lo que activa la obligación es la relación, no el volumen.',
     incluye: [
@@ -119,7 +119,7 @@ export const SERVICIOS_NUEVOS: Servicio[] = [
     gancho:
       'Estar en un régimen especial no significa no tener obligaciones: significa tener otras.',
     resumen: 'Para empresas bajo SEM, EMMA, Zona Libre de Colón o Panamá Pacífico.',
-    icono: 'edificio',
+    icono: 'sello',
     paraQuien:
       'Para la multinacional que opera bajo régimen SEM o EMMA, y para la empresa establecida en Zona Libre de Colón o en Panamá Pacífico que necesita a alguien que conozca ese terreno concreto.',
     incluye: [
@@ -160,7 +160,7 @@ export const SERVICIOS_NUEVOS: Servicio[] = [
     gancho:
       'El impuesto que casi nadie recuerda hasta que le bloquea un trámite.',
     resumen: 'La declaración, el pago mensual y el paz y salvo del municipio.',
-    icono: 'personas',
+    icono: 'mapa',
     paraQuien:
       'Para cualquier empresa con actividad en un municipio panameño, que son prácticamente todas. Y muy en especial para quien descubrió que lo debía el día que fue a renovar algo.',
     incluye: [
