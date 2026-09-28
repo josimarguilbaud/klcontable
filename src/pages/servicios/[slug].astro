@@ -35,7 +35,7 @@ const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio
   title={servicio.titulo}
   description={servicio.descripcion}
   ruta={ruta}
-  imagen={foto}
+  imagen={foto?.src}
   faqs={servicio.faqs}
   migas={[
     { nombre: 'Inicio', ruta: '/' },
@@ -66,13 +66,13 @@ const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio
       {
         foto && (
           <img
-            src={foto}
-            alt=""
-            width="800"
-            height="533"
+            src={foto.src}
+            alt={foto.alt}
+            width="1600"
+            height="900"
             loading="eager"
             fetchpriority="high"
-            class="hidden aspect-[3/2] w-full rounded-2xl object-cover shadow-2xl ring-1 ring-white/10 lg:block"
+            class="aspect-[16/9] w-full rounded-2xl object-cover shadow-2xl ring-1 ring-white/10 lg:aspect-[3/2]"
           />
         )
       }

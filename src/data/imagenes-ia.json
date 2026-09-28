@@ -268,5 +268,77 @@
     "archivo": "blog/como-cambiar-de-contador-sin-perder-informacion.webp",
     "alt": "Manos entregando una caja de archivo con carpetas a otras manos en una oficina de Panamá",
     "escena": "Close-up of one pair of hands passing a cardboard archive box full of folders to another pair of hands across a reception desk in a modest office in Panama City, a USB drive resting on top of the folders. Soft indoor light, realistic editorial photography, no faces or readable text."
+  },
+  {
+    "clave": "servicio/asesoria-contable-panama",
+    "archivo": "servicio/asesoria-contable-panama.webp",
+    "alt": "Asesora contable explicando un informe financiero a un empresario en una mesa de reuniones",
+    "escena": "Over-the-shoulder view of an accountant's hand pointing with a pen at a simple printed bar chart while a business owner's hands rest on the table, bright meeting room in Panama City, faces out of frame."
+  },
+  {
+    "clave": "servicio/servicios-de-contabilidad-outsourcing-en-panama",
+    "archivo": "servicio/servicios-de-contabilidad-outsourcing-en-panama.webp",
+    "alt": "Escritorio de contabilidad ordenado con laptop, carpetas y documentos al día",
+    "escena": "A calm, well-organized accounting workstation: laptop with blurred abstract spreadsheet grid, neatly stacked labeled-free folders, a document tray and a coffee cup, morning light, Panama City skyline softly visible through the window."
+  },
+  {
+    "clave": "servicio/servicios-de-auditoria-contable-en-panama",
+    "archivo": "servicio/servicios-de-auditoria-contable-en-panama.webp",
+    "alt": "Manos revisando con una lupa un informe financiero impreso junto a carpetas archivadas",
+    "escena": "Close-up of hands reviewing a printed financial report with a pen and a magnifying glass, archive binders on a shelf behind, focused professional atmosphere, cool daylight."
+  },
+  {
+    "clave": "servicio/servicios-de-gestion-tributaria-en-panama",
+    "archivo": "servicio/servicios-de-gestion-tributaria-en-panama.webp",
+    "alt": "Laptop y calendario de escritorio con recibos ordenados, preparando las declaraciones de impuestos",
+    "escena": "A laptop, a desk calendar with a few days marked by colored sticky tabs, neatly sorted receipts and a calculator on a wooden desk, preparing tax filings, warm light."
+  },
+  {
+    "clave": "servicio/servicios-de-planilla-en-panama",
+    "archivo": "servicio/servicios-de-planilla-en-panama.webp",
+    "alt": "Equipo de trabajadores de una pyme panameña de espaldas en un taller luminoso, la planilla de la empresa",
+    "escena": "Wide shot of a small Panamanian workshop with three workers seen from behind or in soft focus doing their jobs at workbenches, bright natural light, sense of a small team whose payroll matters."
+  },
+  {
+    "clave": "servicio/servicio-de-mensajeria-y-tramites-empresariales-en-panama",
+    "archivo": "servicio/servicio-de-mensajeria-y-tramites-empresariales-en-panama.webp",
+    "alt": "Mensajero con una carpeta de documentos caminando frente a un edificio público en Ciudad de Panamá",
+    "escena": "A courier seen from behind walking with a document folder under his arm toward the entrance of a public office building in Panama City, sunny morning, palm trees."
+  },
+  {
+    "clave": "inicio/senales",
+    "archivo": "inicio/senales.webp",
+    "alt": "Empresario de espaldas mirando papeles desordenados en su escritorio al final del día",
+    "escena": "A business owner seen from behind at a desk at dusk, looking at scattered papers and an open laptop, head resting on one hand, city lights beginning outside the window, contemplative mood."
+  },
+  {
+    "clave": "inicio/mensual",
+    "archivo": "inicio/mensual.webp",
+    "alt": "Carpeta de informe mensual cerrada sobre la mesa junto a una taza de café y un teléfono",
+    "escena": "A neat closed monthly report binder, a phone and a cup of coffee on a clean desk, first light of the morning in a Panama City office, sense of order and calm."
+  },
+  {
+    "clave": "inicio/por-que",
+    "archivo": "inicio/por-que.webp",
+    "alt": "Apretón de manos entre dos personas sobre una mesa con documentos, vista de cerca",
+    "escena": "Close-up of a firm handshake over a table with neatly arranged documents and a pen, warm office light, faces out of frame."
+  },
+  {
+    "clave": "inicio/proceso",
+    "archivo": "inicio/proceso.webp",
+    "alt": "Dos personas revisando juntas una laptop en una reunión de inicio, vistas de espaldas",
+    "escena": "Two people seen from behind sitting side by side reviewing a laptop (screen blurred) at a bright meeting table in a Panama City office, a notebook between them, onboarding meeting feel."
+  },
+  {
+    "clave": "inicio/despacho",
+    "archivo": "inicio/despacho.webp",
+    "alt": "Vista de Ciudad de Panamá desde la ventana de una oficina con escritorio y carpetas",
+    "escena": "A quiet professional office desk with folders and a desk lamp in the foreground, large window showing the Panama City skyline and the bay at golden hour."
+  },
+  {
+    "clave": "inicio/cierre",
+    "archivo": "inicio/cierre.webp",
+    "alt": "Skyline de Ciudad de Panamá al atardecer desde la Cinta Costera",
+    "escena": "Panoramic view of the Panama City skyline over the bay at blue hour from the Cinta Costera, calm water, city lights reflecting."
   }
 ]

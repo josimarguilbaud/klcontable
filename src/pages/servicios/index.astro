@@ -13,7 +13,7 @@ import { SITE } from '../../data/site';
 import { TODOS } from '../../data/servicios';
 import Icono from '../../components/Icono.astro';
 import FotoHero from '../../components/FotoHero.astro';
-import { fotoIA } from '../../data/imagenes';
+import { fotoIA, fotoServicio } from '../../data/imagenes';
 
 const foto = fotoIA('pagina/servicios');
 ---
@@ -44,20 +44,38 @@ const foto = fotoIA('pagina/servicios');
     <div class="mx-auto max-w-6xl px-5">
       <div class="grid gap-6 md:grid-cols-2">
         {
-          TODOS.map((s) => (
-            <a
-              href={`/servicios/${s.slug}/`}
-              class="tarjeta group rounded-xl border border-tinta-200 bg-white p-8"
-            >
-              <span class="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-marca-50 text-marca-700 transition group-hover:bg-marca-700 group-hover:text-white">
-                <Icono nombre={s.icono} clase="h-8 w-8" />
-              </span>
-              <h2 class="font-titulo text-2xl font-bold group-hover:text-marca-700">{s.nombre}</h2>
-              <p class="mt-3 text-lg text-tinta-700">{s.gancho}</p>
-              <p class="mt-4 text-sm text-tinta-500">{s.paraQuien}</p>
-              <span class="mt-5 inline-block font-bold text-marca-700">Ver el servicio →</span>
-            </a>
-          ))
+          TODOS.map((s) => {
+            const f = fotoServicio(s.slug);
+            return (
+              <a
+                href={`/servicios/${s.slug}/`}
+                class="tarjeta group flex flex-col overflow-hidden rounded-xl border border-tinta-200 bg-white"
+              >
+                {f && (
+                  <div class="overflow-hidden">
+                    <img
+                      src={f.src}
+                      alt={f.alt}
+                      width="1600"
+                      height="900"
+                      loading="lazy"
+                      decoding="async"
+                      class="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                )}
+                <div class="relative flex grow flex-col p-8">
+                  <span class:list={['mb-5 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-marca-50 text-marca-700 ring-4 ring-white transition group-hover:bg-marca-700 group-hover:text-white', f && '-mt-15']}>
+                    <Icono nombre={s.icono} clase="h-8 w-8" />
+                  </span>
+                  <h2 class="font-titulo text-2xl font-bold group-hover:text-marca-700">{s.nombre}</h2>
+                  <p class="mt-3 text-lg text-tinta-700">{s.gancho}</p>
+                  <p class="mt-4 grow text-sm text-tinta-500">{s.paraQuien}</p>
+                  <span class="mt-5 inline-block font-bold text-marca-700">Ver el servicio →</span>
+                </div>
+              </a>
+            );
+          })
         }
       </div>
     </div>

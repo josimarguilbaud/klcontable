@@ -1,7 +1,7 @@
 ---
 /**
- * La foto a la derecha de un hero oscuro. Solo en escritorio: en móvil empuja
- * el texto y los botones fuera de la primera pantalla, y ahí manda el texto.
+ * La foto de un hero oscuro: a la derecha en escritorio y debajo del texto en
+ * móvil, más apaisada para no empujar demasiado lo que sigue.
  *
  * `width`/`height` explícitos para que el navegador reserve el hueco (sin CLS).
  */
@@ -21,5 +21,5 @@ const { foto } = Astro.props;
   loading="eager"
   fetchpriority="high"
   decoding="async"
-  class="hidden aspect-[3/2] w-full rounded-2xl object-cover shadow-2xl ring-1 ring-white/10 lg:block"
+  class="aspect-[16/9] w-full rounded-2xl object-cover shadow-2xl ring-1 ring-white/10 lg:aspect-[3/2]"
 />

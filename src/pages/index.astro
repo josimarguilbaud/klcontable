@@ -24,10 +24,25 @@ import { TODOS } from '../data/servicios';
 import { GUIAS } from '../data/guias';
 import { ARTICULOS } from '../data/articulos';
 import Icono from '../components/Icono.astro';
-import { IMG_PORTADA } from '../data/imagenes';
+import FotoSeccion from '../components/FotoSeccion.astro';
+import { IMG_PORTADA, fotoIA, fotoServicio } from '../data/imagenes';
+
+/** Las fotos de cada sección de la portada (ver `imagenes-ia.json`). */
+const F = {
+  senales: fotoIA('inicio/senales'),
+  mensual: fotoIA('inicio/mensual'),
+  porQue: fotoIA('inicio/por-que'),
+  proceso: fotoIA('inicio/proceso'),
+  despacho: fotoIA('inicio/despacho'),
+  cierre: fotoIA('inicio/cierre'),
+  calculadora: fotoIA('pagina/calculadoras'),
+};
 
 /** Los tres artículos más recientes, para que la portada alimente al blog. */
-const ULTIMOS = [...ARTICULOS].sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, 3);
+const ULTIMOS = [...ARTICULOS]
+  .sort((a, b) => b.fecha.localeCompare(a.fecha))
+  .slice(0, 3)
+  .map((a) => ({ ...a, foto: fotoIA(`blog/${a.slug}`) }));
 
 /**
  * Las señales de que algo va mal. Van ANTES que los servicios a propósito:
@@ -315,17 +330,22 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
   <!-- EL PROBLEMA: va antes que los servicios a proposito -->
   <section class="py-20 lg:py-24">
     <div class="mx-auto max-w-6xl px-5">
-      <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
-        ¿Le suena alguna?
-      </span>
-      <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
-        Señales de que su contabilidad tiene un problema
-      </h2>
-      <p class="mt-4 max-w-2xl text-lg text-tinta-700">
-        La mayoría de las empresas no cambia de contador porque el anterior
-        hiciera mal los números, sino por alguna de estas seis cosas. Si se
-        reconoce en una sola, ya vale la pena una conversación.
-      </p>
+      <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr]">
+        <div>
+          <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+            ¿Le suena alguna?
+          </span>
+          <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+            Señales de que su contabilidad tiene un problema
+          </h2>
+          <p class="mt-4 max-w-2xl text-lg text-tinta-700">
+            La mayoría de las empresas no cambia de contador porque el anterior
+            hiciera mal los números, sino por alguna de estas seis cosas. Si se
+            reconoce en una sola, ya vale la pena una conversación.
+          </p>
+        </div>
+        <FotoSeccion foto={F.senales} />
+      </div>
 
       <div class="mt-11 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {
@@ -358,19 +378,37 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
 
       <div class="mt-11 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {
-          TODOS.map((s) => (
-            <a
-              href={`/servicios/${s.slug}/`}
-              class="tarjeta group rounded-xl border border-tinta-200 bg-white p-7"
-            >
-              <span class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-marca-50 text-marca-700 transition group-hover:bg-marca-700 group-hover:text-white">
-                <Icono nombre={s.icono} />
-              </span>
-              <h3 class="font-titulo text-xl font-bold group-hover:text-marca-700">{s.nombre}</h3>
-              <p class="mt-2.5 text-tinta-700">{s.resumen}</p>
-              <span class="mt-5 inline-block text-sm font-bold text-marca-700">Ver más →</span>
-            </a>
-          ))
+          TODOS.map((s) => {
+            const f = fotoServicio(s.slug);
+            return (
+              <a
+                href={`/servicios/${s.slug}/`}
+                class="tarjeta group flex flex-col overflow-hidden rounded-xl border border-tinta-200 bg-white"
+              >
+                {f && (
+                  <div class="overflow-hidden">
+                    <img
+                      src={f.src}
+                      alt={f.alt}
+                      width="1600"
+                      height="900"
+                      loading="lazy"
+                      decoding="async"
+                      class="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                )}
+                <div class="flex grow flex-col p-7">
+                  <span class:list={['mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-marca-50 text-marca-700 ring-4 ring-white transition group-hover:bg-marca-700 group-hover:text-white', f && '-mt-13']}>
+                    <Icono nombre={s.icono} />
+                  </span>
+                  <h3 class="font-titulo text-xl font-bold group-hover:text-marca-700">{s.nombre}</h3>
+                  <p class="mt-2.5 grow text-tinta-700">{s.resumen}</p>
+                  <span class="mt-5 inline-block text-sm font-bold text-marca-700">Ver más →</span>
+                </div>
+              </a>
+            );
+          })
         }
       </div>
     </div>
@@ -379,16 +417,21 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
   <!-- QUÉ INCLUYE -->
   <section class="py-20 lg:py-24">
     <div class="mx-auto max-w-6xl px-5">
-      <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
-        El servicio mensual
-      </span>
-      <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
-        Qué recibe cada mes, en concreto
-      </h2>
-      <p class="mt-4 max-w-2xl text-lg text-tinta-700">
-        «Llevamos su contabilidad» no dice nada. Esto es lo que hay dentro de esa
-        frase, para que sepa exactamente qué está contratando.
-      </p>
+      <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr]">
+        <div>
+          <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+            El servicio mensual
+          </span>
+          <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+            Qué recibe cada mes, en concreto
+          </h2>
+          <p class="mt-4 max-w-2xl text-lg text-tinta-700">
+            «Llevamos su contabilidad» no dice nada. Esto es lo que hay dentro de esa
+            frase, para que sepa exactamente qué está contratando.
+          </p>
+        </div>
+        <FotoSeccion foto={F.mensual} />
+      </div>
 
       <div class="mt-11 grid gap-x-10 gap-y-8 md:grid-cols-2">
         {
@@ -409,17 +452,22 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
   <!-- POR QUÉ NOSOTROS -->
   <section class="border-y border-tinta-200 bg-tinta-50 py-20 lg:py-24">
     <div class="mx-auto max-w-6xl px-5">
-      <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
-        Por qué KL Contable
-      </span>
-      <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
-        Seis promesas que puede comprobar el primer mes
-      </h2>
-      <p class="mt-4 max-w-2xl text-lg text-tinta-700">
-        No le vamos a decir que somos profesionales y comprometidos: eso lo dicen
-        todas las webs de contadores de Panamá. Estas seis, en cambio, se
-        verifican solas.
-      </p>
+      <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr]">
+        <div>
+          <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+            Por qué KL Contable
+          </span>
+          <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+            Seis promesas que puede comprobar el primer mes
+          </h2>
+          <p class="mt-4 max-w-2xl text-lg text-tinta-700">
+            No le vamos a decir que somos profesionales y comprometidos: eso lo dicen
+            todas las webs de contadores de Panamá. Estas seis, en cambio, se
+            verifican solas.
+          </p>
+        </div>
+        <FotoSeccion foto={F.porQue} />
+      </div>
 
       <div class="mt-11 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {
@@ -451,16 +499,34 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
 
       <div class="mt-11 grid gap-6 md:grid-cols-3">
         {
-          GUIAS.map((g) => (
-            <a
-              href={`/${g.slug}/`}
-              class="tarjeta group flex flex-col rounded-xl border border-tinta-200 bg-white p-7"
-            >
-              <h3 class="font-titulo text-xl font-bold group-hover:text-marca-700">{g.nombre}</h3>
-              <p class="mt-3 grow leading-relaxed text-tinta-700">{g.gancho}</p>
-              <span class="mt-5 inline-block text-sm font-bold text-marca-700">Ver la guía →</span>
-            </a>
-          ))
+          GUIAS.map((g) => {
+            const f = fotoIA(`guia/${g.slug}`);
+            return (
+              <a
+                href={`/${g.slug}/`}
+                class="tarjeta group flex flex-col overflow-hidden rounded-xl border border-tinta-200 bg-white"
+              >
+                {f && (
+                  <div class="overflow-hidden">
+                    <img
+                      src={f.src}
+                      alt={f.alt}
+                      width="1600"
+                      height="900"
+                      loading="lazy"
+                      decoding="async"
+                      class="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                )}
+                <div class="flex grow flex-col p-7">
+                  <h3 class="font-titulo text-xl font-bold group-hover:text-marca-700">{g.nombre}</h3>
+                  <p class="mt-3 grow leading-relaxed text-tinta-700">{g.gancho}</p>
+                  <span class="mt-5 inline-block text-sm font-bold text-marca-700">Ver la guía →</span>
+                </div>
+              </a>
+            );
+          })
         }
       </div>
     </div>
@@ -469,17 +535,22 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
   <!-- CÓMO TRABAJAMOS -->
   <section class="border-y border-tinta-200 bg-tinta-50 py-20 lg:py-24">
     <div class="mx-auto max-w-6xl px-5">
-      <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
-        Cómo trabajamos
-      </span>
-      <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
-        Empezar es más simple de lo que parece
-      </h2>
-      <p class="mt-4 max-w-2xl text-lg text-tinta-700">
-        Sobre todo el paso tres, que es el que frena a casi todo el mundo: si ya
-        tiene contador, no hace falta que usted gestione el traspaso ni que se
-        pelee con nadie.
-      </p>
+      <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_.9fr]">
+        <div>
+          <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+            Cómo trabajamos
+          </span>
+          <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+            Empezar es más simple de lo que parece
+          </h2>
+          <p class="mt-4 max-w-2xl text-lg text-tinta-700">
+            Sobre todo el paso tres, que es el que frena a casi todo el mundo: si ya
+            tiene contador, no hace falta que usted gestione el traspaso ni que se
+            pelee con nadie.
+          </p>
+        </div>
+        <FotoSeccion foto={F.proceso} />
+      </div>
 
       <div class="mt-11 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
         {
@@ -512,7 +583,21 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
       </p>
 
       <div class="mt-11 grid gap-6 lg:grid-cols-2">
-        <a href="/calculadoras/" class="tarjeta group rounded-2xl border border-tinta-200 bg-white p-8">
+        <a href="/calculadoras/" class="tarjeta group overflow-hidden rounded-2xl border border-tinta-200 bg-white">
+          {F.calculadora && (
+            <div class="overflow-hidden">
+              <img
+                src={F.calculadora.src}
+                alt={F.calculadora.alt}
+                width="1600"
+                height="900"
+                loading="lazy"
+                decoding="async"
+                class="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-105"
+              />
+            </div>
+          )}
+          <div class="p-8">
           <h3 class="font-titulo text-2xl font-black tracking-tight group-hover:text-marca-700">
             Calculadora de Seguro Social
           </h3>
@@ -525,6 +610,7 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
           <span class="mt-5 inline-block text-sm font-bold text-marca-700">
             Abrir la calculadora →
           </span>
+          </div>
         </a>
 
         <div class="rounded-2xl border border-tinta-200 bg-white p-8">
@@ -533,10 +619,23 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
             {
               ULTIMOS.map((a) => (
                 <li>
-                  <a href={`/blog/${a.slug}/`} class="group block">
-                    <span class="font-titulo font-bold group-hover:text-marca-700">{a.h1}</span>
-                    <span class="mt-0.5 block text-sm text-tinta-500">
-                      {a.minutos} min de lectura
+                  <a href={`/blog/${a.slug}/`} class="group flex items-center gap-4">
+                    {a.foto && (
+                      <img
+                        src={a.foto.src}
+                        alt=""
+                        width="1600"
+                        height="900"
+                        loading="lazy"
+                        decoding="async"
+                        class="aspect-[4/3] w-24 shrink-0 rounded-lg object-cover"
+                      />
+                    )}
+                    <span>
+                      <span class="font-titulo font-bold group-hover:text-marca-700">{a.h1}</span>
+                      <span class="mt-0.5 block text-sm text-tinta-500">
+                        {a.minutos} min de lectura
+                      </span>
                     </span>
                   </a>
                 </li>
@@ -554,6 +653,11 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
   <!-- TEXTO SEO, escrito para leerse, no para rellenar -->
   <section class="border-y border-tinta-200 bg-tinta-50 py-20">
     <div class="mx-auto max-w-3xl px-5">
+      {F.despacho && (
+        <div class="mb-10">
+          <FotoSeccion foto={F.despacho} />
+        </div>
+      )}
       <h2 class="font-titulo text-3xl font-black tracking-tight">
         ¿Busca un contador en Panamá?
       </h2>
@@ -629,8 +733,19 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
   </section>
 
   <!-- CIERRE -->
-  <section class="bg-tinta-900 py-20">
-    <div class="mx-auto max-w-3xl px-5 text-center">
+  <section class="relative overflow-hidden bg-tinta-900 py-20">
+    {F.cierre && (
+      <img
+        src={F.cierre.src}
+        alt=""
+        width="1600"
+        height="900"
+        loading="lazy"
+        decoding="async"
+        class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25"
+      />
+    )}
+    <div class="relative mx-auto max-w-3xl px-5 text-center">
       <h2 class="font-titulo text-3xl font-black tracking-tight text-white lg:text-4xl">
         Cuénteme su caso y le digo qué hace falta
       </h2>

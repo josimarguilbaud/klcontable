@@ -1,0 +1,27 @@
+---
+/**
+ * La foto que acompaña la cabecera de una sección: a la derecha del título en
+ * escritorio y debajo del texto en móvil. Si la imagen aún no está generada,
+ * no pinta nada y la sección queda como antes.
+ */
+import type { Foto } from '../data/imagenes';
+
+interface Props {
+  foto?: Foto;
+}
+const { foto } = Astro.props;
+---
+
+{
+  foto && (
+    <img
+      src={foto.src}
+      alt={foto.alt}
+      width="1600"
+      height="900"
+      loading="lazy"
+      decoding="async"
+      class="aspect-[16/9] w-full rounded-2xl object-cover shadow-[var(--shadow-suave)]"
+    />
+  )
+}

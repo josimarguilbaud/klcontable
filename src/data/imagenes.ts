@@ -42,8 +42,14 @@ export function fotoIA(clave: string): Foto | undefined {
   return existsSync(join(PUBLIC, src)) ? { src, alt: e.alt } : undefined;
 }
 
-/** Fotos rescatadas de la web anterior, por servicio. */
-const RESCATADAS: Record<string, string> = {
+/**
+ * La foto de un servicio.
+ *
+ * Primero la generada para ese servicio; si todavía no existe, la rescatada de
+ * la web anterior, y en los cuatro servicios nuevos (que nunca tuvieron una) la
+ * prestada de otro servicio.
+ */
+const RESPALDO: Record<string, string> = {
   'asesoria-contable-panama': '/img/servicios-de-contabilidad-empresarial.jpg',
   'servicios-de-contabilidad-outsourcing-en-panama': '/img/contabilidad-outsourcing-en-panama.jpg',
   'servicios-de-auditoria-contable-en-panama': '/img/auditoria-contable-1.jpg',
@@ -51,13 +57,6 @@ const RESCATADAS: Record<string, string> = {
   'servicios-de-planilla-en-panama': '/img/planilla.jpg',
   'servicio-de-mensajeria-y-tramites-empresariales-en-panama':
     '/img/servicio-de-mensajeria-y-tramites-empresariales-en-panama.jpg',
-};
-
-/**
- * Los cuatro servicios nuevos no tenían foto propia y reusaban una de otro
- * servicio. Si ya está generada la suya, va esa; si no, la prestada de antes.
- */
-const PRESTADAS: Record<string, string> = {
   'facturacion-electronica-panama': '/img/servicio-de-declaracion-de-itbms-en-panama.jpg',
   'precios-de-transferencia-panama':
     '/img/creacion-y-presentacion-de-declaracion-de-renta-en-panama.jpg',
@@ -65,8 +64,8 @@ const PRESTADAS: Record<string, string> = {
   'impuestos-municipales-panama': '/img/planilla2.jpg',
 };
 
-export function fotoServicio(slug: string): string | undefined {
-  return RESCATADAS[slug] ?? fotoIA(`servicio/${slug}`)?.src ?? PRESTADAS[slug];
+export function fotoServicio(slug: string): Foto | undefined {
+  return fotoIA(`servicio/${slug}`) ?? (RESPALDO[slug] ? { src: RESPALDO[slug], alt: '' } : undefined);
 }
 
 /** La de la portada. Vivía justo ahí en el sitio anterior. */
