@@ -57,7 +57,7 @@
     "clave": "servicio/facturacion-electronica-panama",
     "archivo": "servicio/facturacion-electronica-panama.webp",
     "alt": "Terminal de punto de venta emitiendo un comprobante en el mostrador de un comercio",
-    "escena": "A modern point-of-sale terminal on a shop counter printing a small receipt, a tablet showing an abstract invoice layout without readable text, shallow depth of field."
+    "escena": "A point-of-sale terminal on a shop counter printing a short blank receipt, beside a tablet whose screen shows only abstract colored blocks, shallow depth of field."
   },
   {
     "clave": "servicio/precios-de-transferencia-panama",
@@ -75,13 +75,13 @@
     "clave": "servicio/impuestos-municipales-panama",
     "archivo": "servicio/impuestos-municipales-panama.webp",
     "alt": "Fachada de pequeños comercios en una calle de Ciudad de Panamá con toldos de colores",
-    "escena": "A row of small shopfronts with colorful awnings on a street in Panama City, midday light, no readable signs."
+    "escena": "A row of small shopfronts with plain colorful awnings and no signage on a street in Panama City, midday light, a bicycle leaning on a wall."
   },
   {
     "clave": "blog/cuanto-cuesta-un-empleado-en-panama",
     "archivo": "blog/cuanto-cuesta-un-empleado-en-panama.webp",
     "alt": "Sobre de pago, calculadora y una lista de conceptos sobre el escritorio de una pequeña empresa",
-    "escena": "A pay envelope, a calculator and a sheet with a blurred list of line items on a small business desk, a hand pointing at the sheet."
+    "escena": "A closed plain paper pay envelope, a desk calculator and a sheet of paper covered only in abstract grey lines (no words at all) on a small business desk, a hand resting beside them."
   },
   {
     "clave": "blog/que-pasa-si-presento-tarde-a-la-dgi",
@@ -159,7 +159,7 @@
     "clave": "blog/subio-la-cuota-patronal-css-en-panama",
     "archivo": "blog/subio-la-cuota-patronal-css-en-panama.webp",
     "alt": "Manos de una persona revisando una planilla impresa con una calculadora y un bolígrafo sobre un escritorio de madera",
-    "escena": "Overhead shot of hands comparing two stacks of printed payroll sheets with a desk calculator and a pen on a wooden desk in a small Panama City office, blurred rows of figures, no legible text. Soft window light with a hint of palm trees outside."
+    "escena": "Overhead shot of two hands comparing two stacks of paper sheets filled only with abstract grey bars and blank table grids (no words, no headings), a desk calculator and a pen on a wooden desk."
   },
   {
     "clave": "blog/como-se-calcula-una-liquidacion-laboral-en-panama",
@@ -213,7 +213,7 @@
     "clave": "blog/que-preparar-antes-del-cierre-del-ano-fiscal",
     "archivo": "blog/que-preparar-antes-del-cierre-del-ano-fiscal.webp",
     "alt": "Escritorio con carpetas ordenadas por mes, calculadora y comprobantes agrupados con clips, luz de tarde",
-    "escena": "Editorial overhead photo of an office desk in Panama City with a row of monthly folders, stacks of receipts grouped with paper clips and a desk calculator, warm late-afternoon light from a window with blinds. No readable text, no faces."
+    "escena": "Overhead photo of an office desk with a row of plain unlabeled folders, neat piles of receipts held with binder clips, a calculator and a blank clipboard, warm late-afternoon light."
   },
   {
     "clave": "blog/conciliacion-bancaria-por-que-es-lo-primero",
