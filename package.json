@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "astro dev --port 4330",
     "build": "astro build",
-    "preview": "astro preview --port 4330"
+    "preview": "astro preview --port 4330",
+    "imagenes": "node scripts/generar-imagenes.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

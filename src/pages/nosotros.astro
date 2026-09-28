@@ -12,25 +12,33 @@
 import Base from '../layouts/Base.astro';
 import { SITE, HAY_CREDENCIALES } from '../data/site';
 import { SERVICIOS } from '../data/servicios';
+import FotoHero from '../components/FotoHero.astro';
+import { fotoIA } from '../data/imagenes';
+
+const foto = fotoIA('pagina/nosotros');
 ---
 
 <Base
   title="Nosotros | 35 Años de Experiencia Contable en Panamá — KL Contable"
   description="KL Contable lleva 35 años de experiencia en contabilidad, impuestos y planilla en Panamá. Conozca cómo trabajamos y por qué nuestros clientes se quedan."
   ruta="/nosotros/"
+  imagen={foto?.src}
   migas={[{ nombre: 'Inicio', ruta: '/' }]}
 >
   <section class="hero-degradado bg-tinta-900">
-    <div class="mx-auto max-w-6xl px-5 py-16 lg:py-20">
-      <p class="mb-4 text-xs font-bold tracking-widest text-acento-400 uppercase">La firma</p>
-      <h1 class="max-w-3xl font-titulo text-3xl leading-[1.08] font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
-        35 años llevando la contabilidad de empresas panameñas
-      </h1>
-      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-tinta-200">
-        Tiempo suficiente para haber visto de todo: reformas fiscales,
-        digitalizaciones, crisis y bonanzas. Y para saber que lo que un
-        empresario necesita casi nunca es un informe más bonito.
-      </p>
+    <div class:list={['mx-auto max-w-6xl px-5 py-16 lg:py-20', foto && 'grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr]']}>
+      <div>
+        <p class="mb-4 text-xs font-bold tracking-widest text-acento-400 uppercase">La firma</p>
+        <h1 class="max-w-3xl font-titulo text-3xl leading-[1.08] font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+          35 años llevando la contabilidad de empresas panameñas
+        </h1>
+        <p class="mt-5 max-w-2xl text-lg leading-relaxed text-tinta-200">
+          Tiempo suficiente para haber visto de todo: reformas fiscales,
+          digitalizaciones, crisis y bonanzas. Y para saber que lo que un
+          empresario necesita casi nunca es un informe más bonito.
+        </p>
+      </div>
+      {foto && <FotoHero foto={foto} />}
     </div>
   </section>
 

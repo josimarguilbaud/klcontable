@@ -14,7 +14,7 @@ import { SITE } from '../../data/site';
 import { TODOS } from '../../data/servicios';
 import { DESARROLLO } from '../../data/servicios-desarrollo';
 import { DESARROLLO_2 } from '../../data/servicios-desarrollo-2';
-import { IMG_SERVICIO } from '../../data/imagenes';
+import { fotoServicio } from '../../data/imagenes';
 
 export function getStaticPaths() {
   return TODOS.map((s) => ({ params: { slug: s.slug }, props: { servicio: s } }));
@@ -25,7 +25,7 @@ const otros = TODOS.filter((s) => s.slug !== servicio.slug).slice(0, 3);
 // Los cinco bloques, en orden: los tres que explican el servicio y luego el
 // coste de no hacer nada y el «como empezamos», que es lo que cierra.
 const bloques = [...(DESARROLLO[servicio.slug] ?? []), ...(DESARROLLO_2[servicio.slug] ?? [])];
-const foto = IMG_SERVICIO[servicio.slug];
+const foto = fotoServicio(servicio.slug);
 const ruta = `/servicios/${servicio.slug}/`;
 
 const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio.nombre}.`);
@@ -35,6 +35,7 @@ const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio
   title={servicio.titulo}
   description={servicio.descripcion}
   ruta={ruta}
+  imagen={foto}
   faqs={servicio.faqs}
   migas={[
     { nombre: 'Inicio', ruta: '/' },

@@ -16,6 +16,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Un push hecho por otro workflow con GITHUB_TOKEN no dispara `push`; sin
+  # esto, las imágenes generadas se quedarían en GitHub sin publicarse.
+  workflow_run:
+    workflows: [Generar imágenes]
+    types: [completed]
+    branches: [main]
 
 concurrency:
   group: deploy-klcontable
@@ -28,6 +34,7 @@ env:
 
 jobs:
   desplegar:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Preparar la llave

@@ -6,73 +6,208 @@
  * un CTA genérico: quien acaba de leer sobre el costo de un empleado quiere
  * hablar de planilla, no de "servicios contables" en abstracto.
  *
- * El schema `Article` va aquí y no en Base porque solo aplica a estas páginas.
+ * Orden pensado para buscadores Y para asistentes de IA (SEO + GEO):
+ *   1. La respuesta directa arriba (`resumen`), en frases que se entienden
+ *      solas: es lo que Google usa de fragmento destacado y lo que un asistente
+ *      cita cuando le hacen la misma pregunta.
+ *   2. Lo esencial en viñetas (`claves`).
+ *   3. Índice con anclas: cada H2 tiene `id`, así Google puede enlazar a la
+ *      sección exacta y el lector salta a lo suyo.
+ *   4. El desarrollo, y al final las preguntas relacionadas como `FAQPage`.
+ *
+ * El schema `BlogPosting` va aquí y no en Base porque solo aplica a estas páginas.
  */
 import Base from '../../layouts/Base.astro';
 import { SITE } from '../../data/site';
 import { ARTICULOS } from '../../data/articulos';
-import { SERVICIOS } from '../../data/servicios';
+import { TODOS } from '../../data/servicios';
+import { fotoIA } from '../../data/imagenes';
 
 export function getStaticPaths() {
   return ARTICULOS.map((a) => ({ params: { articulo: a.slug }, props: { a } }));
 }
 
 const { a } = Astro.props;
-const servicio = a.servicio ? SERVICIOS.find((s) => s.slug === a.servicio) : undefined;
+const ruta = `/blog/${a.slug}/`;
+const url = new URL(ruta, SITE.dominio).href;
+const foto = fotoIA(`blog/${a.slug}`);
+const servicio = a.servicio ? TODOS.find((s) => s.slug === a.servicio) : undefined;
+const faqs = a.faqs ?? [];
 
-// Los otros artículos, los más recientes primero, sin repetir este.
+/** El `id` de un H2, a partir de su texto: sin tildes, en minúsculas y con guiones. */
+const ancla = (t: string) =>
+  t
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
+// Primero los del mismo servicio (son los que de verdad le interesan a este
+// lector), después los más recientes. Sin repetir este.
 const otros = [...ARTICULOS]
   .filter((x) => x.slug !== a.slug)
-  .sort((x, y) => y.fecha.localeCompare(x.fecha))
-  .slice(0, 3);
+  .sort(
+    (x, y) =>
+      Number(y.servicio === a.servicio) - Number(x.servicio === a.servicio) ||
+      y.fecha.localeCompare(x.fecha),
+  )
+  .slice(0, 3)
+  .map((x) => ({ ...x, foto: fotoIA(`blog/${x.slug}`) }));
 
-const fecha = new Date(a.fecha + 'T12:00:00Z').toLocaleDateString('es-PA', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-});
+const fmt = (iso: string) =>
+  new Date(iso + 'T12:00:00Z').toLocaleDateString('es-PA', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+const modificado = a.actualizado && a.actualizado > a.fecha ? a.actualizado : a.fecha;
 
 const schema = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'BlogPosting',
+  '@id': url + '#articulo',
   headline: a.h1,
   description: a.descripcion,
+  ...(a.resumen ? { abstract: a.resumen } : {}),
   datePublished: a.fecha,
-  dateModified: a.fecha,
+  dateModified: modificado,
   inLanguage: 'es-PA',
-  mainEntityOfPage: `${SITE.url}/blog/${a.slug}/`,
-  author: { '@type': 'Organization', name: SITE.nombre, url: SITE.url },
-  publisher: { '@type': 'Organization', name: SITE.nombre, url: SITE.url },
+  mainEntityOfPage: url,
+  url,
+  wordCount: [a.resumen ?? '', ...a.secciones.flatMap((s) => [s.t, ...s.p])]
+    .join(' ')
+    .split(/\s+/)
+    .filter(Boolean).length,
+  timeRequired: `PT${a.minutos}M`,
+  isPartOf: { '@type': 'Blog', name: `Blog de ${SITE.nombre}`, url: `${SITE.dominio}/blog/` },
+  spatialCoverage: { '@type': 'Country', name: 'Panamá' },
+  ...(servicio
+    ? { about: { '@type': 'Service', name: servicio.nombre, url: `${SITE.dominio}/servicios/${servicio.slug}/` } }
+    : {}),
+  author: { '@id': SITE.dominio + '#negocio' },
+  publisher: { '@id': SITE.dominio + '#negocio' },
+  ...(foto
+    ? {
+        image: {
+          '@type': 'ImageObject',
+          url: new URL(foto.src, SITE.dominio).href,
+          width: 1600,
+          height: 900,
+          caption: foto.alt,
+        },
+      }
+    : {}),
+  // Qué partes leer en voz alta un asistente de voz o de IA.
+  speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '#respuesta'] },
 };
 ---
 
 <Base
   title={a.titulo}
   description={a.descripcion}
-  ruta={`/blog/${a.slug}/`}
+  ruta={ruta}
+  imagen={foto?.src}
+  faqs={faqs}
   migas={[{ nombre: 'Inicio', ruta: '/' }, { nombre: 'Blog', ruta: '/blog/' }]}
 >
   <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+  <meta property="article:published_time" content={a.fecha} slot="head" />
+  <meta property="article:modified_time" content={modificado} slot="head" />
 
   <article>
     <section class="hero-degradado bg-tinta-900">
       <div class="mx-auto max-w-3xl px-5 py-16 lg:py-20">
         <p class="mb-4 text-xs font-bold tracking-widest text-acento-400 uppercase">
-          {fecha} · {a.minutos} min de lectura
+          <time datetime={a.fecha}>{fmt(a.fecha)}</time> · {a.minutos} min de lectura
         </p>
         <h1 class="font-titulo text-3xl leading-[1.1] font-black tracking-tight text-white sm:text-4xl">
           {a.h1}
         </h1>
         <p class="mt-5 text-lg leading-relaxed text-tinta-200">{a.entradilla}</p>
+        {
+          modificado !== a.fecha && (
+            <p class="mt-4 text-sm text-tinta-200">
+              Revisado el <time datetime={modificado}>{fmt(modificado)}</time>
+            </p>
+          )
+        }
       </div>
     </section>
+
+    {
+      foto && (
+        <div class="mx-auto -mb-4 max-w-4xl px-5 pt-10 lg:pt-14">
+          <img
+            src={foto.src}
+            alt={foto.alt}
+            width="1600"
+            height="900"
+            fetchpriority="high"
+            decoding="async"
+            class="aspect-[16/9] w-full rounded-2xl object-cover shadow-[var(--shadow-suave)]"
+          />
+        </div>
+      )
+    }
 
     <section class="py-14 lg:py-20">
       <div class="mx-auto max-w-3xl px-5">
         {
+          a.resumen && (
+            <div class="mb-10 rounded-2xl border-l-4 border-acento-500 bg-marca-50 p-6 lg:p-8">
+              <p class="text-xs font-bold tracking-widest text-marca-700 uppercase">Respuesta corta</p>
+              <p id="respuesta" class="mt-3 text-lg leading-relaxed text-tinta-900">{a.resumen}</p>
+            </div>
+          )
+        }
+
+        {
+          a.claves && a.claves.length > 0 && (
+            <div class="mb-10">
+              <h2 class="font-titulo text-xl font-black tracking-tight">Lo esencial</h2>
+              <ul class="mt-4 space-y-3">
+                {a.claves.map((c) => (
+                  <li class="flex gap-3 text-lg leading-relaxed text-tinta-700">
+                    <span class="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-acento-500" />
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+
+        {
+          a.secciones.length >= 4 && (
+            <nav aria-label="En este artículo" class="mb-12 rounded-xl border border-tinta-200 p-6">
+              <p class="font-titulo text-sm font-bold tracking-widest text-tinta-500 uppercase">En este artículo</p>
+              <ol class="mt-3 list-decimal space-y-1.5 pl-5 text-tinta-700">
+                {a.secciones.map((s) => (
+                  <li>
+                    <a href={`#${ancla(s.t)}`} class="hover:text-marca-700 hover:underline">
+                      {s.t}
+                    </a>
+                  </li>
+                ))}
+                {faqs.length > 0 && (
+                  <li>
+                    <a href="#preguntas-frecuentes" class="hover:text-marca-700 hover:underline">
+                      Preguntas frecuentes
+                    </a>
+                  </li>
+                )}
+              </ol>
+            </nav>
+          )
+        }
+
+        {
           a.secciones.map((s) => (
             <div class="mb-11">
-              <h2 class="font-titulo text-2xl leading-snug font-black tracking-tight">{s.t}</h2>
+              <h2 id={ancla(s.t)} class="scroll-mt-24 font-titulo text-2xl leading-snug font-black tracking-tight">
+                {s.t}
+              </h2>
               <div class="mt-4 space-y-4 text-lg leading-relaxed text-tinta-700">
                 {s.p.map((p) => (
                   <p>{p}</p>
@@ -80,6 +215,29 @@ const schema = {
               </div>
             </div>
           ))
+        }
+
+        {
+          faqs.length > 0 && (
+            <div class="mb-12">
+              <h2 id="preguntas-frecuentes" class="scroll-mt-24 font-titulo text-2xl leading-snug font-black tracking-tight">
+                Preguntas frecuentes
+              </h2>
+              <div class="mt-5 divide-y divide-tinta-200 rounded-xl border border-tinta-200">
+                {faqs.map((f) => (
+                  <details class="group p-5">
+                    <summary class="flex cursor-pointer list-none items-start justify-between gap-4 font-titulo text-lg font-bold [&::-webkit-details-marker]:hidden">
+                      {f.p}
+                      <span class="mt-0.5 text-2xl leading-none text-acento-500 transition group-open:rotate-45" aria-hidden="true">
+                        +
+                      </span>
+                    </summary>
+                    <p class="mt-3 leading-relaxed text-tinta-700">{f.r}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          )
         }
 
         <!-- El cierre apunta al servicio del que trata el artículo, no a uno genérico -->
@@ -113,6 +271,12 @@ const schema = {
             }
           </div>
         </div>
+
+        <p class="mt-8 text-sm leading-relaxed text-tinta-500">
+          {`Contenido informativo de ${SITE.nombre}, firma de contabilidad en ${SITE.ciudad}.`} No
+          sustituye una consulta sobre su caso: la normativa cambia y cada
+          empresa es distinta.
+        </p>
       </div>
     </section>
 
@@ -122,9 +286,14 @@ const schema = {
         <div class="mt-7 grid gap-5 md:grid-cols-3">
           {
             otros.map((o) => (
-              <a href={`/blog/${o.slug}/`} class="tarjeta rounded-xl border border-tinta-200 bg-white p-6">
-                <h3 class="font-titulo text-lg leading-snug font-bold">{o.h1}</h3>
-                <p class="mt-2 text-sm text-tinta-700">{o.entradilla}</p>
+              <a href={`/blog/${o.slug}/`} class="tarjeta overflow-hidden rounded-xl border border-tinta-200 bg-white">
+                {o.foto && (
+                  <img src={o.foto.src} alt="" width="1600" height="900" loading="lazy" decoding="async" class="aspect-[16/9] w-full object-cover" />
+                )}
+                <div class="p-6">
+                  <h3 class="font-titulo text-lg leading-snug font-bold">{o.h1}</h3>
+                  <p class="mt-2 text-sm text-tinta-700">{o.entradilla}</p>
+                </div>
               </a>
             ))
           }

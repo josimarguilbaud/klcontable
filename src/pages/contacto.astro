@@ -13,25 +13,33 @@
 import Base from '../layouts/Base.astro';
 import { SITE } from '../data/site';
 import { TODOS } from '../data/servicios';
+import FotoHero from '../components/FotoHero.astro';
+import { fotoIA } from '../data/imagenes';
 
 const waTexto = encodeURIComponent('Hola, quisiera una consulta sobre servicios contables.');
+
+const foto = fotoIA('pagina/contacto');
 ---
 
 <Base
   title="Contacto | Consulta Contable Gratuita en Panamá — KL Contable"
   description="Hable con un contador en Panamá. Primera consulta gratuita por WhatsApp, teléfono o correo. Le decimos qué necesita y cuánto cuesta, sin compromiso."
   ruta="/contacto/"
+  imagen={foto?.src}
   migas={[{ nombre: 'Inicio', ruta: '/' }]}
 >
   <section class="hero-degradado bg-tinta-900">
-    <div class="mx-auto max-w-6xl px-5 py-16 lg:py-20">
-      <h1 class="max-w-3xl font-titulo text-3xl leading-[1.08] font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
-        Cuéntenos su caso
-      </h1>
-      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-tinta-200">
-        La primera consulta no cuesta nada. Le decimos qué necesita y cuánto
-        cuesta. Si resulta que no necesita nada, también se lo decimos.
-      </p>
+    <div class:list={['mx-auto max-w-6xl px-5 py-16 lg:py-20', foto && 'grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr]']}>
+      <div>
+        <h1 class="max-w-3xl font-titulo text-3xl leading-[1.08] font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+          Cuéntenos su caso
+        </h1>
+        <p class="mt-5 max-w-2xl text-lg leading-relaxed text-tinta-200">
+          La primera consulta no cuesta nada. Le decimos qué necesita y cuánto
+          cuesta. Si resulta que no necesita nada, también se lo decimos.
+        </p>
+      </div>
+      {foto && <FotoHero foto={foto} />}
     </div>
   </section>
 
