@@ -30,7 +30,6 @@ import { IMG_PORTADA, fotoIA, fotoServicio } from '../data/imagenes';
 
 /** Las fotos de cada sección de la portada (ver `imagenes-ia.json`). */
 const F = {
-  nouscrm: fotoIA('inicio/nouscrm'),
   senales: fotoIA('inicio/senales'),
   mensual: fotoIA('inicio/mensual'),
   porQue: fotoIA('inicio/por-que'),
@@ -792,7 +791,32 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
             agencia que hizo esta web.
           </p>
         </div>
-        <FotoSeccion foto={F.nouscrm} />
+        <!-- Captura real del panel (datos de demostración), en marco de
+             navegador. Proporción natural: recortarla a 16:9 cortaría las cifras. -->
+        <figure>
+          <div class="overflow-hidden rounded-2xl border border-tinta-200 bg-white shadow-[0_30px_60px_-20px_rgb(0_24_48/0.35)]">
+            <div class="flex items-center gap-1.5 border-b border-tinta-200 bg-tinta-50 px-4 py-2.5" aria-hidden="true">
+              <span class="h-2.5 w-2.5 rounded-full bg-tinta-300"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-tinta-300"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-tinta-300"></span>
+              <span class="ml-3 truncate rounded-md bg-white px-3 py-0.5 text-xs text-tinta-500">nouscrm.app</span>
+            </div>
+            <img
+              src="/img/nouscrm-panel.webp"
+              srcset="/img/nouscrm-panel-850.webp 850w, /img/nouscrm-panel.webp 1700w"
+              sizes="(min-width: 1024px) 560px, 100vw"
+              alt="Panel de NousCRM: lo cobrado en el mes, lo pendiente por cobrar, lo vencido y la lista de facturas con saldo abierto"
+              width="1700"
+              height="1100"
+              loading="lazy"
+              decoding="async"
+              class="block w-full"
+            />
+          </div>
+          <figcaption class="mt-3 text-center text-xs text-tinta-500">
+            Panel de NousCRM con datos de demostración.
+          </figcaption>
+        </figure>
       </div>
     </div>
   </section>
