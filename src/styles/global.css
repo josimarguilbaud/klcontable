@@ -1,12 +1,17 @@
 @import "tailwindcss";
 
 /*
- * Sistema de diseño — «Confianza Contable».
+ * Sistema de diseño — los colores del logo de KL Contable.
  *
- * Teal corporativo + esmeralda de acento sobre pizarra. El teal transmite la
- * seriedad que un despacho contable necesita; el esmeralda es el color del
- * crecimiento y se reserva SOLO para lo que el cliente debe pulsar. Si el
- * acento se usa en todas partes deja de señalar nada.
+ * Azul marino del logotipo (#001830) para textos y fondos oscuros, el azul del
+ * isotipo como color de marca y su cian como acento. Antes la web iba en teal
+ * y esmeralda, que no tenían nada que ver con el logo: la marca se veía
+ * distinta en la cabecera y en el resto de la página.
+ *
+ * El acento se reserva SOLO para lo que el cliente debe pulsar. Si se usa en
+ * todas partes deja de señalar nada. Contrastes comprobados (WCAG AA): blanco
+ * sobre acento-500 4.9:1, marca-700 sobre blanco 5.8:1, acento-400 sobre el
+ * marino 8:1 o más, tinta-500 sobre blanco 5:1.
  *
  * Tipografías: Outfit para titulares y Source Sans 3 para el texto.
  *
@@ -18,20 +23,24 @@
  * cifras seguidas, que es justo lo que hay en una web contable.
  */
 @theme {
-  --color-tinta-950: #020617;
-  --color-tinta-900: #0f172a;
-  --color-tinta-700: #334155;
-  --color-tinta-500: #64748b;
-  --color-tinta-200: #e2e8f0;
-  --color-tinta-50:  #f8fafc;
+  /* Marino del logotipo, en escala */
+  --color-tinta-950: #000c1a;
+  --color-tinta-900: #001830;
+  --color-tinta-700: #2c3e55;
+  --color-tinta-500: #5f7189;
+  --color-tinta-300: #a9b6c6;
+  --color-tinta-200: #dde4ec;
+  --color-tinta-50:  #f5f8fb;
 
-  --color-marca-800: #115e59;
-  --color-marca-700: #0f766e;
-  --color-marca-600: #0d9488;
-  --color-marca-50:  #f0fdfa;
+  /* Azul del isotipo */
+  --color-marca-800: #005a8c;
+  --color-marca-700: #006ba6;
+  --color-marca-600: #0080c0;
+  --color-marca-50:  #eef8fd;
 
-  --color-acento-500: #10b981;
-  --color-acento-400: #34d399;
+  /* Cian del isotipo: botones y señales */
+  --color-acento-500: #0077b6;
+  --color-acento-400: #1fb4e6;
 
   --color-whatsapp: #25d366;
 
@@ -52,8 +61,8 @@
   --text-sub: 1.375rem;
   --text-sub--line-height: 1.35;
 
-  --shadow-suave: 0 10px 40px -10px rgb(15 118 110 / 0.10);
-  --shadow-acento: 0 10px 25px -5px rgb(16 185 129 / 0.30);
+  --shadow-suave: 0 10px 40px -10px rgb(0 107 166 / 0.12);
+  --shadow-acento: 0 10px 25px -5px rgb(0 119 182 / 0.35);
 }
 
 /*
@@ -63,11 +72,11 @@
  */
 .hero-degradado {
   background-image:
-    linear-gradient(to right, rgb(15 23 42 / 0.95) 0%, rgb(15 118 110 / 0.82) 100%);
+    linear-gradient(to right, rgb(0 24 48 / 0.96) 0%, rgb(0 90 140 / 0.86) 100%);
 }
 
 /* La tarjeta se levanta al pasar el ratón y marca el borde superior en
-   esmeralda: señala «esto es pulsable» sin necesidad de decirlo. */
+   el cian de la marca: señala «esto es pulsable» sin necesidad de decirlo. */
 .tarjeta {
   border-top: 3px solid transparent;
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
@@ -75,7 +84,7 @@
 .tarjeta:hover {
   transform: translateY(-4px);
   border-top-color: var(--color-acento-500);
-  box-shadow: 0 20px 40px -15px rgb(15 118 110 / 0.18);
+  box-shadow: 0 20px 40px -15px rgb(0 107 166 / 0.20);
 }
 
 @media (prefers-reduced-motion: reduce) {
