@@ -154,6 +154,14 @@ const NAV = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#001830" />
+    <!-- Favicon: el isotipo del logo. `.ico` en la raíz porque navegadores y
+         lectores de feeds lo piden ahí sin leer el HTML; el PNG de 48 px es
+         el que Google usa junto al resultado de búsqueda (múltiplo de 48). -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
