@@ -12,6 +12,7 @@ import { TODOS } from '../data/servicios';
 import { GUIAS } from '../data/guias';
 import { DESARROLLO_GUIAS } from '../data/guias/index';
 import { ARTICULOS } from '../data/articulos';
+import { NOVEDADES } from '../data/novedades';
 
 export const GET: APIRoute = () => {
   const u = (ruta: string) => new URL(ruta, SITE.dominio).href;
@@ -35,6 +36,10 @@ export const GET: APIRoute = () => {
     '## Herramientas',
     '',
     `- [Calculadora de Seguro Social](${u('/calculadoras/')}): cuota del trabajador y cuota patronal a la CSS con los porcentajes vigentes de la Ley 462 de 2025 y su calendario de aumentos.`,
+    '',
+    '## Novedades DGI y CSS (con fuente oficial)',
+    '',
+    ...NOVEDADES.map((n) => `- [${n.h1}](${u(`/novedades/${n.slug}/`)}) (${n.fecha}): ${n.resumen} Fuente: ${n.fuente.url}`),
     '',
     '## Artículos',
     '',

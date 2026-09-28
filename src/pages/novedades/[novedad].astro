@@ -1,0 +1,192 @@
+---
+/**
+ * Una novedad DGI / CSS.
+ *
+ * Arriba: qué cambia y a quién le afecta, en frases que se entienden solas
+ * (lo que citan Google y los asistentes de IA). Abajo: la fuente oficial con
+ * la fecha en que se comprobó, visible, no escondida en un pie de página.
+ * Schema `NewsArticle` con `citation` apuntando a esa fuente.
+ */
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../data/site';
+import { NOVEDADES } from '../../data/novedades';
+import { ARTICULOS } from '../../data/articulos';
+import { TODOS } from '../../data/servicios';
+import { fotoIA } from '../../data/imagenes';
+import { ancla, fechaLarga } from '../../lib/texto';
+
+export function getStaticPaths() {
+  return NOVEDADES.map((n) => ({ params: { novedad: n.slug }, props: { n } }));
+}
+
+const { n } = Astro.props;
+const ruta = `/novedades/${n.slug}/`;
+const url = new URL(ruta, SITE.dominio).href;
+const foto = fotoIA(`novedad/${n.slug}`) ?? (n.articulos?.[0] ? fotoIA(`blog/${n.articulos[0]}`) : undefined);
+const servicio = n.servicio ? TODOS.find((s) => s.slug === n.servicio) : undefined;
+const faqs = n.faqs ?? [];
+const lecturas = (n.articulos ?? [])
+  .map((slug) => ARTICULOS.find((a) => a.slug === slug))
+  .filter((a): a is (typeof ARTICULOS)[number] => Boolean(a));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  '@id': url + '#nota',
+  headline: n.h1,
+  description: n.descripcion,
+  abstract: n.resumen,
+  datePublished: n.fecha,
+  dateModified: n.fuente.comprobado > n.fecha ? n.fuente.comprobado : n.fecha,
+  inLanguage: 'es-PA',
+  url,
+  mainEntityOfPage: url,
+  spatialCoverage: { '@type': 'Country', name: 'Panamá' },
+  author: { '@id': SITE.dominio + '/#negocio' },
+  publisher: { '@id': SITE.dominio + '/#negocio' },
+  citation: { '@type': 'CreativeWork', name: n.fuente.nombre, url: n.fuente.url },
+  ...(foto ? { image: new URL(foto.src, SITE.dominio).href } : {}),
+  speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '#respuesta'] },
+};
+---
+
+<Base
+  title={n.titulo}
+  description={n.descripcion}
+  ruta={ruta}
+  imagen={foto?.src}
+  faqs={faqs}
+  migas={[{ nombre: 'Inicio', ruta: '/' }, { nombre: 'Novedades', ruta: '/novedades/' }]}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+  <meta property="article:published_time" content={n.fecha} slot="head" />
+
+  <article>
+    <section class="hero-degradado bg-tinta-900">
+      <div class="mx-auto max-w-3xl px-5 py-16 lg:py-20">
+        <p class="mb-4 text-xs font-bold tracking-widest text-acento-400 uppercase">
+          Novedad {n.entidad} · <time datetime={n.fecha}>{fechaLarga(n.fecha)}</time>
+        </p>
+        <h1 class="font-titulo text-3xl leading-[1.1] font-black tracking-tight text-white sm:text-4xl">{n.h1}</h1>
+      </div>
+    </section>
+
+    <section class="py-14 lg:py-20">
+      <div class="mx-auto max-w-3xl px-5">
+        <div class="rounded-2xl border-l-4 border-acento-500 bg-marca-50 p-6 lg:p-8">
+          <p class="text-xs font-bold tracking-widest text-marca-700 uppercase">Qué cambia</p>
+          <p id="respuesta" class="mt-3 text-lg leading-relaxed text-tinta-900">{n.resumen}</p>
+        </div>
+
+        <div class="mt-10">
+          <h2 class="font-titulo text-xl font-black tracking-tight">A quién le afecta</h2>
+          <ul class="mt-4 space-y-3">
+            {n.aQuien.map((x) => (
+              <li class="flex gap-3 text-lg leading-relaxed text-tinta-700">
+                <span class="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-acento-500" />
+                <span>{x}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {
+          foto && (
+            <img
+              src={foto.src}
+              srcset={foto.srcset}
+              sizes="(min-width: 768px) 720px, 100vw"
+              alt={foto.alt}
+              width="1600"
+              height="900"
+              decoding="async"
+              class="mt-10 aspect-[16/9] w-full rounded-2xl object-cover shadow-[var(--shadow-suave)]"
+            />
+          )
+        }
+
+        <div class="mt-10">
+          {n.secciones.map((s) => (
+            <div class="mb-10">
+              <h2 id={ancla(s.t)} class="scroll-mt-24 font-titulo text-2xl leading-snug font-black tracking-tight">{s.t}</h2>
+              <div class="mt-4 space-y-4 text-lg leading-relaxed text-tinta-700">
+                {s.p.map((p) => <p>{p}</p>)}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- La fuente, a la vista: es lo que separa una nota de un rumor -->
+        <aside class="rounded-xl border border-tinta-200 p-6">
+          <p class="font-titulo text-sm font-bold tracking-widest text-tinta-500 uppercase">Fuente oficial</p>
+          <p class="mt-2 text-tinta-900">
+            <a href={n.fuente.url} rel="noopener" target="_blank" class="font-semibold text-marca-700 underline underline-offset-2">
+              {n.fuente.nombre}
+            </a>
+            {n.fuente.articulo && <span class="text-tinta-700">, {n.fuente.articulo}</span>}.
+          </p>
+          <p class="mt-1 text-sm text-tinta-500">
+            Comprobado el <time datetime={n.fuente.comprobado}>{fechaLarga(n.fuente.comprobado)}</time>.
+          </p>
+        </aside>
+
+        {
+          faqs.length > 0 && (
+            <div class="mt-12">
+              <h2 id="preguntas-frecuentes" class="font-titulo text-2xl font-black tracking-tight">Preguntas frecuentes</h2>
+              <div class="mt-5 divide-y divide-tinta-200 rounded-xl border border-tinta-200">
+                {faqs.map((f) => (
+                  <details class="group p-5">
+                    <summary class="flex cursor-pointer list-none items-start justify-between gap-4 font-titulo text-lg font-bold">
+                      {f.p}
+                      <span class="mt-0.5 text-2xl leading-none text-acento-500 transition group-open:rotate-45" aria-hidden="true">+</span>
+                    </summary>
+                    <p class="mt-3 leading-relaxed text-tinta-700">{f.r}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          )
+        }
+
+        <div class="mt-12 rounded-2xl border border-tinta-200 bg-tinta-50 p-8 lg:p-10">
+          <h2 class="font-titulo text-xl font-black tracking-tight lg:text-2xl">¿Cómo le afecta a su empresa?</h2>
+          <p class="mt-3 leading-relaxed text-tinta-700">
+            Escríbanos con su caso y se lo decimos en concreto. La primera consulta no cuesta nada.
+          </p>
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+            <a
+              href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hola, leí la novedad «' + n.h1 + '» y quisiera saber cómo me afecta.')}`}
+              rel="noopener"
+              target="_blank"
+              class="rounded-md px-6 py-3.5 text-center font-titulo font-bold text-white transition hover:opacity-90"
+              style="background-color: var(--color-whatsapp)"
+            >
+              Preguntar por WhatsApp
+            </a>
+            {servicio && (
+              <a href={`/servicios/${servicio.slug}/`} class="rounded-md border border-tinta-300 px-6 py-3.5 text-center font-titulo font-bold transition hover:bg-white">
+                Ver {servicio.nombre}
+              </a>
+            )}
+          </div>
+        </div>
+
+        {
+          lecturas.length > 0 && (
+            <div class="mt-12">
+              <h2 class="font-titulo text-xl font-black tracking-tight">Para entenderlo mejor</h2>
+              <ul class="mt-4 space-y-3">
+                {lecturas.map((a) => (
+                  <li>
+                    <a href={`/blog/${a.slug}/`} class="font-semibold text-marca-700 hover:underline">{a.h1}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </div>
+    </section>
+  </article>
+</Base>
