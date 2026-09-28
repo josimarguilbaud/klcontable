@@ -15,29 +15,47 @@ en `main` y publicado.
 - Sección `/novedades/` con la primera nota (Ley 462, cuota patronal CSS).
 - Search Console: archivo de verificación subido.
 
-## Para hacer en sesión local (con navegador)
+## Sesión local del 28/09/2026 — QA con navegador y comparación
 
-La sesión en la nube no podía abrir webs de terceros. En local, con Claude en
-Chrome:
-
-1. **Comparar con la competencia: https://avergara.com/** (A. Vergara & Co.,
-   CPA desde 1985, El Cangrejo). Revisar la web completa contra
-   https://klcontable.com y listar qué tienen que nos falte: diseño, formularios,
-   precios, testimonios, página del fundador, sección «Actualidad», servicios.
-   Lo que ya se sabía por Google: número de firma CPA (C.P.A. P.J. 29), página
-   del fundador con formación, dirección y teléfono fijo, fecha de fundación,
-   título orientado a «Contadores Públicos Autorizados en Panamá», noticias con
-   fecha, servicios de contabilidad de costos, revisión y compilación de
-   estados financieros y asesoría de RR. HH., Instagram y X.
-2. **Revisar klcontable.com publicada**: que las fotos cargan, móvil, colores,
-   footer, `/novedades/`, `/llms.txt`, `/sitemap-index.xml`.
-3. **Comprobar que `www.klcontable.com` redirige con 301 a `klcontable.com`.**
-4. **Novedades para confirmar en la fuente oficial** antes de publicarlas:
-   - Prórroga de la actualización del RUC — Resolución 201-6695 de 12/08/2025,
-     Gaceta Oficial 30348: https://dgi.mef.gob.pa/New/news?n=288
-     (el resumen del buscador no dejaba claro el año del plazo).
-   - Calendario Tributario de Cumplimiento 2026:
-     https://dgi.mef.gob.pa/Calendario/Calendario
+1. **Comparación con https://avergara.com/** — hecha. Brechas reales:
+   - Sin dirección física ni teléfono fijo en el footer (ya pendiente).
+   - `/nosotros/` no tiene foto real ni narrativa de formación/trayectoria de
+     la Licda. Escudero (ya pendiente); sí tiene idoneidad, misión/visión y FAQ.
+   - `/novedades/` solo tiene una nota; avergara.com tiene un flujo constante
+     de «Actualidad» con noticias fechadas (la más reciente, jul/2026). La
+     brecha es de volumen, no de estructura — la sección ya existe y funciona.
+   - Sin redes sociales en el footer (ya pendiente).
+   - Servicios que avergara.com sí lista y KL Contable no tiene página propia:
+     contabilidad de costos, revisión/compilación de estados financieros,
+     asesoría de RR. HH. — confirmar con la Licda. Escudero si se ofrecen de
+     verdad antes de crear páginas (ya pendiente, ver abajo).
+   - Dato nuevo: **avergara.com tampoco publica precios ni testimonios.** La
+     página `/precios/` del plan original seguiría siendo una ventaja real,
+     no ponerse al día.
+2. **Revisión de klcontable.com publicada** — hecha. Sin problemas: las 27
+   imágenes cargan (200 OK), footer completo con enlaces oficiales DGI/CSS/
+   Panamá Emprende, `/novedades/`, `/llms.txt`, `/sitemap-index.xml` y
+   `/robots.txt` responden 200. Móvil se ve bien y el menú hamburguesa abre
+   correctamente (confirmado por el DOM).
+3. **`www.klcontable.com` — ⚠️ no redirigía con 301.** Causa: `nginx.conf`
+   tenía `server_name _;` como único bloque, así que servía el mismo
+   contenido sin mirar el host; solo había un `<link rel="canonical">`, que es
+   una sugerencia, no una orden. **Corregido** en `nginx.conf`: bloque nuevo
+   `server_name www.klcontable.com` con `return 301 https://klcontable.com$request_uri;`.
+   `npm run build` verificado. **Falta pushear a `main` para que despliegue**
+   (confirmar con Josimar antes, porque no hay staging).
+4. **Fuentes oficiales verificadas en dgi.mef.gob.pa**:
+   - Prórroga del RUC: confirmada — Resolución del 21/08/2025 (Gaceta 30348),
+     plazo extendido hasta el **31 de diciembre de 2025**. ⚠️ Ese plazo ya
+     pasó (hoy 28/09/2026) y no hay prórroga posterior en las noticias de la
+     DGI. **No publicar esta novedad como vigente** — no hay borrador todavía
+     en `src/data/novedades.ts`, así que no hace falta corregir nada, solo no
+     escribirla así.
+   - Calendario Tributario de Cumplimiento 2026: la página oficial
+     (dgi.mef.gob.pa/Calendario/Calendario) solo tiene publicados enero a
+     agosto. Septiembre-diciembre todavía no están cargados por la DGI — si
+     se construye `/calendario-tributario/`, esos 4 meses no tienen fuente
+     todavía.
 
 ## Datos que tiene que dar el dueño (van en `src/data/site.ts`)
 
