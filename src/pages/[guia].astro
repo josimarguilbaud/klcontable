@@ -6,41 +6,115 @@
  * Rutas nuevas y en español. No había nada indexado aquí que conservar, así
  * que se escriben como deben escribirse; el `/servicios/` en inglés se mantiene
  * solo porque tiene historia detrás.
+ *
+ * Misma estructura SEO + GEO que los artículos del blog: respuesta directa
+ * arriba (lo que citan Google y los asistentes de IA), lo esencial en viñetas,
+ * índice con anclas, secciones con foto, primeros pasos, y todas las preguntas
+ * frecuentes declaradas como `FAQPage`. El desarrollo largo vive en
+ * `src/data/guias/<slug>.ts`.
  */
 import Base from '../layouts/Base.astro';
 import { SITE } from '../data/site';
 import { GUIAS } from '../data/guias';
+import { DESARROLLO_GUIAS } from '../data/guias/index';
 import { TODOS } from '../data/servicios';
+import { ARTICULOS } from '../data/articulos';
 import FotoHero from '../components/FotoHero.astro';
-import { fotoIA } from '../data/imagenes';
+import { fotoIA, fotoServicio } from '../data/imagenes';
+import { ancla, fechaLarga } from '../lib/texto';
 
 export function getStaticPaths() {
   return GUIAS.map((g) => ({ params: { guia: g.slug }, props: { guia: g } }));
 }
 
 const { guia } = Astro.props;
+const d = DESARROLLO_GUIAS[guia.slug];
+const ruta = `/${guia.slug}/`;
+const url = new URL(ruta, SITE.dominio).href;
+const titulo = d?.titulo ?? guia.titulo;
+const descripcion = d?.descripcion ?? guia.descripcion;
 const foto = fotoIA(`guia/${guia.slug}`);
+const faqs = [...guia.faqs, ...(d?.faqsExtra ?? [])];
+const secciones = (d?.secciones ?? []).map((s, i) => ({
+  ...s,
+  id: ancla(s.t),
+  foto: s.imagen ? fotoIA(`guia/${guia.slug}-${i + 1}`) : undefined,
+}));
+
 const relacionados = guia.servicios
   .map((s) => TODOS.find((x) => x.slug === s))
-  .filter((s): s is (typeof TODOS)[number] => Boolean(s));
+  .filter((s): s is (typeof TODOS)[number] => Boolean(s))
+  .map((s) => ({ ...s, foto: fotoServicio(s.slug) }));
+
+const lecturas = (d?.articulos ?? [])
+  .map((slug) => ARTICULOS.find((a) => a.slug === slug))
+  .filter((a): a is (typeof ARTICULOS)[number] => Boolean(a))
+  .map((a) => ({ ...a, foto: fotoIA(`blog/${a.slug}`) }));
+
+const indice = [
+  ...secciones.map((s) => ({ t: s.t, id: s.id })),
+  ...(d?.pasos.length ? [{ t: 'Primeros pasos', id: 'primeros-pasos' }] : []),
+  { t: 'Preguntas frecuentes', id: 'preguntas-frecuentes' },
+];
+
+const audiencia: Record<string, string> = {
+  'para-emprendedores': 'Emprendedores que abren un negocio en Panamá',
+  'para-pymes': 'Pequeñas y medianas empresas de Panamá',
+  'para-extranjeros': 'Extranjeros con empresa o sociedad en Panamá',
+};
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': url + '#guia',
+  headline: guia.h1,
+  description: descripcion,
+  ...(d ? { abstract: d.resumen, dateModified: d.actualizado } : {}),
+  inLanguage: 'es-PA',
+  url,
+  mainEntityOfPage: url,
+  audience: { '@type': 'BusinessAudience', audienceType: audiencia[guia.slug] ?? guia.nombre },
+  spatialCoverage: { '@type': 'Country', name: 'Panamá' },
+  about: relacionados.map((s) => ({
+    '@type': 'Service',
+    name: s.nombre,
+    url: `${SITE.dominio}/servicios/${s.slug}/`,
+  })),
+  author: { '@id': SITE.dominio + '#negocio' },
+  publisher: { '@id': SITE.dominio + '#negocio' },
+  ...(foto ? { image: new URL(foto.src, SITE.dominio).href } : {}),
+  speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '#respuesta'] },
+  ...(lecturas.length
+    ? { citation: lecturas.map((a) => `${SITE.dominio}/blog/${a.slug}/`) }
+    : {}),
+};
 ---
 
 <Base
-  title={guia.titulo}
-  description={guia.descripcion}
-  ruta={`/${guia.slug}/`}
+  title={titulo}
+  description={descripcion}
+  ruta={ruta}
   imagen={foto?.src}
-  faqs={guia.faqs}
+  faqs={faqs}
   migas={[{ nombre: 'Inicio', ruta: '/' }]}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
   <section class="hero-degradado bg-tinta-900">
     <div class:list={['mx-auto max-w-6xl px-5 py-16 lg:py-20', foto && 'grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr]']}>
       <div>
-        <p class="mb-4 text-xs font-bold tracking-widest text-acento-400 uppercase">{guia.nombre}</p>
+        <p class="mb-4 text-xs font-bold tracking-widest text-acento-400 uppercase">Guía · {guia.nombre}</p>
         <h1 class="max-w-3xl font-titulo text-3xl leading-[1.08] font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
           {guia.h1}
         </h1>
         <p class="mt-5 max-w-2xl text-lg leading-relaxed text-tinta-200">{guia.gancho}</p>
+        {
+          d && (
+            <p class="mt-4 text-sm text-tinta-200">
+              Revisada el <time datetime={d.actualizado}>{fechaLarga(d.actualizado)}</time>
+            </p>
+          )
+        }
       </div>
       {foto && <FotoHero foto={foto} />}
     </div>
@@ -48,9 +122,51 @@ const relacionados = guia.servicios
 
   <section class="py-16 lg:py-20">
     <div class="mx-auto max-w-3xl px-5">
+      {
+        d && (
+          <div class="mb-10 rounded-2xl border-l-4 border-acento-500 bg-marca-50 p-6 lg:p-8">
+            <p class="text-xs font-bold tracking-widest text-marca-700 uppercase">Respuesta corta</p>
+            <p id="respuesta" class="mt-3 text-lg leading-relaxed text-tinta-900">{d.resumen}</p>
+          </div>
+        )
+      }
+
       <div class="space-y-5 text-lg leading-relaxed text-tinta-700">
         {guia.intro.map((p) => <p>{p}</p>)}
       </div>
+
+      {
+        d && (
+          <div class="mt-10">
+            <h2 class="font-titulo text-xl font-black tracking-tight">Lo esencial</h2>
+            <ul class="mt-4 space-y-3">
+              {d.claves.map((c) => (
+                <li class="flex gap-3 text-lg leading-relaxed text-tinta-700">
+                  <span class="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-acento-500" />
+                  <span>{c}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      {
+        secciones.length > 0 && (
+          <nav aria-label="En esta guía" class="mt-10 rounded-xl border border-tinta-200 p-6">
+            <p class="font-titulo text-sm font-bold tracking-widest text-tinta-500 uppercase">En esta guía</p>
+            <ol class="mt-3 list-decimal space-y-1.5 pl-5 text-tinta-700">
+              {indice.map((x) => (
+                <li>
+                  <a href={`#${x.id}`} class="hover:text-marca-700 hover:underline">
+                    {x.t}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
     </div>
   </section>
 
@@ -72,6 +188,59 @@ const relacionados = guia.servicios
     </div>
   </section>
 
+  {
+    secciones.length > 0 && (
+      <section class="py-16 lg:py-20">
+        <div class="mx-auto max-w-3xl px-5">
+          {secciones.map((s) => (
+            <div class="mb-12">
+              <h2 id={s.id} class="scroll-mt-24 font-titulo text-2xl leading-snug font-black tracking-tight lg:text-3xl">
+                {s.t}
+              </h2>
+              {s.foto && (
+                <img
+                  src={s.foto.src}
+                  alt={s.foto.alt}
+                  width="1600"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                  class="mt-6 aspect-[16/9] w-full rounded-2xl object-cover shadow-[var(--shadow-suave)]"
+                />
+              )}
+              <div class="mt-5 space-y-4 text-lg leading-relaxed text-tinta-700">
+                {s.p.map((p) => (
+                  <p>{p}</p>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  {
+    d && d.pasos.length > 0 && (
+      <section class="border-y border-tinta-200 bg-tinta-50 py-16 lg:py-20">
+        <div class="mx-auto max-w-6xl px-5">
+          <h2 id="primeros-pasos" class="scroll-mt-24 font-titulo text-2xl font-black tracking-tight lg:text-3xl">
+            Primeros pasos
+          </h2>
+          <ol class="mt-9 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {d.pasos.map((p, i) => (
+              <li class="border-t-2 border-acento-500 pt-5">
+                <span class="font-titulo text-4xl font-black text-tinta-300">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="mt-2 font-titulo text-xl font-bold">{p.t}</h3>
+                <p class="mt-2 leading-relaxed text-tinta-700">{p.d}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
+
   <section class="py-16 lg:py-20">
     <div class="mx-auto max-w-6xl px-5">
       <h2 class="font-titulo text-2xl font-black tracking-tight lg:text-3xl">
@@ -80,9 +249,24 @@ const relacionados = guia.servicios
       <div class="mt-8 grid gap-5 md:grid-cols-3">
         {
           relacionados.map((s) => (
-            <a href={`/servicios/${s.slug}/`} class="tarjeta rounded-xl border border-tinta-200 bg-white p-6">
-              <h3 class="font-titulo text-lg font-bold">{s.nombre}</h3>
-              <p class="mt-2 text-sm text-tinta-700">{s.resumen}</p>
+            <a href={`/servicios/${s.slug}/`} class="tarjeta group overflow-hidden rounded-xl border border-tinta-200 bg-white">
+              {s.foto && (
+                <div class="overflow-hidden">
+                  <img
+                    src={s.foto.src}
+                    alt={s.foto.alt}
+                    width="1600"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                    class="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+              )}
+              <div class="p-6">
+                <h3 class="font-titulo text-lg font-bold group-hover:text-marca-700">{s.nombre}</h3>
+                <p class="mt-2 text-sm text-tinta-700">{s.resumen}</p>
+              </div>
             </a>
           ))
         }
@@ -90,12 +274,37 @@ const relacionados = guia.servicios
     </div>
   </section>
 
+  {
+    lecturas.length > 0 && (
+      <section class="border-t border-tinta-200 py-16 lg:py-20">
+        <div class="mx-auto max-w-6xl px-5">
+          <h2 class="font-titulo text-2xl font-black tracking-tight lg:text-3xl">Para profundizar</h2>
+          <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {lecturas.map((a) => (
+              <a href={`/blog/${a.slug}/`} class="tarjeta overflow-hidden rounded-xl border border-tinta-200 bg-white">
+                {a.foto && (
+                  <img src={a.foto.src} alt="" width="1600" height="900" loading="lazy" decoding="async" class="aspect-[16/9] w-full object-cover" />
+                )}
+                <div class="p-6">
+                  <h3 class="font-titulo text-lg leading-snug font-bold">{a.h1}</h3>
+                  <p class="mt-2 text-sm text-tinta-700">{a.entradilla}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   <section class="border-t border-tinta-200 bg-tinta-50 py-16 lg:py-20">
     <div class="mx-auto max-w-3xl px-5">
-      <h2 class="font-titulo text-2xl font-black tracking-tight lg:text-3xl">Preguntas frecuentes</h2>
+      <h2 id="preguntas-frecuentes" class="scroll-mt-24 font-titulo text-2xl font-black tracking-tight lg:text-3xl">
+        Preguntas frecuentes
+      </h2>
       <div class="mt-8 divide-y divide-tinta-200 border-y border-tinta-200">
         {
-          guia.faqs.map((f) => (
+          faqs.map((f) => (
             <details class="group py-5">
               <summary class="flex cursor-pointer list-none items-start justify-between gap-4 font-titulo text-lg font-bold">
                 {f.p}
@@ -118,6 +327,15 @@ const relacionados = guia.servicios
       <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
         <a href={`tel:${SITE.telefonoE164}`} class="rounded-md bg-acento-500 px-6 py-3.5 font-titulo font-bold text-white hover:bg-acento-400">
           Llamar al {SITE.telefono}
+        </a>
+        <a
+          href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hola, leí la guía «' + guia.h1 + '» y quisiera una consulta.')}`}
+          rel="noopener"
+          target="_blank"
+          class="rounded-md px-6 py-3.5 font-titulo font-bold text-white transition hover:opacity-90"
+          style="background-color: var(--color-whatsapp)"
+        >
+          Preguntar por WhatsApp
         </a>
         <a href="/contacto/" class="rounded-md border border-white/25 px-6 py-3.5 font-titulo font-bold text-white hover:bg-white/10">
           Escribir un mensaje

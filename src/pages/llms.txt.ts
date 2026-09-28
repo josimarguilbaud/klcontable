@@ -10,6 +10,7 @@ import type { APIRoute } from 'astro';
 import { SITE } from '../data/site';
 import { TODOS } from '../data/servicios';
 import { GUIAS } from '../data/guias';
+import { DESARROLLO_GUIAS } from '../data/guias/index';
 import { ARTICULOS } from '../data/articulos';
 
 export const GET: APIRoute = () => {
@@ -29,7 +30,7 @@ export const GET: APIRoute = () => {
     '',
     '## Guías por tipo de cliente',
     '',
-    ...GUIAS.map((g) => `- [${g.nombre}](${u(`/${g.slug}/`)}): ${g.descripcion}`),
+    ...GUIAS.map((g) => `- [${g.h1}](${u(`/${g.slug}/`)}): ${DESARROLLO_GUIAS[g.slug]?.resumen ?? g.descripcion}`),
     '',
     '## Herramientas',
     '',

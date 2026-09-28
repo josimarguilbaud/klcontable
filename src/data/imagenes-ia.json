@@ -340,5 +340,59 @@
     "archivo": "inicio/cierre.webp",
     "alt": "Skyline de Ciudad de Panamá al atardecer desde la Cinta Costera",
     "escena": "Panoramic view of the Panama City skyline over the bay at blue hour from the Cinta Costera, calm water, city lights reflecting."
+  },
+  {
+    "clave": "guia/para-emprendedores-1",
+    "archivo": "guia/para-emprendedores-1.webp",
+    "alt": "Emprendedora revisando planes de su negocio en una mesa de café en Ciudad de Panamá",
+    "escena": "A young entrepreneur sketching plans in a blank notebook at a small café table in Casco Viejo, Panama City, morning light through colonial shutters, seen from behind and slightly to the side. No readable text, no signs, no logos."
+  },
+  {
+    "clave": "guia/para-emprendedores-4",
+    "archivo": "guia/para-emprendedores-4.webp",
+    "alt": "Dueño de una pequeña tienda en Panamá atendiendo una venta en el mostrador",
+    "escena": "The owner of a small neighborhood shop in Panama City handing a paper bag across a wooden counter to a customer, shot from behind the customer at waist height, warm afternoon light. No readable text, no signs, no logos, no faces in focus."
+  },
+  {
+    "clave": "guia/para-emprendedores-7",
+    "archivo": "guia/para-emprendedores-7.webp",
+    "alt": "Emprendedor separando recibos en carpetas por mes sobre un escritorio en su casa en Panamá",
+    "escena": "Hands sorting blank receipts into color-coded folders on a home desk in a Panama City apartment, a laptop closed to one side and tropical plants by the window. No readable text, no screens with letters, no logos, no faces."
+  },
+  {
+    "clave": "guia/para-pymes-1",
+    "archivo": "guia/para-pymes-1.webp",
+    "alt": "Dueña de una pyme en Panamá revisando carpetas de su negocio en la trastienda de su local",
+    "escena": "Editorial photo of a small business back office in Panama City: a woman seen from behind sorting unlabeled colored folders on a wooden shelf, warm afternoon light through a window with blurred palm trees outside."
+  },
+  {
+    "clave": "guia/para-pymes-4",
+    "archivo": "guia/para-pymes-4.webp",
+    "alt": "Empleados de una pequeña empresa panameña trabajando en un taller, vistos de espaldas",
+    "escena": "Realistic editorial photo inside a small furniture workshop in Panama, two workers seen from behind sanding a wooden table, sawdust in warm light, no faces visible, no signs."
+  },
+  {
+    "clave": "guia/para-pymes-8",
+    "archivo": "guia/para-pymes-8.webp",
+    "alt": "Cajas de archivo y carpetas apiladas sobre una mesa de oficina en Ciudad de Panamá, listas para revisar",
+    "escena": "Editorial still life in a modest Panama City office: stacked cardboard archive boxes and blank folders on a table, a closed laptop beside them, city skyline softly blurred through the window at dusk."
+  },
+  {
+    "clave": "guia/para-extranjeros-1",
+    "archivo": "guia/para-extranjeros-1.webp",
+    "alt": "Vista de la bahía de Ciudad de Panamá al atardecer desde la ventanilla de un avión que aterriza",
+    "escena": "Editorial photograph looking through an airplane window at the Panama City skyline and bay at golden hour, the wing partly visible, soft reflections on the glass. No people, no visible text or logos."
+  },
+  {
+    "clave": "guia/para-extranjeros-5",
+    "archivo": "guia/para-extranjeros-5.webp",
+    "alt": "Mensajero con sobre bajo el brazo subiendo las escaleras de un edificio público en Ciudad de Panamá",
+    "escena": "Realistic editorial photo of a courier seen from behind, a plain unmarked envelope under his arm, walking up the steps of a government building in Panama City on a bright morning. No readable signs, no faces visible."
+  },
+  {
+    "clave": "guia/para-extranjeros-8",
+    "archivo": "guia/para-extranjeros-8.webp",
+    "alt": "Teléfono boca abajo y taza de café en un balcón del Casco Viejo de Panamá por la mañana",
+    "escena": "Editorial photograph of a small wrought-iron balcony table in Casco Viejo, Panama City, with a coffee cup and a smartphone lying face down, colonial facades softly blurred behind in morning light. No people, no visible text or logos."
   }
 ]

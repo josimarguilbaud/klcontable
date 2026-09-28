@@ -22,6 +22,7 @@ import { SITE } from '../../data/site';
 import { ARTICULOS } from '../../data/articulos';
 import { TODOS } from '../../data/servicios';
 import { fotoIA } from '../../data/imagenes';
+import { ancla, fechaLarga as fmt } from '../../lib/texto';
 
 export function getStaticPaths() {
   return ARTICULOS.map((a) => ({ params: { articulo: a.slug }, props: { a } }));
@@ -33,15 +34,6 @@ const url = new URL(ruta, SITE.dominio).href;
 const foto = fotoIA(`blog/${a.slug}`);
 const servicio = a.servicio ? TODOS.find((s) => s.slug === a.servicio) : undefined;
 const faqs = a.faqs ?? [];
-
-/** El `id` de un H2, a partir de su texto: sin tildes, en minúsculas y con guiones. */
-const ancla = (t: string) =>
-  t
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
 
 // Primero los del mismo servicio (son los que de verdad le interesan a este
 // lector), después los más recientes. Sin repetir este.
@@ -55,12 +47,6 @@ const otros = [...ARTICULOS]
   .slice(0, 3)
   .map((x) => ({ ...x, foto: fotoIA(`blog/${x.slug}`) }));
 
-const fmt = (iso: string) =>
-  new Date(iso + 'T12:00:00Z').toLocaleDateString('es-PA', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
 const modificado = a.actualizado && a.actualizado > a.fecha ? a.actualizado : a.fecha;
 
 const schema = {

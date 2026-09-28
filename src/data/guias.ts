@@ -24,6 +24,28 @@ export type Guia = {
   faqs: Faq[];
 };
 
+/**
+ * El desarrollo largo de cada guía, en `src/data/guias/<slug>.ts`.
+ *
+ * Mismo planteamiento SEO + GEO que los artículos del blog: la respuesta
+ * directa arriba, lo esencial en viñetas, secciones con H2 buscables, pasos
+ * concretos y preguntas frecuentes. Las secciones con `imagen` llevan foto
+ * (ver `imagenes-ia.json`, claves `guia/<slug>-<n>`).
+ */
+export type GuiaDesarrollo = {
+  /** Si se definen, sustituyen a los de la guía (título y descripción SEO). */
+  titulo?: string;
+  descripcion?: string;
+  resumen: string;
+  claves: string[];
+  secciones: { t: string; p: string[]; imagen?: { alt: string; escena: string } }[];
+  pasos: { t: string; d: string }[];
+  faqsExtra: Faq[];
+  /** Slugs de artículos del blog que amplían la guía. */
+  articulos: string[];
+  actualizado: string;
+};
+
 export const GUIAS: Guia[] = [
   {
     slug: 'para-emprendedores',
