@@ -24,6 +24,7 @@ import { TODOS } from '../data/servicios';
 import { GUIAS } from '../data/guias';
 import { ARTICULOS } from '../data/articulos';
 import Icono from '../components/Icono.astro';
+import { IMG_PORTADA } from '../data/imagenes';
 
 /** Los tres artículos más recientes, para que la portada alimente al blog. */
 const ULTIMOS = [...ARTICULOS].sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, 3);
@@ -236,8 +237,18 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
   faqs={FAQS}
 >
   <!-- HERO -->
-  <section class="hero-degradado relative bg-tinta-900">
-    <div class="mx-auto max-w-6xl px-5 py-20 lg:py-28">
+  <section class="hero-degradado relative overflow-hidden bg-tinta-900">
+    <!-- La foto de portada de la web anterior, de fondo y muy apagada: da
+         lugar y textura sin competir con el titular. Decorativa, alt vacío. -->
+    <img
+      src={IMG_PORTADA}
+      alt=""
+      width="1920"
+      height="796"
+      fetchpriority="high"
+      class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-20 mix-blend-luminosity"
+    />
+    <div class="relative mx-auto max-w-6xl px-5 py-20 lg:py-28">
       <p class="mb-5 inline-block rounded-full border border-acento-500/40 bg-acento-500/10 px-4 py-1.5 text-xs font-bold tracking-widest text-acento-400 uppercase">
         {SITE.ciudad} · {SITE.horario}
       </p>

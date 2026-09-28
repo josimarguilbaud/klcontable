@@ -1,0 +1,272 @@
+[
+  {
+    "clave": "pagina/nosotros",
+    "archivo": "pagina/nosotros.webp",
+    "alt": "Escritorio de madera con carpetas contables ordenadas y una lámpara, en una oficina con vista a Ciudad de Panamá",
+    "escena": "A tidy wooden desk in a quiet accounting office with neatly stacked binders, a desk lamp and a coffee cup, large window behind showing the Panama City skyline softly out of focus at golden hour."
+  },
+  {
+    "clave": "pagina/contacto",
+    "archivo": "pagina/contacto.webp",
+    "alt": "Mano sosteniendo un teléfono móvil sobre un escritorio con una libreta abierta, lista para escribir",
+    "escena": "Close-up of a hand holding a smartphone over an office desk with an open notebook and a pen, as if about to send a message, soft daylight, blurred modern office in Panama City behind."
+  },
+  {
+    "clave": "pagina/calculadoras",
+    "archivo": "pagina/calculadoras.webp",
+    "alt": "Calculadora, recibos de pago y lápiz sobre un escritorio, preparando el cálculo del Seguro Social",
+    "escena": "Top-down view of a desk with a calculator, a few payroll slips with blurred unreadable lines, a pencil and reading glasses, clean composition with soft shadows."
+  },
+  {
+    "clave": "pagina/servicios",
+    "archivo": "pagina/servicios.webp",
+    "alt": "Mesa de reuniones con documentos contables y una laptop, preparada para revisar las cuentas de una empresa",
+    "escena": "A small meeting table in a bright Panama City office with a laptop, a folder of financial documents and two coffee cups, ready for a client review meeting, nobody present."
+  },
+  {
+    "clave": "pagina/blog",
+    "archivo": "pagina/blog.webp",
+    "alt": "Taza de café junto a un cuaderno con notas y una tablet sobre una mesa, un momento para leer con calma",
+    "escena": "A calm reading moment: a cup of coffee, an open notebook with illegible handwritten notes and a tablet on a wooden table next to a window with tropical plants outside."
+  },
+  {
+    "clave": "pagina/404",
+    "archivo": "pagina/404.webp",
+    "alt": "Archivador con un cajón abierto y carpetas desordenadas, como un documento que no está donde se esperaba",
+    "escena": "A metal filing cabinet with one drawer half open and a few folders slightly out of place, soft moody light in an empty office corridor."
+  },
+  {
+    "clave": "guia/para-emprendedores",
+    "archivo": "guia/para-emprendedores.webp",
+    "alt": "Emprendedora de espaldas abriendo la persiana de su pequeño local en una calle de Ciudad de Panamá",
+    "escena": "A small business owner seen from behind raising the metal shutter of a tiny new shop on a colorful street in Panama City in the early morning."
+  },
+  {
+    "clave": "guia/para-pymes",
+    "archivo": "guia/para-pymes.webp",
+    "alt": "Interior de una pyme panameña con estanterías de inventario y un mostrador con caja registradora",
+    "escena": "Interior of a small Panamanian family business: shelves with inventory boxes, a counter with a cash register and a laptop, warm light, no people in focus."
+  },
+  {
+    "clave": "guia/para-extranjeros",
+    "archivo": "guia/para-extranjeros.webp",
+    "alt": "Maleta y pasaporte junto a una carpeta de documentos, con el skyline de Ciudad de Panamá al fondo",
+    "escena": "A carry-on suitcase, a closed passport and a folder of documents on a hotel desk by a window overlooking the Panama City skyline and the bay."
+  },
+  {
+    "clave": "servicio/facturacion-electronica-panama",
+    "archivo": "servicio/facturacion-electronica-panama.webp",
+    "alt": "Terminal de punto de venta emitiendo un comprobante en el mostrador de un comercio",
+    "escena": "A modern point-of-sale terminal on a shop counter printing a small receipt, a tablet showing an abstract invoice layout without readable text, shallow depth of field."
+  },
+  {
+    "clave": "servicio/precios-de-transferencia-panama",
+    "archivo": "servicio/precios-de-transferencia-panama.webp",
+    "alt": "Mapa del mundo difuminado detrás de documentos financieros y una calculadora, operaciones entre empresas de distintos países",
+    "escena": "Financial reports and a calculator on a glass desk, with a softly blurred world map on the wall behind, suggesting operations between related companies in different countries."
+  },
+  {
+    "clave": "servicio/regimenes-especiales-panama",
+    "archivo": "servicio/regimenes-especiales-panama.webp",
+    "alt": "Contenedores apilados en un puerto panameño al atardecer, imagen de la actividad logística y las zonas francas",
+    "escena": "Stacked shipping containers at a Panamanian port near Colón at sunset, cranes in the background, wide view."
+  },
+  {
+    "clave": "servicio/impuestos-municipales-panama",
+    "archivo": "servicio/impuestos-municipales-panama.webp",
+    "alt": "Fachada de pequeños comercios en una calle de Ciudad de Panamá con toldos de colores",
+    "escena": "A row of small shopfronts with colorful awnings on a street in Panama City, midday light, no readable signs."
+  },
+  {
+    "clave": "blog/cuanto-cuesta-un-empleado-en-panama",
+    "archivo": "blog/cuanto-cuesta-un-empleado-en-panama.webp",
+    "alt": "Sobre de pago, calculadora y una lista de conceptos sobre el escritorio de una pequeña empresa",
+    "escena": "A pay envelope, a calculator and a sheet with a blurred list of line items on a small business desk, a hand pointing at the sheet."
+  },
+  {
+    "clave": "blog/que-pasa-si-presento-tarde-a-la-dgi",
+    "archivo": "blog/que-pasa-si-presento-tarde-a-la-dgi.webp",
+    "alt": "Calendario de pared con un día marcado en rojo y un reloj, el plazo de una declaración que se pasó",
+    "escena": "A paper wall calendar with one day circled in red marker next to a wall clock, office background out of focus."
+  },
+  {
+    "clave": "blog/persona-natural-o-sociedad-anonima-en-panama",
+    "archivo": "blog/persona-natural-o-sociedad-anonima-en-panama.webp",
+    "alt": "Dos caminos marcados sobre una mesa con dos carpetas distintas, la decisión entre persona natural y sociedad",
+    "escena": "Two different folders, one plain and one formal with a ribbon, lying side by side on a table with a fountain pen between them, suggesting a choice."
+  },
+  {
+    "clave": "blog/que-gastos-puede-deducir-su-empresa-en-panama",
+    "archivo": "blog/que-gastos-puede-deducir-su-empresa-en-panama.webp",
+    "alt": "Recibos de gastos ordenados por categorías junto a una laptop sobre un escritorio",
+    "escena": "Business expense receipts sorted into neat small piles with paper clips next to a laptop, top-down view, clean desk."
+  },
+  {
+    "clave": "blog/como-elegir-contador-en-panama",
+    "archivo": "blog/como-elegir-contador-en-panama.webp",
+    "alt": "Reunión entre dos personas vistas desde las manos, revisando documentos juntos en una mesa",
+    "escena": "Over-the-shoulder view of two people's hands reviewing documents together at a table, one pointing at a page, faces out of frame."
+  },
+  {
+    "clave": "blog/contabilidad-atrasada-que-hacer",
+    "archivo": "blog/contabilidad-atrasada-que-hacer.webp",
+    "alt": "Cajas de archivo con papeles acumulados en una esquina de la oficina, contabilidad atrasada",
+    "escena": "Cardboard archive boxes overflowing with papers stacked in the corner of a small office, afternoon light through blinds."
+  },
+  {
+    "clave": "blog/que-pide-un-banco-panameno-para-dar-credito",
+    "archivo": "blog/que-pide-un-banco-panameno-para-dar-credito.webp",
+    "alt": "Carpeta de estados financieros sobre el mostrador de una sucursal bancaria",
+    "escena": "A neat folder of financial statements placed on a bank branch desk, modern bank interior in Panama City blurred behind."
+  },
+  {
+    "clave": "blog/necesito-declarar-itbms",
+    "archivo": "blog/necesito-declarar-itbms.webp",
+    "alt": "Ticket de compra y datáfono en el mostrador de una tienda en Panamá",
+    "escena": "A shopping receipt and a card payment terminal on the counter of a small store in Panama, shopper's hand reaching for the receipt."
+  },
+  {
+    "clave": "blog/obligaciones-de-una-sociedad-inactiva-en-panama",
+    "archivo": "blog/obligaciones-de-una-sociedad-inactiva-en-panama.webp",
+    "alt": "Oficina vacía con persianas bajadas y una carpeta cubierta de polvo sobre el escritorio",
+    "escena": "An empty, unused office with closed blinds and a single dusty folder on a desk, quiet atmosphere."
+  },
+  {
+    "clave": "blog/abrir-empresa-en-panama-siendo-extranjero",
+    "archivo": "blog/abrir-empresa-en-panama-siendo-extranjero.webp",
+    "alt": "Vista del skyline de Ciudad de Panamá desde la Cinta Costera con una persona de espaldas",
+    "escena": "A person seen from behind with a backpack looking at the Panama City skyline from the Cinta Costera waterfront promenade in the morning."
+  },
+  {
+    "clave": "blog/que-es-el-decimo-tercer-mes-en-panama",
+    "archivo": "blog/que-es-el-decimo-tercer-mes-en-panama.webp",
+    "alt": "Alcancía de cerámica sobre un escritorio junto a un calendario, la idea de apartar dinero cada mes",
+    "escena": "A ceramic piggy bank on an office desk beside a desk calendar and a few coins, soft natural light."
+  },
+  {
+    "clave": "blog/senales-de-que-su-contabilidad-tiene-problemas",
+    "archivo": "blog/senales-de-que-su-contabilidad-tiene-problemas.webp",
+    "alt": "Lupa sobre un libro contable impreso con una zona marcada en amarillo, buscando señales de un problema",
+    "escena": "Close-up of a hand holding a magnifying glass over a printed financial ledger with blurred columns, one area highlighted with a yellow marker."
+  },
+  {
+    "clave": "blog/facturacion-electronica-en-panama-que-cambia",
+    "archivo": "blog/facturacion-electronica-en-panama-que-cambia.webp",
+    "alt": "Mostrador de una ferretería en Panamá con una impresora térmica sacando un comprobante junto a un lector de tarjetas",
+    "escena": "Close-up of a hardware store counter in Panama City where a small thermal printer is feeding out a blank receipt next to a card terminal, shelves of tools softly blurred behind. Warm afternoon light, no legible text or logos."
+  },
+  {
+    "clave": "blog/subio-la-cuota-patronal-css-en-panama",
+    "archivo": "blog/subio-la-cuota-patronal-css-en-panama.webp",
+    "alt": "Manos de una persona revisando una planilla impresa con una calculadora y un bolígrafo sobre un escritorio de madera",
+    "escena": "Overhead shot of hands comparing two stacks of printed payroll sheets with a desk calculator and a pen on a wooden desk in a small Panama City office, blurred rows of figures, no legible text. Soft window light with a hint of palm trees outside."
+  },
+  {
+    "clave": "blog/como-se-calcula-una-liquidacion-laboral-en-panama",
+    "archivo": "blog/como-se-calcula-una-liquidacion-laboral-en-panama.webp",
+    "alt": "Sobre de papel, una carpeta y una caja de cartón con objetos personales sobre una mesa de oficina al terminar la jornada",
+    "escena": "A cardboard box holding a mug, a small plant and a folded jacket sits on an empty office desk next to a closed manila envelope and a folder, late evening light through blinds in a Panama City office. No people, no legible text."
+  },
+  {
+    "clave": "blog/que-es-la-prima-de-antiguedad-en-panama",
+    "archivo": "blog/que-es-la-prima-de-antiguedad-en-panama.webp",
+    "alt": "Carpetas de expedientes de personal ordenadas en un archivador metálico abierto, algunas más gastadas que otras",
+    "escena": "An open metal filing cabinet drawer full of personnel folders of different ages, some worn and yellowed, others crisp and new, in a quiet Panamanian office storeroom. Shallow depth of field, tabs unreadable."
+  },
+  {
+    "clave": "blog/paz-y-salvo-de-la-dgi-para-que-sirve",
+    "archivo": "blog/paz-y-salvo-de-la-dgi-para-que-sirve.webp",
+    "alt": "Persona de espaldas esperando en la sala de una oficina pública de Ciudad de Panamá con una carpeta bajo el brazo",
+    "escena": "A person seen from behind waiting in a government office lobby in Panama City, holding a document folder under the arm, rows of plastic chairs and a service counter softly blurred ahead. Natural daylight, no readable signs."
+  },
+  {
+    "clave": "blog/que-es-el-aviso-de-operacion-en-panama",
+    "archivo": "blog/que-es-el-aviso-de-operacion-en-panama.webp",
+    "alt": "Fachada de un pequeño comercio en una calle de Ciudad de Panamá con la persiana metálica a medio subir por la mañana",
+    "escena": "Early morning on a street in Panama City: a small corner shop with its metal rolling shutter half raised, a hand pushing it up, colorful facade and sidewalk tiles, no legible signage or logos."
+  },
+  {
+    "clave": "blog/recibi-una-notificacion-de-la-dgi-que-hacer",
+    "archivo": "blog/recibi-una-notificacion-de-la-dgi-que-hacer.webp",
+    "alt": "Manos abriendo un sobre oficial sobre la mesa de una cocina, junto a una taza de café y un teléfono boca abajo",
+    "escena": "Close-up of hands opening an official-looking envelope at a kitchen table in a Panama City apartment, a cup of coffee and a face-down phone nearby, morning light. The letter inside is folded and unreadable."
+  },
+  {
+    "clave": "blog/que-impuestos-municipales-paga-un-negocio-en-panama",
+    "archivo": "blog/que-impuestos-municipales-paga-un-negocio-en-panama.webp",
+    "alt": "Fachada de un pequeño comercio en una calle del Casco Antiguo de Ciudad de Panamá con la persiana a medio abrir",
+    "escena": "Editorial photo of a small shopfront on a colonial street in Casco Antiguo, Panama City, early morning, the metal shutter half raised and a folder of paperwork resting on the counter inside. No readable signage, no people."
+  },
+  {
+    "clave": "blog/precios-de-transferencia-le-aplican-a-su-empresa",
+    "archivo": "blog/precios-de-transferencia-le-aplican-a-su-empresa.webp",
+    "alt": "Dos carpetas de documentos unidas por un clip sobre una mesa de reuniones con vista a los rascacielos de Panamá",
+    "escena": "Editorial photo of two separate document folders connected by a single binder clip on a glass meeting table, with the blurred skyline of Punta Pacifica, Panama City, behind the window. No readable text, no people."
+  },
+  {
+    "clave": "blog/regimenes-especiales-obligaciones-contables-panama",
+    "archivo": "blog/regimenes-especiales-obligaciones-contables-panama.webp",
+    "alt": "Pasillo de una bodega en la Zona Libre de Colón con cajas apiladas y un portapapeles sobre una tarima",
+    "escena": "Editorial photo inside a warehouse in the Colon Free Zone, Panama, tall shelves of stacked cardboard boxes and a clipboard resting on a wooden pallet in the foreground, soft industrial light. No readable labels or logos, no people."
+  },
+  {
+    "clave": "blog/que-preparar-antes-del-cierre-del-ano-fiscal",
+    "archivo": "blog/que-preparar-antes-del-cierre-del-ano-fiscal.webp",
+    "alt": "Escritorio con carpetas ordenadas por mes, calculadora y comprobantes agrupados con clips, luz de tarde",
+    "escena": "Editorial overhead photo of an office desk in Panama City with a row of monthly folders, stacks of receipts grouped with paper clips and a desk calculator, warm late-afternoon light from a window with blinds. No readable text, no faces."
+  },
+  {
+    "clave": "blog/conciliacion-bancaria-por-que-es-lo-primero",
+    "archivo": "blog/conciliacion-bancaria-por-que-es-lo-primero.webp",
+    "alt": "Manos marcando con un lápiz un estado de cuenta impreso junto a un libro contable abierto",
+    "escena": "Close-up editorial photo of hands ticking lines with a pencil on a printed bank statement laid next to an open ledger, on a wooden desk in a Panama City office. Text blurred and unreadable, no faces."
+  },
+  {
+    "clave": "blog/utilidad-vs-flujo-de-caja",
+    "archivo": "blog/utilidad-vs-flujo-de-caja.webp",
+    "alt": "Caja registradora casi vacía en un mini súper panameño con facturas por cobrar sujetas junto al mostrador",
+    "escena": "Editorial photo of a nearly empty open cash drawer at the counter of a small neighborhood minimarket in Panama City, with a spike of unpaid invoices beside it and blurred shelves of goods behind. No readable text, no people."
+  },
+  {
+    "clave": "blog/contador-interno-o-contabilidad-externa",
+    "archivo": "blog/contador-interno-o-contabilidad-externa.webp",
+    "alt": "Oficina pequeña con un escritorio vacío y su silla, y al fondo una persona de espaldas en una videollamada",
+    "escena": "Editorial photo of a small office in Panama City with an empty desk and chair in the foreground, and in the soft-focus background a person seen from behind on a video call on a laptop. No readable screen content, no recognizable faces."
+  },
+  {
+    "clave": "blog/como-organizar-facturas-y-comprobantes",
+    "archivo": "blog/como-organizar-facturas-y-comprobantes.webp",
+    "alt": "Manos colocando recibos de papel en carpetas separadas por mes sobre el mostrador de una ferretería en Panamá",
+    "escena": "Close-up of hands sorting paper receipts into a row of labeled accordion folders (labels blank, no readable text) on the wooden counter of a small hardware store in Panama City, shelves of tools softly blurred behind. Natural afternoon light, realistic editorial photography."
+  },
+  {
+    "clave": "blog/como-leer-estados-financieros",
+    "archivo": "blog/como-leer-estados-financieros.webp",
+    "alt": "Café y hojas impresas con gráficos sin texto legible sobre una mesa junto a una ventana con vista a Ciudad de Panamá",
+    "escena": "Printed financial report pages with simple bar and line charts (no legible numbers or text) spread on a small table beside a cup of Panamanian coffee and a pen, early morning light through a window overlooking the Panama City skyline. Realistic editorial photography, shallow depth of field."
+  },
+  {
+    "clave": "blog/cuando-necesita-mi-empresa-una-auditoria-externa",
+    "archivo": "blog/cuando-necesita-mi-empresa-una-auditoria-externa.webp",
+    "alt": "Persona de espaldas revisando archivadores en una sala de reuniones de una empresa en Ciudad de Panamá",
+    "escena": "A person seen from behind pulling a binder from a shelf of neatly stacked archive boxes in a glass-walled meeting room of a mid-size company office in Panama City, a table with open binders in the foreground. Cool daylight, realistic editorial photography, no readable labels."
+  },
+  {
+    "clave": "blog/contratar-en-planilla-o-por-servicios-profesionales",
+    "archivo": "blog/contratar-en-planilla-o-por-servicios-profesionales.webp",
+    "alt": "Dos contratos en blanco sobre un escritorio de oficina con una pluma entre ambos, en Panamá",
+    "escena": "Top-down view of two separate blank contract documents (no legible text) lying side by side on a teak office desk in Panama, a fountain pen resting between them and a hand hovering over one, potted tropical plant at the edge of frame. Warm natural light, realistic editorial photography."
+  },
+  {
+    "clave": "blog/declaracion-de-renta-independiente-panama",
+    "archivo": "blog/declaracion-de-renta-independiente-panama.webp",
+    "alt": "Profesional independiente de espaldas trabajando en un portátil en una terraza del Casco Antiguo de Panamá",
+    "escena": "A freelancer seen from behind working on a laptop (screen blurred) at a small café table on a balcony in Casco Antiguo, Panama City, with a folder of receipts beside a glass of water and colonial facades softly out of focus. Late afternoon golden light, realistic editorial photography."
+  },
+  {
+    "clave": "blog/como-cambiar-de-contador-sin-perder-informacion",
+    "archivo": "blog/como-cambiar-de-contador-sin-perder-informacion.webp",
+    "alt": "Manos entregando una caja de archivo con carpetas a otras manos en una oficina de Panamá",
+    "escena": "Close-up of one pair of hands passing a cardboard archive box full of folders to another pair of hands across a reception desk in a modest office in Panama City, a USB drive resting on top of the folders. Soft indoor light, realistic editorial photography, no faces or readable text."
+  }
+]

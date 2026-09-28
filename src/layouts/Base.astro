@@ -9,6 +9,7 @@ import { SITE, OFICIALES } from '../data/site';
 import type { Faq } from '../data/servicios';
 import { TODOS } from '../data/servicios';
 import { GUIAS } from '../data/guias';
+import { IMG_COMPARTIR } from '../data/imagenes';
 
 interface Props {
   /** Paginas que no deben indexarse (404, gracias, etc.). */
@@ -20,9 +21,12 @@ interface Props {
   migas?: { nombre: string; ruta: string }[];
   /** Si la página tiene FAQ visible, se declara aquí para salir en Google. */
   faqs?: Faq[];
+  /** Imagen al compartir el enlace (WhatsApp, redes). Si no hay, la genérica. */
+  imagen?: string;
 }
 
-const { title, description, ruta, migas = [], faqs = [], noindex = false } = Astro.props;
+const { title, description, ruta, migas = [], faqs = [], noindex = false, imagen } = Astro.props;
+const ogImagen = new URL(imagen ?? IMG_COMPARTIR, SITE.dominio).href;
 const canonical = new URL(ruta, SITE.dominio).href;
 
 // El negocio, descrito una sola vez. Las claves que no se saben NO se inventan:
@@ -118,7 +122,9 @@ const NAV = [
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="es_PA" />
+    <meta property="og:image" content={ogImagen} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImagen} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

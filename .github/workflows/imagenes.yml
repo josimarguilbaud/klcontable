@@ -1,0 +1,56 @@
+# Genera con fal.ai las imágenes que falten (ver `scripts/generar-imagenes.mjs`)
+# y las sube a `main`, lo que a su vez dispara el despliegue.
+#
+# Se lanza a mano desde la pestaña Actions → «Generar imágenes» → Run workflow.
+# Necesita el secreto `FAL_KEY` en Settings → Secrets and variables → Actions.
+# Solo genera las que no existen: correrlo dos veces no gasta crédito de más.
+name: Generar imágenes
+
+on:
+  workflow_dispatch:
+    inputs:
+      filtro:
+        description: 'Solo las claves que empiecen así (p. ej. blog/). Vacío = todas las que faltan.'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: imagenes-klcontable
+  cancel-in-progress: false
+
+jobs:
+  generar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Generar las que faltan
+        env:
+          FAL_KEY: ${{ secrets.FAL_KEY }}
+        run: npm run imagenes -- ${{ inputs.filtro }}
+
+      - name: Comprobar que la web sigue construyendo
+        run: npm run build
+
+      - name: Subir las imágenes nuevas
+        run: |
+          set -euo pipefail
+          git add public/img/ia
+          if git diff --cached --quiet; then
+            echo "No había imágenes nuevas."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Imágenes generadas con fal.ai"
+          git push

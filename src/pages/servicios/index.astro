@@ -12,23 +12,31 @@ import Base from '../../layouts/Base.astro';
 import { SITE } from '../../data/site';
 import { TODOS } from '../../data/servicios';
 import Icono from '../../components/Icono.astro';
+import FotoHero from '../../components/FotoHero.astro';
+import { fotoIA } from '../../data/imagenes';
+
+const foto = fotoIA('pagina/servicios');
 ---
 
 <Base
   title="Servicios Contables en Panamá | Contabilidad, Impuestos y Planilla — KL Contable"
   description="Servicios contables en Panamá: asesoría, contabilidad outsourcing, auditoría, gestión tributaria ante la DGI, planilla con la CSS y trámites empresariales."
   ruta="/servicios/"
+  imagen={foto?.src}
   migas={[{ nombre: 'Inicio', ruta: '/' }]}
 >
   <section class="hero-degradado bg-tinta-900">
-    <div class="mx-auto max-w-6xl px-5 py-16 lg:py-20">
-      <h1 class="max-w-3xl font-titulo text-3xl leading-[1.08] font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
-        Servicios contables en Panamá
-      </h1>
-      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-tinta-200">
-        Seis servicios que cubren el ciclo completo de una empresa panameña.
-        Puede contratarlos juntos o solo el que necesita.
-      </p>
+    <div class:list={['mx-auto max-w-6xl px-5 py-16 lg:py-20', foto && 'grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr]']}>
+      <div>
+        <h1 class="max-w-3xl font-titulo text-3xl leading-[1.08] font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+          Servicios contables en Panamá
+        </h1>
+        <p class="mt-5 max-w-2xl text-lg leading-relaxed text-tinta-200">
+          Seis servicios que cubren el ciclo completo de una empresa panameña.
+          Puede contratarlos juntos o solo el que necesita.
+        </p>
+      </div>
+      {foto && <FotoHero foto={foto} />}
     </div>
   </section>
 

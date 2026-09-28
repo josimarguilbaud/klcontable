@@ -3,3 +3,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://klcontable.com/sitemap-index.xml
+
+# Índice para asistentes de IA: https://klcontable.com/llms.txt

@@ -1,0 +1,25 @@
+---
+/**
+ * La foto a la derecha de un hero oscuro. Solo en escritorio: en móvil empuja
+ * el texto y los botones fuera de la primera pantalla, y ahí manda el texto.
+ *
+ * `width`/`height` explícitos para que el navegador reserve el hueco (sin CLS).
+ */
+import type { Foto } from '../data/imagenes';
+
+interface Props {
+  foto: Foto;
+}
+const { foto } = Astro.props;
+---
+
+<img
+  src={foto.src}
+  alt={foto.alt}
+  width="1600"
+  height="1067"
+  loading="eager"
+  fetchpriority="high"
+  decoding="async"
+  class="hidden aspect-[3/2] w-full rounded-2xl object-cover shadow-2xl ring-1 ring-white/10 lg:block"
+/>
