@@ -25,6 +25,7 @@ import { GUIAS } from '../data/guias';
 import { ARTICULOS } from '../data/articulos';
 import Icono from '../components/Icono.astro';
 import FotoSeccion from '../components/FotoSeccion.astro';
+import Cta from '../components/Cta.astro';
 import { IMG_PORTADA, fotoIA, fotoServicio } from '../data/imagenes';
 
 /** Las fotos de cada sección de la portada (ver `imagenes-ia.json`). */
@@ -361,6 +362,11 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
           ))
         }
       </div>
+      <Cta
+        texto="¿Se reconoce en alguna? Cuéntenoslo y le decimos cómo se arregla."
+        mensaje="Hola, me reconocí en una de las señales de su web y quisiera una consulta."
+        secundario={{ texto: `Llamar al ${SITE.telefono}`, href: `tel:${SITE.telefonoE164}` }}
+      />
     </div>
   </section>
 
@@ -417,6 +423,12 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
           })
         }
       </div>
+      <Cta
+        texto="¿No sabe cuál necesita? Pregúntenos: se lo decimos sin compromiso."
+        mensaje="Hola, no sé qué servicio contable necesito. ¿Me orientan?"
+        boton="Preguntar por WhatsApp"
+        secundario={{ texto: 'Ver todos los servicios', href: '/servicios/' }}
+      />
     </div>
   </section>
 
@@ -452,6 +464,12 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
           ))
         }
       </div>
+      <Cta
+        texto="Todo esto, con un precio cerrado que sabe antes de empezar."
+        mensaje="Hola, quisiera un precio cerrado para la contabilidad mensual de mi empresa."
+        boton="Pedir mi precio cerrado"
+        secundario={{ texto: 'Consulta gratuita', href: '/contacto/' }}
+      />
     </div>
   </section>
 
@@ -484,6 +502,39 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
             </div>
           ))
         }
+      </div>
+    </div>
+  </section>
+
+  <!-- Banda CPA: la credencial es el mejor argumento para dar el paso -->
+  <section class="hero-degradado py-14 lg:py-16">
+    <div class="mx-auto flex max-w-6xl flex-col gap-8 px-5 lg:flex-row lg:items-center lg:justify-between">
+      <div class="flex items-center gap-5">
+        <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white/10 font-titulo text-2xl font-black text-acento-400" aria-hidden="true">
+          {CONTADORA.iniciales}
+        </div>
+        <div>
+          <p class="font-titulo text-2xl font-black tracking-tight text-white lg:text-3xl">
+            Hable directamente con una Contadora Pública Autorizada
+          </p>
+          <p class="mt-2 text-tinta-200">
+            {CONTADORA.nombreCompleto} · {CREDENCIAL}. La primera consulta es gratuita.
+          </p>
+        </div>
+      </div>
+      <div class="flex shrink-0 flex-col gap-3 sm:flex-row">
+        <a
+          href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hola, quisiera hablar con la licenciada sobre mi empresa.')}`}
+          rel="noopener"
+          target="_blank"
+          class="rounded-md px-6 py-3.5 text-center font-titulo font-bold text-white transition hover:opacity-90"
+          style="background-color: var(--color-whatsapp)"
+        >
+          Escribir por WhatsApp
+        </a>
+        <a href={`tel:${SITE.telefonoE164}`} class="rounded-md border border-white/30 px-6 py-3.5 text-center font-titulo font-bold text-white transition hover:bg-white/10">
+          Llamar al {SITE.telefono}
+        </a>
       </div>
     </div>
   </section>
@@ -571,6 +622,12 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
           ))
         }
       </div>
+      <Cta
+        texto="El paso 1 es una conversación, y no cuesta nada."
+        mensaje="Hola, quisiera empezar con la conversación gratuita para revisar mi caso."
+        boton="Empezar por el paso 1"
+        secundario={{ texto: 'Usar el formulario', href: '/contacto/' }}
+      />
     </div>
   </section>
 
@@ -743,6 +800,11 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
           ))
         }
       </div>
+      <Cta
+        texto="¿Su pregunta no está? Hágala: contestar no cuesta nada."
+        mensaje="Hola, tengo una pregunta sobre contabilidad:"
+        boton="Hacer mi pregunta"
+      />
     </div>
   </section>
 

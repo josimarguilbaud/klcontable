@@ -1,0 +1,56 @@
+---
+/**
+ * Llamada a la acción al final de una sección.
+ *
+ * El mensaje de WhatsApp cambia según la sección: así la licenciada sabe desde
+ * el primer mensaje qué ha leído el cliente (y de paso se ve qué bloque de la
+ * portada convierte más).
+ *
+ * `oscuro` para secciones con fondo marino.
+ */
+import { SITE } from '../data/site';
+
+interface Props {
+  texto: string;
+  mensaje: string;
+  boton?: string;
+  secundario?: { texto: string; href: string };
+  oscuro?: boolean;
+}
+
+const { texto, mensaje, boton = 'Escribir por WhatsApp', secundario, oscuro = false } = Astro.props;
+const wa = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(mensaje)}`;
+---
+
+<div
+  class:list={[
+    'mt-12 flex flex-col gap-5 rounded-2xl p-6 sm:flex-row sm:items-center sm:justify-between lg:p-8',
+    oscuro ? 'border border-white/15 bg-white/5' : 'border border-tinta-200 bg-white shadow-[var(--shadow-suave)]',
+  ]}
+>
+  <p class:list={['font-titulo text-lg font-bold lg:text-xl', oscuro ? 'text-white' : 'text-tinta-900']}>{texto}</p>
+  <div class="flex shrink-0 flex-col gap-3 sm:flex-row">
+    <a
+      href={wa}
+      rel="noopener"
+      target="_blank"
+      class="rounded-md px-6 py-3.5 text-center font-titulo font-bold text-white transition hover:opacity-90"
+      style="background-color: var(--color-whatsapp)"
+    >
+      {boton}
+    </a>
+    {
+      secundario && (
+        <a
+          href={secundario.href}
+          class:list={[
+            'rounded-md border px-6 py-3.5 text-center font-titulo font-bold transition',
+            oscuro ? 'border-white/25 text-white hover:bg-white/10' : 'border-tinta-300 text-tinta-900 hover:bg-tinta-50',
+          ]}
+        >
+          {secundario.texto}
+        </a>
+      )
+    }
+  </div>
+</div>
