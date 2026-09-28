@@ -1,0 +1,37 @@
+# Diagnóstico puntual del DNS de correo. Solo corre en la rama claude/dns-check
+# (no despliega nada). Se borra junto con la rama al terminar.
+name: Comprobar DNS de correo
+on:
+  push:
+    branches: [claude/dns-check]
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Instalar dig
+        run: sudo apt-get install -y -qq dnsutils >/dev/null
+      - name: Delegación en el registro .com (fuente de verdad)
+        run: dig +norec @a.gtld-servers.net klcontable.com NS | sed -n '/AUTHORITY/,/^$/p'
+      - name: Qué sirve cada juego de nameservers
+        run: |
+          for ns in dns1.namecheaphosting.com dns1.registrar-servers.com; do
+            echo "===== @$ns"
+            for t in NS MX TXT; do echo "--- $t"; dig +short @$ns klcontable.com $t; done
+            echo "--- DKIM"; dig +short @$ns default._domainkey.klcontable.com TXT | cut -c1-120
+            echo "--- DMARC"; dig +short @$ns _dmarc.klcontable.com TXT
+            echo "--- mail A"; dig +short @$ns mail.klcontable.com A
+          done
+      - name: Qué ven los resolvedores públicos
+        run: |
+          for r in 8.8.8.8 1.1.1.1 9.9.9.9 208.67.222.222; do
+            echo "===== @$r"
+            echo "NS:  $(dig +short @$r klcontable.com NS | tr '\n' ' ')"
+            echo "MX:  $(dig +short @$r klcontable.com MX | tr '\n' ' ')"
+            echo "SPF: $(dig +short @$r klcontable.com TXT | tr '\n' ' ')"
+          done
+      - name: Puerto 25 de los MX nuevos (¿aceptan conexión?)
+        continue-on-error: true
+        run: |
+          for mx in mx1-hosting.jellyfish.systems mx2-hosting.jellyfish.systems; do
+            timeout 8 bash -c "exec 3<>/dev/tcp/$mx/25 && head -c 200 <&3" && echo " <- $mx OK" || echo "$mx: sin conexión (GitHub suele bloquear el 25 de salida)"
+          done
