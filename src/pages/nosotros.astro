@@ -4,65 +4,241 @@
  *
  * En una firma contable esta página vende más que la portada: el cliente está
  * a punto de entregarle sus números a un desconocido y viene aquí a decidir si
- * se fía. Por eso lleva los 35 años arriba y no escondidos.
+ * se fía. Por eso lleva arriba lo que se puede comprobar: quién firma (la
+ * Licda. Luris Escudero Muñoz), su idoneidad de Contadora Pública Autorizada y
+ * los 35 años.
  *
- * Lo que NO lleva: nombres de socios, idoneidades ni fotos inventadas. Cuando
- * Josimar dé esos datos, se pintan solos desde `site.ts`.
+ * Lo que NO lleva: biografía, estudios ni cifras de clientes que no se hayan
+ * confirmado, ni una foto que no sea real. Los datos viven en `site.ts`.
  */
 import Base from '../layouts/Base.astro';
-import { SITE, HAY_CREDENCIALES } from '../data/site';
-import { SERVICIOS } from '../data/servicios';
+import { SITE, CONTADORA, CREDENCIAL } from '../data/site';
+import { TODOS } from '../data/servicios';
 import FotoHero from '../components/FotoHero.astro';
-import { fotoIA } from '../data/imagenes';
+import { fotoIA, fotoServicio } from '../data/imagenes';
 
 const foto = fotoIA('pagina/nosotros');
+
+/** Lo que cambia para el cliente que la firma esté a cargo de una CPA. */
+const POR_QUE_CPA = [
+  {
+    t: 'Puede firmar lo que le piden',
+    d: 'Hay documentos que en Panamá tienen que ir firmados por un Contador Público Autorizado: los estados financieros que pide un banco o una licitación, entre otros. Con nosotros no hace falta buscar a otra persona que los firme.',
+  },
+  {
+    t: 'Responde con su idoneidad',
+    d: `La idoneidad de CPA la otorga la Junta Técnica de Contabilidad, y con ella la profesional responde de su trabajo. La de nuestra contadora es la ${CREDENCIAL}.`,
+  },
+  {
+    t: 'Una sola responsable',
+    d: 'Su contabilidad no pasa de mano en mano sin nadie a cargo. Hay una contadora que responde por el trabajo y a la que puede preguntarle directamente.',
+  },
+];
+
+/** Cómo trabajamos: promesas que se comprueban, no adjetivos. */
+const PRINCIPIOS = [
+  { t: 'Avisamos antes', d: 'Le escribimos antes de cada vencimiento, no después. Casi todas las multas que vemos vienen de enterarse tarde.' },
+  { t: 'Le hablamos claro', d: 'Si no entiende lo que le explicamos, el trabajo no está terminado. Sin jerga y sin informes que nadie lee.' },
+  { t: 'Precio cerrado', d: 'Sabe cuánto va a pagar antes de empezar. Si algo cambia, se lo decimos antes de hacerlo.' },
+  { t: 'Sus documentos son suyos', d: 'Si algún día decide cambiar de contador, se lleva su información completa y ordenada.' },
+];
+
+const FAQS = [
+  {
+    p: '¿KL Contable es una firma de Contador Público Autorizado?',
+    r: `Sí. La firma está a cargo de la ${CONTADORA.nombreCompleto}, Contadora Pública Autorizada con ${CREDENCIAL}.`,
+  },
+  {
+    p: '¿Quién es la contadora responsable de KL Contable?',
+    r: `La ${CONTADORA.nombreCompleto}, fundadora de la firma y Contadora Pública Autorizada (${CREDENCIAL}).`,
+  },
+  {
+    p: '¿Qué es un Contador Público Autorizado (CPA) en Panamá?',
+    r: 'Es el profesional de la contabilidad con idoneidad otorgada por la Junta Técnica de Contabilidad. Esa idoneidad le permite firmar documentos que un contador sin ella no puede firmar, como los estados financieros que piden los bancos o las licitaciones.',
+  },
+  {
+    p: '¿Puedo ver la idoneidad antes de contratar?',
+    r: 'Por supuesto. Pídala en la primera consulta y se la mostramos. Es lo primero que debería pedirle a cualquier contador.',
+  },
+  {
+    p: '¿Cuánta experiencia tiene la firma?',
+    r: `${SITE.anosExperiencia} años llevando la contabilidad, los impuestos y la planilla de empresas en Panamá.`,
+  },
+];
+
+const persona = {
+  '@type': 'Person',
+  '@id': SITE.dominio + '/nosotros/#contadora',
+  name: CONTADORA.nombre,
+  honorificPrefix: CONTADORA.tratamiento,
+  jobTitle: CONTADORA.cargo,
+  worksFor: { '@id': SITE.dominio + '/#negocio' },
+  hasCredential: {
+    '@type': 'EducationalOccupationalCredential',
+    credentialCategory: 'Idoneidad de Contador Público Autorizado (CPA)',
+    identifier: CONTADORA.idoneidadCPA,
+    recognizedBy: { '@type': 'Organization', name: 'Junta Técnica de Contabilidad de Panamá' },
+  },
+  ...(CONTADORA.foto ? { image: new URL(CONTADORA.foto, SITE.dominio).href } : {}),
+};
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  url: `${SITE.dominio}/nosotros/`,
+  inLanguage: 'es-PA',
+  about: { '@id': SITE.dominio + '/#negocio' },
+  mainEntity: persona,
+};
 ---
 
 <Base
-  title="Nosotros: 35 Años de Contabilidad en Panamá | KL Contable"
-  description="KL Contable lleva 35 años de experiencia en contabilidad, impuestos y planilla en Panamá. Conozca cómo trabajamos y por qué nuestros clientes se quedan."
+  title="Nosotros: Firma de Contador Público Autorizado | KL Contable"
+  description={`KL Contable, firma dirigida por la ${CONTADORA.nombreCompleto}, Contadora Pública Autorizada (${CREDENCIAL}). ${SITE.anosExperiencia} años de contabilidad en Panamá.`}
   ruta="/nosotros/"
   imagen={foto?.src}
+  faqs={FAQS}
   migas={[{ nombre: 'Inicio', ruta: '/' }]}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
   <section class="hero-degradado bg-tinta-900">
     <div class:list={['mx-auto max-w-6xl px-5 py-16 lg:py-20', foto && 'grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr]']}>
       <div>
-        <p class="mb-4 text-xs font-bold tracking-widest text-acento-400 uppercase">La firma</p>
+        <p class="mb-4 text-xs font-bold tracking-widest text-acento-400 uppercase">
+          Firma de Contador Público Autorizado
+        </p>
         <h1 class="max-w-3xl font-titulo text-3xl leading-[1.08] font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
-          35 años llevando la contabilidad de empresas panameñas
+          {SITE.anosExperiencia} años llevando la contabilidad de empresas panameñas
         </h1>
         <p class="mt-5 max-w-2xl text-lg leading-relaxed text-tinta-200">
-          Tiempo suficiente para haber visto de todo: reformas fiscales,
-          digitalizaciones, crisis y bonanzas. Y para saber que lo que un
-          empresario necesita casi nunca es un informe más bonito.
+          Una firma a cargo de una Contadora Pública Autorizada, con una regla
+          simple: si usted no entiende lo que le explicamos, el trabajo no está
+          terminado.
         </p>
+        <div class="mt-7 inline-flex items-center gap-3 rounded-xl border border-white/15 bg-white/5 px-4 py-3">
+          <svg class="h-6 w-6 shrink-0 text-acento-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" /></svg>
+          <span class="text-sm text-white">
+            <strong>{CONTADORA.nombreCompleto}</strong><br />
+            <span class="text-tinta-200">Contadora Pública Autorizada · {CREDENCIAL}</span>
+          </span>
+        </div>
       </div>
       {foto && <FotoHero foto={foto} />}
     </div>
   </section>
 
+  <!-- La fundadora: quién firma. Sin biografía que no esté confirmada. -->
   <section class="py-16 lg:py-20">
-    <div class="mx-auto max-w-3xl px-5">
-      <div class="space-y-5 text-lg leading-relaxed text-tinta-700">
-        <p>
-          <strong>KL Contable</strong> nació para hacer algo que suena obvio y
-          se cumple poco: que un empresario entienda sus propios números.
-        </p>
-        <p>
-          En estos 35 años hemos visto pasar muchas empresas por aquí, y casi
-          todas llegaron por el mismo motivo. No porque su contador anterior se
-          equivocara en una cifra, sino porque no contestaba el teléfono, porque
-          avisaba de los vencimientos cuando ya habían pasado, o porque entregaba
-          unos informes que nadie en la empresa sabía leer.
-        </p>
-        <p>
-          Trabajamos con las obligaciones reales de una empresa panameña: la
-          <strong>DGI</strong>, el <strong>ITBMS</strong>, la planilla ante la
-          <strong>Caja de Seguro Social</strong>, los trámites que aparecen sin
-          avisar. Y lo hacemos con una regla simple: si usted no entiende lo que
-          le explicamos, el trabajo no está terminado.
-        </p>
+    <div class="mx-auto grid max-w-6xl items-start gap-10 px-5 lg:grid-cols-[.8fr_1.2fr]">
+      <div class="rounded-2xl border border-tinta-200 bg-white p-8 shadow-[var(--shadow-suave)]">
+        {
+          CONTADORA.foto ? (
+            <img
+              src={CONTADORA.foto}
+              alt={`${CONTADORA.nombreCompleto}, Contadora Pública Autorizada`}
+              width="600"
+              height="600"
+              class="aspect-square w-40 rounded-2xl object-cover"
+            />
+          ) : (
+            <div class="flex h-28 w-28 items-center justify-center rounded-2xl bg-tinta-900 font-titulo text-4xl font-black text-acento-400" aria-hidden="true">
+              {CONTADORA.iniciales}
+            </div>
+          )
+        }
+        <p class="mt-6 font-titulo text-2xl font-black tracking-tight">{CONTADORA.nombreCompleto}</p>
+        <p class="mt-1 font-semibold text-marca-700">{CONTADORA.cargo}</p>
+        <dl class="mt-6 space-y-3 border-t border-tinta-200 pt-6 text-sm">
+          <div class="flex justify-between gap-4">
+            <dt class="text-tinta-500">Idoneidad CPA</dt>
+            <dd class="font-bold">No. {CONTADORA.idoneidadCPA}</dd>
+          </div>
+          <div class="flex justify-between gap-4">
+            <dt class="text-tinta-500">Experiencia de la firma</dt>
+            <dd class="font-bold">{SITE.anosExperiencia} años</dd>
+          </div>
+          <div class="flex justify-between gap-4">
+            <dt class="text-tinta-500">Ubicación</dt>
+            <dd class="font-bold">{SITE.direccion ?? SITE.ciudad}</dd>
+          </div>
+          {
+            SITE.ruc && (
+              <div class="flex justify-between gap-4">
+                <dt class="text-tinta-500">RUC</dt>
+                <dd class="font-bold">{SITE.ruc}</dd>
+              </div>
+            )
+          }
+        </dl>
+      </div>
+
+      <div>
+        <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+          Quién está detrás
+        </span>
+        <h2 class="mt-4 font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+          Una contadora que responde por su trabajo
+        </h2>
+        <div class="mt-6 space-y-5 text-lg leading-relaxed text-tinta-700">
+          <p>
+            <strong>KL Contable</strong> la fundó la <strong>{CONTADORA.nombreCompleto}</strong>,
+            Contadora Pública Autorizada con {CREDENCIAL}. Es ella quien está al
+            frente del trabajo de la firma y quien responde por él.
+          </p>
+          <p>
+            La firma nació para hacer algo que suena obvio y se cumple poco: que
+            un empresario entienda sus propios números. En estos {SITE.anosExperiencia} años
+            hemos visto llegar a muchas empresas por el mismo motivo. No porque
+            su contador anterior se equivocara en una cifra, sino porque no
+            contestaba el teléfono, avisaba de los vencimientos cuando ya habían
+            pasado o entregaba informes que nadie en la empresa sabía leer.
+          </p>
+          <p>
+            Trabajamos con las obligaciones reales de una empresa panameña:
+            la <strong>DGI</strong>, el <strong>ITBMS</strong>, la planilla ante
+            la <strong>Caja de Seguro Social</strong> y los trámites que aparecen
+            sin avisar.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Qué significa CPA para el cliente: el argumento, explicado -->
+  <section class="border-y border-tinta-200 bg-tinta-50 py-16 lg:py-20">
+    <div class="mx-auto max-w-6xl px-5">
+      <span class="rounded-full bg-white px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+        Contador Público Autorizado
+      </span>
+      <h2 class="mt-4 max-w-3xl font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+        Qué gana usted con una firma a cargo de una CPA
+      </h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        {
+          POR_QUE_CPA.map((x) => (
+            <div class="rounded-xl border border-tinta-200 bg-white p-7">
+              <h3 class="font-titulo text-xl font-bold">{x.t}</h3>
+              <p class="mt-3 leading-relaxed text-tinta-700">{x.d}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto max-w-6xl px-5">
+      <h2 class="font-titulo text-3xl font-black tracking-tight lg:text-4xl">Cómo trabajamos</h2>
+      <div class="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {
+          PRINCIPIOS.map((x) => (
+            <div class="border-t-2 border-acento-500 pt-5">
+              <h3 class="font-titulo text-xl font-bold">{x.t}</h3>
+              <p class="mt-2 leading-relaxed text-tinta-700">{x.d}</p>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -90,46 +266,60 @@ const foto = fotoIA('pagina/nosotros');
 
   <section class="py-16 lg:py-20">
     <div class="mx-auto max-w-6xl px-5">
-      <h2 class="font-titulo text-2xl font-black tracking-tight lg:text-3xl">
-        En qué le podemos ayudar
-      </h2>
-      <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <h2 class="font-titulo text-2xl font-black tracking-tight lg:text-3xl">En qué le podemos ayudar</h2>
+      <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
         {
-          SERVICIOS.map((s) => (
-            <a href={`/servicios/${s.slug}/`} class="tarjeta rounded-xl border border-tinta-200 bg-white p-6">
-              <h3 class="font-titulo text-lg font-bold">{s.nombre}</h3>
-              <p class="mt-2 text-sm text-tinta-700">{s.resumen}</p>
-            </a>
+          TODOS.map((s) => {
+            const f = fotoServicio(s.slug);
+            return (
+              <a href={`/servicios/${s.slug}/`} class="tarjeta group overflow-hidden rounded-xl border border-tinta-200 bg-white">
+                {f && (
+                  <img
+                    src={f.src}
+                    srcset={f.srcset}
+                    sizes="(min-width: 1024px) 220px, (min-width: 768px) 50vw, 100vw"
+                    alt=""
+                    width="1600"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                    class="aspect-[16/9] w-full object-cover"
+                  />
+                )}
+                <div class="p-5">
+                  <h3 class="font-titulo font-bold group-hover:text-marca-700">{s.nombre}</h3>
+                  <p class="mt-1.5 text-sm text-tinta-700">{s.resumen}</p>
+                </div>
+              </a>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-tinta-200 bg-tinta-50 py-16 lg:py-20">
+    <div class="mx-auto max-w-3xl px-5">
+      <h2 class="font-titulo text-2xl font-black tracking-tight lg:text-3xl">Preguntas frecuentes</h2>
+      <div class="mt-8 divide-y divide-tinta-200 border-y border-tinta-200">
+        {
+          FAQS.map((f) => (
+            <details class="group py-5">
+              <summary class="flex cursor-pointer list-none items-start justify-between gap-4 font-titulo text-lg font-bold">
+                {f.p}
+                <span class="mt-1 shrink-0 text-marca-700 transition group-open:rotate-45">+</span>
+              </summary>
+              <p class="mt-3 leading-relaxed text-tinta-700">{f.r}</p>
+            </details>
           ))
         }
       </div>
     </div>
   </section>
 
-  {
-    /* Cuando existan RUC, idoneidad o el nombre del contador responsable, esta
-       sección aparece sola. Mientras no existan, no se enseña nada: en una
-       firma contable una credencial inventada no es marketing, es un problema. */
-    HAY_CREDENCIALES && (
-      <section class="border-t border-tinta-200 bg-tinta-50 py-16">
-        <div class="mx-auto max-w-3xl px-5">
-          <h2 class="font-titulo text-2xl font-black tracking-tight">Datos de la firma</h2>
-          <ul class="mt-6 space-y-2 text-tinta-700">
-            {SITE.contadorResponsable && <li>Contador responsable: {SITE.contadorResponsable}</li>}
-            {SITE.idoneidadJTC && <li>Idoneidad JTC: {SITE.idoneidadJTC}</li>}
-            {SITE.ruc && <li>RUC: {SITE.ruc}</li>}
-            {SITE.direccion && <li>{SITE.direccion}</li>}
-          </ul>
-        </div>
-      </section>
-    )
-  }
-
   <section class="bg-tinta-900 py-16">
     <div class="mx-auto max-w-3xl px-5 text-center">
-      <h2 class="font-titulo text-2xl font-black tracking-tight text-white lg:text-3xl">
-        ¿Conversamos?
-      </h2>
+      <h2 class="font-titulo text-2xl font-black tracking-tight text-white lg:text-3xl">¿Conversamos?</h2>
       <p class="mt-3 text-tinta-200">La primera consulta es gratuita. {SITE.horario}.</p>
       <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
         <a href={`tel:${SITE.telefonoE164}`} class="rounded-md bg-acento-500 px-6 py-3.5 font-titulo font-bold text-white hover:bg-marca-800">

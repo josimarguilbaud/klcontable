@@ -20,8 +20,10 @@ Una firma contable que publica un dato falso pierde justo lo que vende.
   Hoy: cuotas CSS de la Ley 462 de 2025 (trabajador 9.75 %; patronal 13.25 %
   hasta 28/02/2027, 14.25 % hasta 28/02/2029, 15.25 % después).
 - **Datos del negocio** (`src/data/site.ts`): lo no confirmado va a `null` y la
-  web no lo muestra. Pendientes: dirección, RUC, contador responsable,
-  idoneidad (JTC/CPA). Los 35 años están confirmados por el dueño.
+  web no lo muestra. Pendientes: dirección y RUC. Confirmados: 35 años y la
+  contadora (`CONTADORA`): Licda. Luris Escudero Muñoz, fundadora, Contadora
+  Pública Autorizada con Idoneidad CPA No. 0630-2010. La firma se presenta como
+  «Contador Público Autorizado» en toda la web. Su foto, solo real (nunca IA).
 - **Novedades** (`src/data/novedades.ts`): el tipo exige `fuente` con URL y
   fecha de comprobación. Un resumen de buscador o la web de otro despacho NO es
   fuente: hay que haber leído la norma o el comunicado oficial.

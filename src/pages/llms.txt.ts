@@ -7,7 +7,7 @@
  * datos que las páginas, así que nunca se queda desactualizado.
  */
 import type { APIRoute } from 'astro';
-import { SITE } from '../data/site';
+import { SITE, CONTADORA, CREDENCIAL } from '../data/site';
 import { TODOS } from '../data/servicios';
 import { GUIAS } from '../data/guias';
 import { DESARROLLO_GUIAS } from '../data/guias/index';
@@ -21,7 +21,7 @@ export const GET: APIRoute = () => {
   const texto = [
     `# ${SITE.nombre}`,
     '',
-    `> Firma de servicios de contabilidad en ${SITE.ciudad}, Panamá${SITE.anosExperiencia ? `, con ${SITE.anosExperiencia} años de experiencia` : ''}. Contabilidad mensual, impuestos ante la DGI, planilla ante la CSS y trámites empresariales para pymes, emprendedores y extranjeros con empresa en Panamá.`,
+    `> Firma de Contador Público Autorizado en ${SITE.ciudad}, Panamá, dirigida por la ${CONTADORA.nombreCompleto}, Contadora Pública Autorizada (${CREDENCIAL})${SITE.anosExperiencia ? `, con ${SITE.anosExperiencia} años de experiencia` : ''}. Contabilidad mensual, impuestos ante la DGI, planilla ante la CSS y trámites empresariales para pymes, emprendedores y extranjeros con empresa en Panamá.`,
     '',
     `Contacto: ${SITE.telefono} (teléfono y WhatsApp, ${SITE.horario.toLowerCase()}) · ${SITE.correo}. Primera consulta gratuita.`,
     '',

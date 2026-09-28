@@ -43,11 +43,12 @@ Chrome:
 
 - Dirección física (clave para Google Maps / Perfil de Empresa).
 - RUC.
-- Nombre del contador responsable y su idoneidad (JTC / CPA).
+- ~~Contadora responsable e idoneidad~~ — hecho el 28/09/2026: Licda. Luris
+  Escudero Muñoz, Idoneidad CPA No. 0630-2010 (`CONTADORA` en `site.ts`).
+- Foto real de la Licda. Escudero para /nosotros/ (`CONTADORA.foto`).
+- Formación y trayectoria de la Licda. Escudero, si quiere contarla.
 - Año de fundación de la firma.
 - Redes sociales (Instagram, Facebook, LinkedIn) para el footer y `sameAs`.
-- Si alguien tiene idoneidad CPA: permite posicionar «contador público
-  autorizado en Panamá». Si no, NO usar el término.
 - Qué servicios más ofrece de verdad (costos, compilación de estados
   financieros, RR. HH.) antes de crear sus páginas.
 

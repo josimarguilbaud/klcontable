@@ -34,14 +34,32 @@ export const SITE = {
   anosExperiencia: 35 as number | null,
   direccion: null as string | null,
   ruc: null as string | null,
-  contadorResponsable: null as string | null,
-  idoneidadJTC: null as string | null,      // nº de la Junta Técnica de Contabilidad
   clientesAtendidos: null as number | null,
 } as const;
 
-/** ¿Hay algún dato de confianza que enseñar? Si no, la sección no se pinta. */
-export const HAY_CREDENCIALES =
-  SITE.idoneidadJTC !== null || SITE.ruc !== null || SITE.contadorResponsable !== null;
+/**
+ * La contadora responsable y fundadora. Confirmado por Josimar el 28/09/2026.
+ *
+ * Es la credencial que más pesa en una firma contable: la idoneidad de
+ * Contador Público Autorizado. Sale en la barra superior, la portada, cada
+ * servicio, /nosotros/, el pie y el schema del negocio.
+ *
+ * `foto` va en null a propósito: la foto tiene que ser real. Nunca una
+ * generada con IA ni de banco de imágenes: es una persona concreta con una
+ * credencial concreta.
+ */
+export const CONTADORA = {
+  tratamiento: 'Licda.',
+  nombre: 'Luris Escudero Muñoz',
+  nombreCompleto: 'Licda. Luris Escudero Muñoz',
+  iniciales: 'LE',
+  cargo: 'Contadora Pública Autorizada y fundadora',
+  idoneidadCPA: '0630-2010',
+  foto: null as string | null,
+} as const;
+
+/** La credencial en una línea, igual en toda la web. */
+export const CREDENCIAL = `Idoneidad CPA No. ${CONTADORA.idoneidadCPA}`;
 
 /** Enlaces oficiales. Son de instituciones panameñas: no caducan y dan contexto. */
 export const OFICIALES = [

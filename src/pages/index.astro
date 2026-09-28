@@ -19,7 +19,7 @@
  * así se leen, se corrigen y se amplían sin pelearse con las clases.
  */
 import Base from '../layouts/Base.astro';
-import { SITE } from '../data/site';
+import { SITE, CONTADORA, CREDENCIAL } from '../data/site';
 import { TODOS } from '../data/servicios';
 import { GUIAS } from '../data/guias';
 import { ARTICULOS } from '../data/articulos';
@@ -177,6 +177,10 @@ const PASOS = [
  */
 const FAQS = [
   {
+    p: '¿KL Contable es una firma de Contador Público Autorizado?',
+    r: `Sí. La firma la dirige la ${CONTADORA.nombreCompleto}, Contadora Pública Autorizada con ${CREDENCIAL}. Eso significa, entre otras cosas, que podemos firmar los estados financieros que le pide un banco o una licitación.`,
+  },
+  {
     p: '¿Cuánto cuesta llevar la contabilidad de mi empresa en Panamá?',
     r: 'Depende del volumen de operaciones, de si tiene empleados en planilla y de si está al día o hay atrasos que ordenar. Por eso la primera consulta es gratuita: se revisa su caso concreto y se le da un precio cerrado, sin sorpresas después.',
   },
@@ -247,7 +251,7 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
 
 <Base
   title="Contador en Panamá | Servicios de Contabilidad — KL Contable"
-  description="Servicios de contabilidad en Panamá para empresas y emprendedores: contabilidad mensual, impuestos ante la DGI, planilla y trámites. Primera consulta gratuita."
+  description="Contador Público Autorizado en Panamá: contabilidad mensual, impuestos ante la DGI, planilla y trámites para empresas. Primera consulta gratuita."
   ruta="/"
   faqs={FAQS}
 >
@@ -311,6 +315,10 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
             <p class="mt-1 text-sm text-tinta-200">Llevando contabilidad en Panamá.</p>
           </div>
         )}
+        <a href="/nosotros/" class="group">
+          <p class="font-titulo text-lg font-bold text-white group-hover:text-acento-400">Contador Público Autorizado</p>
+          <p class="mt-1 text-sm text-tinta-200">{CONTADORA.nombreCompleto}, {CREDENCIAL}.</p>
+        </a>
         <div>
           <p class="font-titulo text-lg font-bold text-white">Aviso antes del vencimiento</p>
           <p class="mt-1 text-sm text-tinta-200">Nunca se entera tarde de una fecha.</p>
@@ -318,10 +326,6 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
         <div>
           <p class="font-titulo text-lg font-bold text-white">Le hablamos claro</p>
           <p class="mt-1 text-sm text-tinta-200">Sin jerga. Si no lo entiende, no sirve.</p>
-        </div>
-        <div>
-          <p class="font-titulo text-lg font-bold text-white">Precio cerrado</p>
-          <p class="mt-1 text-sm text-tinta-200">Sabe cuánto paga antes de empezar.</p>
         </div>
       </div>
     </div>
@@ -679,7 +683,9 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
         </p>
         <p>
           En <strong>KL Contable</strong> llevamos <strong>35 años</strong
-          > haciendo esto en Panamá, y partimos de algo simple: usted no tiene
+          > haciendo esto en Panamá, bajo la dirección
+          de la <strong>{CONTADORA.nombreCompleto}</strong>, Contadora Pública
+          Autorizada ({CREDENCIAL}). Partimos de algo simple: usted no tiene
           por qué entender de contabilidad. Para eso nos contrata. Lo que sí
           tiene derecho a saber es <strong>cuánto entra, cuánto sale y qué le
           toca pagar este mes</strong>, dicho en palabras normales y sin tener
@@ -689,8 +695,8 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
           Trabajamos con las obligaciones reales de una empresa panameña: las
           declaraciones ante la <strong>Dirección General de Ingresos</strong>,
           el <strong>ITBMS</strong> mensual cuando corresponde, la planilla ante
-          la <strong>Caja de Seguro Social</strong> por el sistema SIPE, el
-          <strong>décimo tercer mes</strong> y los trámites que van apareciendo.
+          la <strong>Caja de Seguro Social</strong> por el sistema SIPE,
+          el <strong>décimo tercer mes</strong> y los trámites que van apareciendo.
           Todo con aviso anticipado, porque casi todas las multas que hemos
           visto no fueron por no querer pagar: fueron por enterarse tarde, y ese
           recargo crece cada mes que la obligación sigue pendiente.
@@ -699,8 +705,8 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
           Atendemos tanto a quien está <strong>abriendo su negocio</strong> y
           todavía no sabe si le conviene ser persona natural o sociedad, como a
           la <strong>pyme establecida</strong> que necesita sus estados
-          financieros en orden para pedir un crédito, como al
-          <strong>extranjero</strong> que tiene una sociedad panameña y vive a
+          financieros en orden para pedir un crédito, como
+          al <strong>extranjero</strong> que tiene una sociedad panameña y vive a
           nueve husos horarios de aquí. Son tres necesidades muy distintas, y
           por eso cada una tiene su propia guía en esta web.
         </p>

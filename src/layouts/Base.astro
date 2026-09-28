@@ -5,7 +5,7 @@
  * depende de que cada página se acuerde, tarde o temprano una se olvida.
  */
 import '../styles/global.css';
-import { SITE, OFICIALES } from '../data/site';
+import { SITE, OFICIALES, CONTADORA, CREDENCIAL } from '../data/site';
 import type { Faq } from '../data/servicios';
 import { TODOS } from '../data/servicios';
 import { GUIAS } from '../data/guias';
@@ -47,8 +47,23 @@ const negocio: Record<string, unknown> = {
     addressCountry: SITE.pais,
     ...(SITE.direccion ? { streetAddress: SITE.direccion } : {}),
   },
-  description:
-    'Firma de servicios de contabilidad en Panamá: contabilidad, impuestos ante la DGI, planilla y trámites empresariales.',
+  description: `Firma de Contador Público Autorizado en Panamá, dirigida por la ${CONTADORA.nombreCompleto} (${CREDENCIAL}): contabilidad, impuestos ante la DGI, planilla y trámites empresariales.`,
+  // La fundadora y su credencial, en todas las páginas: es la señal de
+  // experiencia y autoridad (E-E-A-T) que más pesa en una firma contable.
+  founder: {
+    '@type': 'Person',
+    '@id': SITE.dominio + '/nosotros/#contadora',
+    name: CONTADORA.nombre,
+    honorificPrefix: CONTADORA.tratamiento,
+    jobTitle: CONTADORA.cargo,
+    url: `${SITE.dominio}/nosotros/`,
+    hasCredential: {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'Idoneidad de Contador Público Autorizado (CPA)',
+      identifier: CONTADORA.idoneidadCPA,
+      recognizedBy: { '@type': 'Organization', name: 'Junta Técnica de Contabilidad de Panamá' },
+    },
+  },
   logo: new URL('/img/logo-klcontable.png', SITE.dominio).href,
   image: new URL(IMG_COMPARTIR, SITE.dominio).href,
   // Solo los días: la hora de apertura no está confirmada y no se inventa.
@@ -189,7 +204,7 @@ const NAV = [
          real es una llamada o un WhatsApp, no un formulario. -->
     <div class="hidden bg-tinta-900 py-2 text-xs text-tinta-200 md:block">
       <div class="mx-auto flex max-w-6xl items-center justify-between px-5">
-        <span>{SITE.ciudad} · {SITE.horario}</span>
+        <span>Contador Público Autorizado · {CREDENCIAL} · {SITE.ciudad}</span>
         <div class="flex gap-5">
           <a href={`mailto:${SITE.correo}`} class="hover:text-acento-400">{SITE.correo}</a>
           <a href={`tel:${SITE.telefonoE164}`} class="font-bold hover:text-acento-400"
@@ -359,6 +374,10 @@ const NAV = [
               Servicios de contabilidad, impuestos y planilla para empresas y
               emprendedores en Panamá{SITE.anosExperiencia ? `, con ${SITE.anosExperiencia} años de experiencia` : ''}.
             </p>
+            <a href="/nosotros/" class="mt-4 inline-flex items-center gap-2 rounded-lg border border-white/15 px-3 py-2 text-xs text-tinta-200 hover:border-acento-400">
+              <svg class="h-4 w-4 shrink-0 text-acento-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" /></svg>
+              <span><strong class="text-white">{CONTADORA.nombreCompleto}</strong> · Contadora Pública Autorizada · {CREDENCIAL}</span>
+            </a>
 
             <ul class="mt-6 space-y-3 text-sm">
               <li>
