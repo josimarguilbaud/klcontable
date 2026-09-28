@@ -30,6 +30,7 @@ import { IMG_PORTADA, fotoIA, fotoServicio } from '../data/imagenes';
 
 /** Las fotos de cada sección de la portada (ver `imagenes-ia.json`). */
 const F = {
+  nouscrm: fotoIA('inicio/nouscrm'),
   senales: fotoIA('inicio/senales'),
   mensual: fotoIA('inicio/mensual'),
   porQue: fotoIA('inicio/por-que'),
@@ -715,6 +716,83 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
             Ver todos los artículos →
           </a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOUSCRM: herramienta recomendada para cotizar y cobrar.
+       OJO: NousCRM NO emite factura electrónica DGI (no es PAC, no genera
+       CUFE). Se presenta como lo que es —cotizaciones, facturas internas y
+       cobros— y se dice claro que la factura electrónica va aparte. En la web
+       de una CPA, venderlo como «sistema de facturación» sería engañar. -->
+  <section class="border-t border-tinta-200 py-20 lg:py-24">
+    <div class="mx-auto max-w-6xl px-5">
+      <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_.95fr]">
+        <div>
+          <span class="rounded-full bg-marca-50 px-3 py-1 text-xs font-bold tracking-widest text-marca-700 uppercase">
+            Herramienta recomendada
+          </span>
+          <h2 class="mt-4 font-titulo text-3xl font-black tracking-tight lg:text-4xl">
+            ¿Todavía cotiza en Word y cobra de memoria?
+          </h2>
+          <p class="mt-4 text-lg leading-relaxed text-tinta-700">
+            Para las empresas que aún no tienen un sistema para cotizar y cobrar,
+            recomendamos <strong>NousCRM</strong>: hace la cotización con su logo y
+            el ITBMS calculado, la convierte en factura con un clic y le muestra
+            en una sola lista quién le debe, con el recordatorio listo para
+            enviarlo por WhatsApp.
+          </p>
+          <ul class="mt-7 space-y-3">
+            {
+              [
+                'Cotizaciones y facturas con su logo, su RUC y su propia numeración.',
+                'Su cliente abre el documento desde WhatsApp, sin crear cuenta ni contraseña.',
+                'Abonos parciales y lo vencido en una lista, con el recordatorio ya escrito.',
+                'Varias empresas con una sola cuenta, cada una con su marca.',
+                'Su contador entra con acceso de solo lectura y exporta a Excel en un clic.',
+              ].map((x) => (
+                <li class="flex gap-3 text-tinta-700">
+                  <svg class="mt-0.5 h-5 w-5 shrink-0 text-marca-700" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-8 8a1 1 0 01-1.4 0l-4-4a1 1 0 111.4-1.4L8 12.6l7.3-7.3a1 1 0 011.4 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>{x}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="mt-7 rounded-xl border-l-4 border-acento-500 bg-tinta-50 p-5 text-sm leading-relaxed text-tinta-700">
+            <strong class="text-tinta-900">Importante:</strong> NousCRM lleva sus
+            cotizaciones y sus cobros, pero <strong>no emite la factura electrónica
+            de la DGI</strong>. Esa se sigue emitiendo por un proveedor autorizado
+            o el facturador gratuito de la DGI, y en KL Contable
+            <a href="/servicios/facturacion-electronica-panama/" class="font-semibold text-marca-700 underline underline-offset-2">le ayudamos a configurarla</a>.
+          </div>
+
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a
+              href="https://nouscrm.app/?utm_source=klcontable&utm_medium=web&utm_campaign=portada"
+              rel="noopener"
+              target="_blank"
+              class="rounded-md bg-acento-500 px-6 py-3.5 text-center font-titulo font-bold text-white shadow-[var(--shadow-acento)] transition hover:bg-marca-800"
+            >
+              Conocer NousCRM
+            </a>
+            <a
+              href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hola, quisiera saber si NousCRM me sirve para cotizar y cobrar en mi empresa.')}`}
+              rel="noopener"
+              target="_blank"
+              class="rounded-md border border-tinta-300 bg-white px-6 py-3.5 text-center font-titulo font-bold text-tinta-900 transition hover:bg-tinta-50"
+            >
+              Preguntarnos si le sirve
+            </a>
+          </div>
+          <p class="mt-4 text-xs text-tinta-500">
+            NousCRM es un producto desarrollado en Panamá por Elemento Web, la
+            agencia que hizo esta web.
+          </p>
+        </div>
+        <FotoSeccion foto={F.nouscrm} />
       </div>
     </div>
   </section>
