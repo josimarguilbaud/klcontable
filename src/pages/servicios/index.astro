@@ -19,7 +19,7 @@ const foto = fotoIA('pagina/servicios');
 ---
 
 <Base
-  title="Servicios Contables en Panamá | Contabilidad, Impuestos y Planilla — KL Contable"
+  title="Servicios Contables en Panamá | KL Contable"
   description="Servicios contables en Panamá: asesoría, contabilidad outsourcing, auditoría, gestión tributaria ante la DGI, planilla con la CSS y trámites empresariales."
   ruta="/servicios/"
   imagen={foto?.src}
@@ -55,6 +55,8 @@ const foto = fotoIA('pagina/servicios');
                   <div class="overflow-hidden">
                     <img
                       src={f.src}
+  srcset={f.srcset}
+  sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
                       alt={f.alt}
                       width="1600"
                       height="900"

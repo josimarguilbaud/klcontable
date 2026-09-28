@@ -80,8 +80,8 @@ const schema = {
     name: s.nombre,
     url: `${SITE.dominio}/servicios/${s.slug}/`,
   })),
-  author: { '@id': SITE.dominio + '#negocio' },
-  publisher: { '@id': SITE.dominio + '#negocio' },
+  author: { '@id': SITE.dominio + '/#negocio' },
+  publisher: { '@id': SITE.dominio + '/#negocio' },
   ...(foto ? { image: new URL(foto.src, SITE.dominio).href } : {}),
   speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '#respuesta'] },
   ...(lecturas.length
@@ -200,6 +200,8 @@ const schema = {
               {s.foto && (
                 <img
                   src={s.foto.src}
+  srcset={s.foto.srcset}
+  sizes="(min-width: 768px) 720px, 100vw"
                   alt={s.foto.alt}
                   width="1600"
                   height="900"
@@ -254,6 +256,8 @@ const schema = {
                 <div class="overflow-hidden">
                   <img
                     src={s.foto.src}
+  srcset={s.foto.srcset}
+  sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
                     alt={s.foto.alt}
                     width="1600"
                     height="900"
@@ -283,7 +287,9 @@ const schema = {
             {lecturas.map((a) => (
               <a href={`/blog/${a.slug}/`} class="tarjeta overflow-hidden rounded-xl border border-tinta-200 bg-white">
                 {a.foto && (
-                  <img src={a.foto.src} alt="" width="1600" height="900" loading="lazy" decoding="async" class="aspect-[16/9] w-full object-cover" />
+                  <img src={a.foto.src}
+  srcset={a.foto.srcset}
+  sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw" alt="" width="1600" height="900" loading="lazy" decoding="async" class="aspect-[16/9] w-full object-cover" />
                 )}
                 <div class="p-6">
                   <h3 class="font-titulo text-lg leading-snug font-bold">{a.h1}</h3>

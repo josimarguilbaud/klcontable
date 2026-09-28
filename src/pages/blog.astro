@@ -21,6 +21,22 @@ const posts = [...ARTICULOS]
   .map((a) => ({ ...a, foto: fotoIA(`blog/${a.slug}`) }));
 const [destacado, ...resto] = posts;
 
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  '@id': `${SITE.dominio}/blog/#blog`,
+  name: `Blog de ${SITE.nombre}`,
+  url: `${SITE.dominio}/blog/`,
+  inLanguage: 'es-PA',
+  publisher: { '@id': SITE.dominio + '/#negocio' },
+  blogPost: posts.map((a) => ({
+    '@type': 'BlogPosting',
+    headline: a.h1,
+    url: `${SITE.dominio}/blog/${a.slug}/`,
+    datePublished: a.fecha,
+  })),
+};
+
 const fmt = (iso: string) =>
   new Date(iso + 'T12:00:00Z').toLocaleDateString('es-PA', {
     day: 'numeric',
@@ -38,6 +54,8 @@ const foto = fotoIA('pagina/blog');
   imagen={foto?.src}
   migas={[{ nombre: 'Inicio', ruta: '/' }]}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
   <section class="hero-degradado bg-tinta-900">
     <div class:list={['mx-auto max-w-6xl px-5 py-16 lg:py-20', foto && 'grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr]']}>
       <div>
@@ -58,7 +76,9 @@ const foto = fotoIA('pagina/blog');
       <!-- El más reciente, a lo ancho -->
       <a href={`/blog/${destacado.slug}/`} class:list={['tarjeta block overflow-hidden rounded-2xl border border-tinta-200 bg-white', destacado.foto && 'lg:grid lg:grid-cols-[1.1fr_.9fr]']}>
         {destacado.foto && (
-          <img src={destacado.foto.src} alt="" width="1600" height="900" decoding="async" class="aspect-[16/9] h-full w-full object-cover lg:aspect-auto lg:order-2" />
+          <img src={destacado.foto.src}
+  srcset={destacado.foto.srcset}
+  sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw" alt="" width="1600" height="900" decoding="async" class="aspect-[16/9] h-full w-full object-cover lg:aspect-auto lg:order-2" />
         )}
         <div class="p-8 lg:p-11">
         <p class="text-xs font-bold tracking-widest text-acento-500 uppercase">Lo último</p>
@@ -77,7 +97,9 @@ const foto = fotoIA('pagina/blog');
           resto.map((a) => (
             <a href={`/blog/${a.slug}/`} class="tarjeta flex flex-col overflow-hidden rounded-xl border border-tinta-200 bg-white">
               {a.foto && (
-                <img src={a.foto.src} alt="" width="1600" height="900" loading="lazy" decoding="async" class="aspect-[16/9] w-full object-cover" />
+                <img src={a.foto.src}
+  srcset={a.foto.srcset}
+  sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw" alt="" width="1600" height="900" loading="lazy" decoding="async" class="aspect-[16/9] w-full object-cover" />
               )}
               <div class="flex grow flex-col p-7">
                 <h2 class="font-titulo text-xl leading-snug font-bold">{a.h1}</h2>

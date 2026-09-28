@@ -25,7 +25,8 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import MANIFIESTO from './imagenes-ia.json';
 
-export type Foto = { src: string; alt: string };
+/** `srcset` solo existe en las generadas: llevan una versión de 800 px para móvil. */
+export type Foto = { src: string; alt: string; srcset?: string };
 
 type EntradaIA = { clave: string; archivo: string; alt: string; escena: string };
 
@@ -39,7 +40,13 @@ export function fotoIA(clave: string): Foto | undefined {
   const e = IA.get(clave);
   if (!e) return undefined;
   const src = `/img/ia/${e.archivo}`;
-  return existsSync(join(PUBLIC, src)) ? { src, alt: e.alt } : undefined;
+  if (!existsSync(join(PUBLIC, src))) return undefined;
+  const chica = src.replace(/\.webp$/, '-800.webp');
+  return {
+    src,
+    alt: e.alt,
+    ...(existsSync(join(PUBLIC, chica)) ? { srcset: `${chica} 800w, ${src} 1600w` } : {}),
+  };
 }
 
 /**

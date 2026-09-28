@@ -71,8 +71,8 @@ const schema = {
   ...(servicio
     ? { about: { '@type': 'Service', name: servicio.nombre, url: `${SITE.dominio}/servicios/${servicio.slug}/` } }
     : {}),
-  author: { '@id': SITE.dominio + '#negocio' },
-  publisher: { '@id': SITE.dominio + '#negocio' },
+  author: { '@id': SITE.dominio + '/#negocio' },
+  publisher: { '@id': SITE.dominio + '/#negocio' },
   ...(foto
     ? {
         image: {
@@ -126,6 +126,8 @@ const schema = {
         <div class="mx-auto -mb-4 max-w-4xl px-5 pt-10 lg:pt-14">
           <img
             src={foto.src}
+  srcset={foto.srcset}
+  sizes="(min-width: 1024px) 896px, 100vw"
             alt={foto.alt}
             width="1600"
             height="900"
@@ -274,7 +276,9 @@ const schema = {
             otros.map((o) => (
               <a href={`/blog/${o.slug}/`} class="tarjeta overflow-hidden rounded-xl border border-tinta-200 bg-white">
                 {o.foto && (
-                  <img src={o.foto.src} alt="" width="1600" height="900" loading="lazy" decoding="async" class="aspect-[16/9] w-full object-cover" />
+                  <img src={o.foto.src}
+  srcset={o.foto.srcset}
+  sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw" alt="" width="1600" height="900" loading="lazy" decoding="async" class="aspect-[16/9] w-full object-cover" />
                 )}
                 <div class="p-6">
                   <h3 class="font-titulo text-lg leading-snug font-bold">{o.h1}</h3>

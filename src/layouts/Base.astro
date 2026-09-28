@@ -34,7 +34,7 @@ const canonical = new URL(ruta, SITE.dominio).href;
 const negocio: Record<string, unknown> = {
   '@context': 'https://schema.org',
   '@type': 'AccountingService',
-  '@id': SITE.dominio + '#negocio',
+  '@id': SITE.dominio + '/#negocio',
   name: SITE.nombre,
   url: SITE.dominio,
   email: SITE.correo,
@@ -49,6 +49,39 @@ const negocio: Record<string, unknown> = {
   },
   description:
     'Firma de servicios de contabilidad en Panamá: contabilidad, impuestos ante la DGI, planilla y trámites empresariales.',
+  logo: new URL('/img/logo-klcontable.png', SITE.dominio).href,
+  image: new URL(IMG_COMPARTIR, SITE.dominio).href,
+  // Solo los días: la hora de apertura no está confirmada y no se inventa.
+  openingHours: 'Mo-Fr',
+  inLanguage: 'es-PA',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: SITE.telefonoE164,
+    email: SITE.correo,
+    contactType: 'customer service',
+    areaServed: 'PA',
+    availableLanguage: 'es',
+  },
+  knowsAbout: ['Contabilidad', 'Impuestos en Panamá', 'ITBMS', 'Planilla y CSS', 'Auditoría', 'Facturación electrónica'],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Servicios de contabilidad en Panamá',
+    itemListElement: TODOS.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: s.nombre, url: `${SITE.dominio}/servicios/${s.slug}/` },
+    })),
+  },
+};
+
+/** El sitio como tal: le dice a Google el nombre de marca que debe mostrar. */
+const sitio = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': SITE.dominio + '/#sitio',
+  name: SITE.nombre,
+  url: SITE.dominio + '/',
+  inLanguage: 'es-PA',
+  publisher: { '@id': SITE.dominio + '/#negocio' },
 };
 
 const migasSchema = migas.length
@@ -135,6 +168,7 @@ const NAV = [
     />
 
     <script type="application/ld+json" set:html={JSON.stringify(negocio)} />
+    {ruta === '/' && <script type="application/ld+json" set:html={JSON.stringify(sitio)} />}
     {migasSchema && <script type="application/ld+json" set:html={JSON.stringify(migasSchema)} />}
     {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 

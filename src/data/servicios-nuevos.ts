@@ -21,7 +21,7 @@ export const SERVICIOS_NUEVOS: Servicio[] = [
   {
     slug: 'facturacion-electronica-panama',
     nombre: 'Facturación Electrónica',
-    titulo: 'Facturación Electrónica en Panamá | Implementación y PAC — KL Contable',
+    titulo: 'Facturación Electrónica en Panamá | KL Contable',
     descripcion:
       'Le montamos la facturación electrónica de su empresa en Panamá: elección del PAC, homologación ante la DGI y su equipo formado para emitir sin sustos.',
     h1: 'Facturación electrónica en Panamá',
@@ -67,7 +67,7 @@ export const SERVICIOS_NUEVOS: Servicio[] = [
   {
     slug: 'precios-de-transferencia-panama',
     nombre: 'Precios de Transferencia',
-    titulo: 'Precios de Transferencia en Panamá | Informe 930 y Estudio — KL Contable',
+    titulo: 'Precios de Transferencia en Panamá | KL Contable',
     descripcion:
       'Estudio de precios de transferencia y declaración informativa en Panamá para empresas que operan con partes relacionadas dentro o fuera del país.',
     h1: 'Precios de transferencia en Panamá',
@@ -112,7 +112,7 @@ export const SERVICIOS_NUEVOS: Servicio[] = [
   {
     slug: 'regimenes-especiales-panama',
     nombre: 'Regímenes Especiales',
-    titulo: 'Regímenes Especiales en Panamá | SEM, EMMA, Zona Libre — KL Contable',
+    titulo: 'Regímenes Especiales en Panamá: SEM y EMMA | KL Contable',
     descripcion:
       'Asesoría contable y fiscal para empresas bajo regímenes especiales en Panamá: SEM, EMMA, Zona Libre de Colón y Panamá Pacífico.',
     h1: 'Regímenes especiales en Panamá',
@@ -153,7 +153,7 @@ export const SERVICIOS_NUEVOS: Servicio[] = [
   {
     slug: 'impuestos-municipales-panama',
     nombre: 'Impuestos Municipales',
-    titulo: 'Impuestos Municipales en Panamá | Paz y Salvo Municipal — KL Contable',
+    titulo: 'Impuestos Municipales en Panamá | KL Contable',
     descripcion:
       'Gestión de impuestos municipales en Panamá: declaración jurada, pago mensual y paz y salvo del municipio para su empresa.',
     h1: 'Impuestos municipales en Panamá',

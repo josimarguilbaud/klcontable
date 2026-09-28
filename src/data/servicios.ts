@@ -32,7 +32,7 @@ export const SERVICIOS: Servicio[] = [
   {
     slug: 'asesoria-contable-panama',
     nombre: 'Asesoría Contable',
-    titulo: 'Asesoría Contable en Panamá | Contador de Confianza — KL Contable',
+    titulo: 'Asesoría Contable en Panamá | KL Contable',
     descripcion:
       'Asesoría contable en Panamá para empresas y emprendedores. Un contador que le explica sus números en palabras claras y le avisa antes de que haya problema.',
     h1: 'Asesoría contable en Panamá',
@@ -71,7 +71,7 @@ export const SERVICIOS: Servicio[] = [
   {
     slug: 'servicios-de-contabilidad-outsourcing-en-panama',
     nombre: 'Contabilidad Outsourcing',
-    titulo: 'Contabilidad Outsourcing en Panamá | Su Departamento Contable — KL Contable',
+    titulo: 'Contabilidad Outsourcing en Panamá | KL Contable',
     descripcion:
       'Externalice su contabilidad en Panamá. Registros al día, estados financieros y cumplimiento con la DGI, sin el costo fijo de un departamento propio.',
     h1: 'Contabilidad outsourcing en Panamá',
@@ -109,9 +109,9 @@ export const SERVICIOS: Servicio[] = [
   {
     slug: 'servicios-de-auditoria-contable-en-panama',
     nombre: 'Auditoría Contable',
-    titulo: 'Auditoría Contable en Panamá | Estados Financieros Auditados — KL Contable',
+    titulo: 'Auditoría Contable en Panamá | KL Contable',
     descripcion:
-      'Auditoría de estados financieros en Panamá para bancos, licitaciones y juntas directivas. Un examen independiente con informe claro y recomendaciones aplicables.',
+      'Auditoría de estados financieros en Panamá para bancos, licitaciones y juntas directivas: examen independiente con informe claro y recomendaciones útiles.',
     h1: 'Auditoría contable en Panamá',
     gancho: 'Un examen independiente de sus números, con un informe que se entiende y sirve.',
     resumen: 'Cuando el banco o una licitación le piden estados auditados.',
@@ -147,7 +147,7 @@ export const SERVICIOS: Servicio[] = [
   {
     slug: 'servicios-de-gestion-tributaria-en-panama',
     nombre: 'Gestión Tributaria',
-    titulo: 'Gestión Tributaria en Panamá | Declaraciones e ITBMS ante la DGI — KL Contable',
+    titulo: 'Gestión Tributaria en Panamá: DGI e ITBMS | KL Contable',
     descripcion:
       'Gestión tributaria en Panamá: declaración de renta, ITBMS y trámites ante la DGI presentados en plazo, sin multas y sin pagar de más.',
     h1: 'Gestión tributaria en Panamá',
@@ -186,7 +186,7 @@ export const SERVICIOS: Servicio[] = [
   {
     slug: 'servicios-de-planilla-en-panama',
     nombre: 'Planilla',
-    titulo: 'Servicio de Planilla en Panamá | Nómina, CSS y SIPE — KL Contable',
+    titulo: 'Servicio de Planilla en Panamá: CSS y SIPE | KL Contable',
     descripcion:
       'Gestión de planilla en Panamá: cálculo de nómina, cuotas de la CSS por el sistema SIPE, décimo tercer mes, vacaciones y liquidaciones. Sin errores y a tiempo.',
     h1: 'Servicio de planilla en Panamá',
@@ -224,7 +224,7 @@ export const SERVICIOS: Servicio[] = [
   {
     slug: 'servicio-de-mensajeria-y-tramites-empresariales-en-panama',
     nombre: 'Mensajería y Trámites',
-    titulo: 'Trámites Empresariales y Mensajería en Panamá | Gestoría — KL Contable',
+    titulo: 'Trámites Empresariales en Panamá | KL Contable',
     descripcion:
       'Gestión de trámites empresariales en Panamá: paz y salvos, avisos de operación, registros y diligencias. Nos hacemos las colas por usted.',
     h1: 'Mensajería y trámites empresariales en Panamá',

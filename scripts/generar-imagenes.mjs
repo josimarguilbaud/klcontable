@@ -8,7 +8,8 @@
  *
  * La clave NUNCA va en el repo: se pasa por variable de entorno.
  *
- * Cada imagen sale en WebP a 1600 px de ancho. El estilo es común a todas
+ * Cada imagen sale en WebP a 1600 px de ancho, más una copia de 800 px para
+ * móvil (`-800.webp`). El estilo es común a todas
  * (ESTILO, abajo) para que la web no parezca un collage de bancos de imágenes;
  * lo que cambia por imagen es solo la escena.
  */
@@ -74,6 +75,11 @@ async function generar(e) {
   await writeFile(
     e.destino,
     await sharp(buf).resize(1600, 900, { fit: 'cover' }).webp({ quality: 78 }).toBuffer(),
+  );
+  // La de 800 px es la que descarga un móvil (va en el `srcset`).
+  await writeFile(
+    e.destino.replace(/\.webp$/, '-800.webp'),
+    await sharp(buf).resize(800, 450, { fit: 'cover' }).webp({ quality: 74 }).toBuffer(),
   );
 }
 

@@ -16,6 +16,14 @@ import { TODOS } from '../data/servicios';
 import FotoHero from '../components/FotoHero.astro';
 import { fotoIA } from '../data/imagenes';
 
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  url: `${SITE.dominio}/contacto/`,
+  inLanguage: 'es-PA',
+  about: { '@id': SITE.dominio + '/#negocio' },
+};
+
 const waTexto = encodeURIComponent('Hola, quisiera una consulta sobre servicios contables.');
 
 const foto = fotoIA('pagina/contacto');
@@ -28,6 +36,8 @@ const foto = fotoIA('pagina/contacto');
   imagen={foto?.src}
   migas={[{ nombre: 'Inicio', ruta: '/' }]}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
   <section class="hero-degradado bg-tinta-900">
     <div class:list={['mx-auto max-w-6xl px-5 py-16 lg:py-20', foto && 'grid items-center gap-10 lg:grid-cols-[1.15fr_.85fr]']}>
       <div>

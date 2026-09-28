@@ -246,7 +246,7 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
 ---
 
 <Base
-  title="Contador en Panamá | Servicios de Contabilidad en Panamá — KL Contable"
+  title="Contador en Panamá | Servicios de Contabilidad — KL Contable"
   description="Servicios de contabilidad en Panamá para empresas y emprendedores: contabilidad mensual, impuestos ante la DGI, planilla y trámites. Primera consulta gratuita."
   ruta="/"
   faqs={FAQS}
@@ -265,7 +265,7 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
     />
     <div class="relative mx-auto max-w-6xl px-5 py-20 lg:py-28">
       <p class="mb-5 inline-block rounded-full border border-acento-500/40 bg-acento-500/10 px-4 py-1.5 text-xs font-bold tracking-widest text-acento-400 uppercase">
-        {SITE.ciudad} · {SITE.horario}
+        Servicios de contabilidad en {SITE.ciudad}
       </p>
 
       <h1 class="max-w-4xl font-titulo text-4xl leading-[1.05] font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
@@ -389,6 +389,8 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
                   <div class="overflow-hidden">
                     <img
                       src={f.src}
+  srcset={f.srcset}
+  sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
                       alt={f.alt}
                       width="1600"
                       height="900"
@@ -510,6 +512,8 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
                   <div class="overflow-hidden">
                     <img
                       src={f.src}
+  srcset={f.srcset}
+  sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
                       alt={f.alt}
                       width="1600"
                       height="900"
@@ -588,6 +592,8 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
             <div class="overflow-hidden">
               <img
                 src={F.calculadora.src}
+  srcset={F.calculadora.srcset}
+  sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
                 alt={F.calculadora.alt}
                 width="1600"
                 height="900"
@@ -623,6 +629,8 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
                     {a.foto && (
                       <img
                         src={a.foto.src}
+  srcset={a.foto.srcset}
+  sizes="96px"
                         alt=""
                         width="1600"
                         height="900"
@@ -737,6 +745,8 @@ const waHome = encodeURIComponent('Hola, quisiera una consulta sobre servicios c
     {F.cierre && (
       <img
         src={F.cierre.src}
+  srcset={F.cierre.srcset}
+  sizes="100vw"
         alt=""
         width="1600"
         height="900"

@@ -14,19 +14,47 @@ import { SITE } from '../../data/site';
 import { TODOS } from '../../data/servicios';
 import { DESARROLLO } from '../../data/servicios-desarrollo';
 import { DESARROLLO_2 } from '../../data/servicios-desarrollo-2';
-import { fotoServicio } from '../../data/imagenes';
+import { fotoIA, fotoServicio } from '../../data/imagenes';
+import { ARTICULOS } from '../../data/articulos';
 
 export function getStaticPaths() {
   return TODOS.map((s) => ({ params: { slug: s.slug }, props: { servicio: s } }));
 }
 
 const { servicio } = Astro.props;
-const otros = TODOS.filter((s) => s.slug !== servicio.slug).slice(0, 3);
+// Los tres siguientes en la lista, dando la vuelta: así todos los servicios
+// reciben enlaces internos, no solo los tres primeros.
+const pos = TODOS.findIndex((s) => s.slug === servicio.slug);
+const otros = [1, 2, 3].map((n) => TODOS[(pos + n) % TODOS.length]);
+
+// Los artículos del blog de este servicio (el grupo temático que Google usa
+// para entender de qué sabe la web), y si son menos de tres, los más recientes.
+const recientes = [...ARTICULOS].sort((a, b) => b.fecha.localeCompare(a.fecha));
+const lecturas = [
+  ...recientes.filter((a) => a.servicio === servicio.slug),
+  ...recientes.filter((a) => a.servicio !== servicio.slug),
+]
+  .slice(0, 3)
+  .map((a) => ({ ...a, foto: fotoIA(`blog/${a.slug}`) }));
 // Los cinco bloques, en orden: los tres que explican el servicio y luego el
 // coste de no hacer nada y el «como empezamos», que es lo que cierra.
 const bloques = [...(DESARROLLO[servicio.slug] ?? []), ...(DESARROLLO_2[servicio.slug] ?? [])];
 const foto = fotoServicio(servicio.slug);
 const ruta = `/servicios/${servicio.slug}/`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${SITE.dominio}${ruta}#servicio`,
+  name: servicio.nombre,
+  serviceType: servicio.h1,
+  description: servicio.descripcion,
+  url: `${SITE.dominio}${ruta}`,
+  provider: { '@id': SITE.dominio + '/#negocio' },
+  areaServed: { '@type': 'Country', name: 'Panamá' },
+  availableLanguage: 'es',
+  ...(foto ? { image: new URL(foto.src, SITE.dominio).href } : {}),
+};
 
 const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio.nombre}.`);
 ---
@@ -42,6 +70,8 @@ const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio
     { nombre: 'Servicios', ruta: '/servicios/' },
   ]}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
+
   <section class="hero-degradado bg-tinta-900">
     <div class="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 lg:grid-cols-[1.15fr_.85fr] lg:py-20">
       <div>
@@ -67,6 +97,8 @@ const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio
         foto && (
           <img
             src={foto.src}
+  srcset={foto.srcset}
+  sizes="(min-width: 1024px) 560px, 100vw"
             alt={foto.alt}
             width="1600"
             height="900"
@@ -153,6 +185,30 @@ const waTexto = encodeURIComponent(`Hola, quisiera información sobre ${servicio
               </summary>
               <p class="mt-3 leading-relaxed text-tinta-700">{f.r}</p>
             </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Artículos del tema: el servicio y su blog se refuerzan entre sí -->
+  <section class="border-t border-tinta-200 py-16 lg:py-20">
+    <div class="mx-auto max-w-6xl px-5">
+      <h2 class="font-titulo text-2xl font-black tracking-tight">Para saber más sobre {servicio.nombre.toLowerCase()}</h2>
+      <div class="mt-8 grid gap-5 md:grid-cols-3">
+        {
+          lecturas.map((a) => (
+            <a href={`/blog/${a.slug}/`} class="tarjeta overflow-hidden rounded-xl border border-tinta-200 bg-white">
+              {a.foto && (
+                <img src={a.foto.src}
+  srcset={a.foto.srcset}
+  sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw" alt="" width="1600" height="900" loading="lazy" decoding="async" class="aspect-[16/9] w-full object-cover" />
+              )}
+              <div class="p-6">
+                <h3 class="font-titulo text-lg leading-snug font-bold">{a.h1}</h3>
+                <p class="mt-2 text-sm text-tinta-700">{a.entradilla}</p>
+              </div>
+            </a>
           ))
         }
       </div>
