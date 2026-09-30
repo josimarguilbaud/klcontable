@@ -60,6 +60,11 @@ export const ARTICULOS_C: Articulo[] = [
           'La contabilidad se cierra por períodos. Si sus documentos están separados por mes, el cierre es entregar una carpeta; si están por proveedor, alguien tiene que desarmarlos y volver a armarlos.',
           'Dentro de cada mes basta con dos grupos: lo que entró (ventas) y lo que salió (compras y gastos).',
         ],
+        enlace: {
+          detalle: 'Si factura con un sistema, las ventas pueden salir de ahí ya ordenadas por mes. Esto es lo que conviene exigirle:',
+          texto: 'Qué le pide un contador a su sistema de facturación',
+          href: '/blog/que-pide-un-contador-al-sistema-de-facturacion/',
+        },
       },
       {
         t: 'Revise los datos antes de guardar',
@@ -441,6 +446,129 @@ export const ARTICULOS_C: Articulo[] = [
         p: [
           'Un contador que recibe una contabilidad y sigue adelante sin revisarla hereda cualquier error sin saberlo. Lo sensato es un repaso inicial de lo recibido: qué está completo, qué falta y qué hay que corregir.',
           'Si está pensando en cambiar, escríbanos por WhatsApp. Le decimos qué necesitamos recibir y cómo lo hacemos para que no se pierda nada por el camino.',
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'que-pide-un-contador-al-sistema-de-facturacion',
+    titulo: 'Sistema de Facturación: Qué Pide su Contador | KL Contable',
+    descripcion:
+      'Numeración sin huecos, ITBMS separado y cobros ligados a cada factura: lo que su contador necesita del sistema con que usted factura en Panamá.',
+    h1: 'Qué le pide un contador a su sistema de facturación',
+    entradilla:
+      'Muchos problemas del cierre de mes no nacen en la contabilidad. Nacen el día en que se facturó.',
+    fecha: '2026-09-29',
+    minutos: 6,
+    servicio: 'servicios-de-contabilidad-outsourcing-en-panama',
+    resumen:
+      'Un contador necesita que el sistema de facturación de su empresa numere sin huecos, separe el ITBMS en cada línea, identifique bien a cada cliente y ligue cada cobro a su factura. También necesita sacar esos datos sin volver a escribirlos. Y en Panamá, antes de elegir, hay que saber si el sistema emite la factura electrónica fiscal o si esa sale aparte, de un PAC o del Facturador Gratuito de la DGI.',
+    claves: [
+      'Cada factura lleva su número, en orden y sin saltos; si tiene un error, se anula o se corrige con otro documento, nunca se borra.',
+      'El subtotal, el ITBMS y el total van separados, línea por línea, para distinguir lo gravado de lo exento.',
+      'Cada cobro, completo o en abonos, queda anotado en su factura con la fecha, la forma de pago y la referencia.',
+      'Su contador descarga los datos en Excel o CSV, o entra con un acceso de solo lectura, sin pedirle su contraseña.',
+      'Si el sistema no emite la factura electrónica fiscal, esa sale de su PAC o del Facturador Gratuito, y las dos tienen que cuadrar.',
+    ],
+    faqs: [
+      {
+        p: '¿Puedo facturar en Excel?',
+        r:
+          'Puede llevar ahí el control al principio, pero Excel no impide saltarse un número, repetirlo o borrar un cobro, y lo que sale de una hoja de cálculo no es una factura fiscal. Si su empresa está obligada a la factura electrónica, esa tiene que salir de un PAC o del Facturador Gratuito de la DGI.',
+      },
+      {
+        p: '¿Mi sistema de facturación tiene que ser el mismo que usa mi contador?',
+        r:
+          'No. Lo que importa es que su contador pueda consultar o descargar los datos sin volver a escribirlos: un archivo de Excel o CSV con facturas, cobros y clientes, o un acceso de solo lectura.',
+      },
+      {
+        p: '¿Un sistema de facturación reemplaza al contador?',
+        r:
+          'No. El sistema ordena la información de ventas y cobros. El registro contable, las declaraciones y los estados financieros siguen siendo trabajo del contador, que los hace mejor y más rápido si esa información le llega completa.',
+      },
+      {
+        p: '¿Qué hago si ya emití una factura con un error?',
+        r:
+          'No la borre ni reutilice su número. Según el caso, se anula dejando el motivo o se corrige con otro documento, como una nota de crédito, y el número original queda registrado. Si es una factura electrónica, la corrección se hace también por medio del PAC o del Facturador Gratuito.',
+      },
+    ],
+    secciones: [
+      {
+        t: 'Una numeración sin huecos',
+        p: [
+          'Cada factura necesita su número, y los números tienen que seguir en orden, sin saltos ni repetidos. Cuando falta la 0152 o la 0153 aparece dos veces, su contador tiene que averiguar qué pasó con cada una antes de poder cerrar el mes.',
+          'Una factura con error no se borra, y su número no se vuelve a usar. Se anula dejando el motivo, o se corrige con otro documento, y el número original queda a la vista. Antes de elegir un sistema, pregunte qué pasa cuando se anula una factura. Si la respuesta es «desaparece», ese sistema le va a dar problemas.',
+        ],
+      },
+      {
+        t: 'El ITBMS separado, línea por línea',
+        p: [
+          'Su contador necesita ver en cada factura el subtotal, el impuesto y el total por separado. Si el sistema solo guarda el total con el impuesto adentro, hay que recalcularlo a mano, y de ahí salen las diferencias de centavos que después no cuadran con la declaración.',
+          'Conviene que el impuesto se calcule en cada línea y no solo al final, porque no todo lo que usted vende lleva la misma tarifa, y hay bienes y servicios exentos. Una factura que mezcla algo gravado con algo exento solo se declara bien si el sistema distingue uno de otro.',
+        ],
+      },
+      {
+        t: 'Cada cliente bien identificado',
+        p: [
+          'Una factura a nombre de «cliente varios», o con el RUC incompleto, le sirve poco a la empresa que la recibe, porque sin sus datos le cuesta sustentar ese gasto. El sistema debería guardar de cada cliente el nombre o la razón social y el RUC con su dígito verificador (DV), y llenarlos por usted en cada factura.',
+          'Guardarlos una sola vez evita el error más común: escribir el RUC de memoria y equivocarse en un dígito.',
+        ],
+      },
+      {
+        t: 'Cada cobro ligado a su factura',
+        p: [
+          'Al cierre, su contador cuadra lo que entró al banco con lo que usted facturó. Si un depósito no dice a qué factura corresponde, alguien tiene que averiguarlo, y mientras tanto esa factura sigue apareciendo como pendiente.',
+          'Por eso cada cobro, completo o en abonos, debería quedar anotado en su factura con la fecha, la forma de pago y la referencia de la transferencia o del recibo. Así el saldo de cada factura sale de lo que de verdad se cobró, y lo que le deben a fin de mes se lee sin hacer cuentas.',
+          'Vender y cobrar son dos hechos distintos. En la contabilidad, la venta cuenta en el mes en que se factura, aunque el cliente pague después. Un buen sistema le muestra las dos cosas por separado, lo facturado y lo cobrado, mes a mes.',
+        ],
+      },
+      {
+        t: 'Datos que su contador pueda sacar sin volver a escribirlos',
+        p: [
+          'Copiar facturas de un PDF a una hoja de cálculo es donde más errores se cuelan. Lo que su contador necesita es descargar las facturas, los cobros y los clientes en un archivo de Excel o CSV, con la fecha de cada documento, para filtrar el mes que va a cerrar.',
+          'Mejor todavía si el sistema le da a su contador un acceso propio de solo lectura. Así su contador ve lo que necesita cuando lo necesita, usted no comparte su contraseña ni manda capturas de pantalla, y nadie cambia nada por error.',
+        ],
+      },
+      {
+        t: 'Quién emite la factura fiscal',
+        p: [
+          'Esta es la pregunta que más confusión causa. En Panamá, la factura que cuenta ante la DGI es la factura electrónica, que se emite por medio de un PAC o del Facturador Gratuito de la propia DGI, o la que sale de una impresora fiscal para quien todavía la usa. Muchos sistemas de facturación y cobros emiten documentos comerciales muy completos que no son facturas fiscales.',
+          'Eso no es un problema si se sabe desde el principio. La fiscal se emite con el PAC o con el Facturador Gratuito, y el otro sistema lleva las cotizaciones, los cobros y lo que le deben. Lo importante es que las dos cuadren: el mismo cliente, los mismos montos y el mismo ITBMS.',
+          'Antes de elegir, pregunte sin rodeos: «¿Lo que emite su sistema es la factura electrónica fiscal, o tengo que emitirla aparte?».',
+        ],
+        enlace: {
+          detalle:
+            'Cómo funciona la validación de la factura electrónica y qué cambia para su empresa:',
+          texto: 'Qué cambia con la facturación electrónica en Panamá',
+          href: '/blog/facturacion-electronica-en-panama-que-cambia/',
+        },
+      },
+      {
+        t: 'Qué opciones hay',
+        p: [
+          'No hay un sistema correcto para todas las empresas. Depende de cuánto factura, de si le pagan en abonos y de si lleva una o varias empresas. Estas son las opciones más comunes en Panamá.',
+          'Una hoja de cálculo. Sirve al principio y no cuesta nada, pero nada le impide saltarse un número, repetirlo o borrar un cobro, y no es una factura fiscal.',
+          'El Facturador Gratuito de la DGI. Emite la factura electrónica fiscal sin costo y está pensado para quien emite pocos documentos. Su trabajo es emitir: el control de quién le debe y cuánto hay que llevarlo aparte.',
+          'La plataforma de un PAC. Emite la factura electrónica fiscal. Algunas incluyen cuentas por cobrar y reportes, y otras solo emiten; pregunte qué puede descargar su contador.',
+          'Un sistema contable con módulo de facturación. Junta la facturación y la contabilidad, lo que ahorra pasos, pero suele costar más y pide más tiempo para aprenderlo.',
+          'Un sistema de facturación y cobros. Lleva cotizaciones, facturas, abonos y lo vencido, a veces de varias empresas a la vez. Si no emite la factura fiscal, se usa junto con un PAC o con el Facturador Gratuito.',
+        ],
+        enlace: {
+          detalle:
+            'Un ejemplo de este último tipo es NousCRM, hecho en Panamá. Lleva cotizaciones, facturas con su propia numeración y el ITBMS por línea, abonos ligados a cada factura y mensualidades, de una o varias empresas. Su contador entra gratis con acceso de solo lectura y descarga facturas, abonos y clientes en CSV. No emite la factura electrónica de la DGI ni lleva la contabilidad: la fiscal sigue saliendo de su PAC o del Facturador Gratuito.',
+          texto: 'Ver cómo funciona NousCRM',
+          href:
+            'https://nouscrm.app/?utm_source=klcontable&utm_medium=web&utm_campaign=blog-sistema-de-facturacion',
+          nota:
+            'NousCRM lo desarrolla Elemento Web, la misma agencia que hizo la web de KL Contable.',
+        },
+      },
+      {
+        t: 'Antes de cambiar de sistema',
+        p: [
+          'Pídale a su contador que vea una factura de prueba y el archivo que exporta el sistema antes de pagar la primera mensualidad. Con eso sabrá si le sirve o si le va a costar horas en cada cierre.',
+          'Si cambia a mitad de año, cierre primero el mes en el sistema anterior y empiece el nuevo con una numeración que no se cruce con la anterior.',
+          'Si quiere que revisemos con usted cómo factura hoy y qué le conviene, escríbanos por WhatsApp.',
         ],
       },
     ],

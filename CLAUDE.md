@@ -36,7 +36,7 @@ Una firma contable que publica un dato falso pierde justo lo que vende.
 | Datos del negocio | `src/data/site.ts` |
 | Cifras oficiales | `src/data/fiscal.ts` |
 | 10 servicios | `src/data/servicios.ts`, `servicios-nuevos.ts`, desarrollo en `servicios-desarrollo*.ts` |
-| Blog (32 artículos) | `src/data/articulos.ts` (12 originales) + `articulos-a/b/c.ts` (20 nuevos) |
+| Blog (33 artículos) | `src/data/articulos.ts` (12 originales) + `articulos-a/b/c.ts` (21 nuevos). Un recuadro con enlace al final de una sección va en `enlace`, no dentro del texto: los párrafos se pintan como texto plano |
 | Guías (3) | `src/data/guias.ts` + desarrollo largo en `src/data/guias/<slug>.ts` |
 | Novedades DGI/CSS | `src/data/novedades.ts` → `/novedades/` |
 | Imágenes generadas | `public/img/ia/**` + descripciones en `src/data/imagenes-ia.json` |

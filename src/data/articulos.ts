@@ -14,7 +14,14 @@ import { ARTICULOS_A } from './articulos-a';
 import { ARTICULOS_B } from './articulos-b';
 import { ARTICULOS_C } from './articulos-c';
 
-export type Seccion = { t: string; p: string[] };
+/**
+ * Un enlace destacado al final de una sección: se ve como un recuadro, con una
+ * frase opcional antes (`detalle`) y letra chica debajo (`nota`), por ejemplo
+ * quién hace el producto al que se enlaza. Los párrafos siguen siendo texto
+ * plano: el enlace va aquí para no tocar cómo se pinta cada artículo.
+ */
+export type Enlace = { texto: string; href: string; detalle?: string; nota?: string };
+export type Seccion = { t: string; p: string[]; enlace?: Enlace };
 
 export type Articulo = {
   slug: string;
